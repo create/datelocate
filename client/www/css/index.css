@@ -9,7 +9,7 @@ strong {
   font-weight:300;
   color:#539D00;
 }
-li {
+.ui-listview>.ui-li-static {
   white-space: normal;
 }
 #landing-background-image {
