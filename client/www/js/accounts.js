@@ -72,11 +72,16 @@ window.fbAsyncInit = function() {
   }
 function findName() {
 	FB.api('/me', function(response) {
-		if (response.status === connected) {
-			$('#username').html("Welcome " + response.name);
-		} else {
-			$('#username').html("Wrong");
-		}
+		FB.Event.subscribe('auth.authResponseChange', function(response) {
+    // Here we specify what we do with the response anytime this event occurs. 
+    if (response.status === 'connected') {
+    	$('#username').html("Welcome " + response.name);
+    	console.log("YES")
+    } else {
+    	$('#username').html("Wrong");
+    	console.log("NO")
+    }
+  	});
     
     console.log(response.id);
 	});
