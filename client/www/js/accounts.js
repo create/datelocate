@@ -1,5 +1,8 @@
 //accounts.js
 
-FB.api('/me', function(response) {
+function findName() {
+	FB.api('/me', function(response) {
     $('#username').html("Welcome " + response.name);
-});
+    console.log(response.name);
+	});
+}
