@@ -5,6 +5,7 @@ var API_KEY = "AIzaSyA_3-FTpr5X41YFGR-xFHVZMbjcU-BJp1Q"; // google maps api key 
 var currentDID;
 var addMarker; // marker for adding
 var addinfowindow;
+var dates = {};
 var placesService;
 var DEFAULT_ZOOM = 13;
 var currentLocationMarker; // blue dot to show current location
@@ -195,7 +196,7 @@ function closePanels() {
     $('#account-panel').panel("close");
 }
 
-// gets all bathrooms near LatLng position and displays them to map. called initially and when map is panned
+// gets all dates near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {
     getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
         function (data, status) {
@@ -209,6 +210,7 @@ var getDates = function(LatLng, map) {
                     var lng = current.location.lng;
                     console.log("creating date: "+name);
                     DIDSet.add(did);
+                    dates[did] = current;
                     var newBathPos = new google.maps.LatLng(lat, lng);
                     marker = new google.maps.Marker({
                         position: newBathPos,
@@ -216,6 +218,7 @@ var getDates = function(LatLng, map) {
                         title: name
                         //animation: google.maps.Animation.DROP
                     });
+                    dates[did].marker = marker;
                     var markerClickCallback = function (did) {
                         return function() {
                             currentDID = did;
@@ -225,6 +228,7 @@ var getDates = function(LatLng, map) {
                         };
                     };
                     google.maps.event.addListener(marker, 'click', markerClickCallback(did));
+                
                 }
             }
         });
@@ -296,6 +300,23 @@ function onDetailsLoad() {
     getReviews();
     $('#review-form')[0].reset();
 };
+
+$("#filter-dates").bind("change", function() {
+    var keyArray = DIDSet.keys();
+    for (var i = 0; i < keyArray.length; i++) {
+        
+        var date = dates[keyArray[i]];
+        if (parseInt(date.price) <= parseInt($('#filter-dates').val())) {
+            //show
+            if (date.marker.getMap() == null) {
+                date.marker.setMap(map);
+            }
+        } else {
+            //hide
+            date.marker.setMap(null);
+        }
+    }
+});
 
 // called when user clicks on locate div
 function locate() {
