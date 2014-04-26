@@ -50,7 +50,9 @@
                 <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28px" width="28px" src="img/add.png" alt="add"></div>
                 <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" ></div></a>
                     
-                <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
+                <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false" onclick="FB.api('/me', function(response) {
+                                        $('#username').html("Welcome " + response.name);
+                                    });">
                     <h2 id="username">Profile</h2>
 
                     <a href="#history-page">
