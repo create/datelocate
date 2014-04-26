@@ -49,7 +49,7 @@
 
                 <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28px" width="28px" src="img/add.png" alt="add"></div>
                 <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" ></div></a>
-                <div id="account-panel" data-role="panel" data-position="left" data-display="push">
+                <div id="account-panel" class="panel left" data-role="panel" data-position="left" data-display="push" data-dismissible="false">
                 <h2>Profile</h2>
                 <ul>
                     <h3>Date History</h3>
@@ -59,9 +59,27 @@
                 
             </div>
 
+            <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="add-details-page">
+                <form id="add-form">
+                    <div class="ui-field-contain">
+                        <input type="text" placeholder="Name of Date/Venue" name="name" id="add-name">
+                        <input type="text" placeholder="Location" name="location" id="add-location">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <label><input type="radio" name="price" value="0" required="required">Free</label>
+                            <label><input type="radio" name="price" value="1">$  </label>
+                            <label><input type="radio" name="price" value="2">$$ </label>
+                            <label><input type="radio" name="price" value="3">$$$</label>
+                        </fieldset>
+                        <br>
+                        <textarea type="text" placeholder="Things to bring" name="materials" id="add-materials"></textarea>
+                       
+                        
+                        <textarea required="required" type="text" placeholder="Insider tips/Review" name="review" id="add-review-text"></textarea>
+                        <div class="error"></div>
+                        <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
+                    </div>  
+                </form>
             </div>
-            
-            
             
             
         </datesiv>

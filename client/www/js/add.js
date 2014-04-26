@@ -5,6 +5,7 @@ var placeTypes = [ 'accounting', 'airport', 'amusement_park', 'aquarium', 'art_g
 var addPlace;
 // Initalizes an event listener for dropping pins
 var addInit = function () {
+    toast("Tap to add...");
     console.log("addinit");
     if (!addListener) {
         if (!addinfowindow) {
@@ -23,6 +24,7 @@ var addInit = function () {
     }
     $('#addbutton img').attr("src", "img/addcancel.png");
     $('#addbutton').attr("onclick", "addDeInit()");
+
 };
 
 // Resets the form and adds a new name from google places
@@ -39,7 +41,7 @@ function fillNamePlaces() {
     placesService.nearbySearch(request, function (results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             console.log(results);
-            var fieldset = $('<fieldset data-role="controlgroup" id="namesuggestions" ><h4>Is this...</h4><br></fieldset>');
+            var fieldset = $('<fieldset data-role="controlgroup" id="namesuggestions" ><h4>Is this...</h4></fieldset>');
             for (var i = 0; i < Math.min(results.length, 3); i++) {
                 var curResult = results[i];
                 var ref = curResult.reference;
@@ -63,7 +65,7 @@ function fillNamePlaces() {
 
 function pickPlace(tag) {
     var fieldset = $('#namesuggestions').slideUp(function(){fieldset.remove();});
-    $('#add-name').val(tag.value);
+    $('#add-location').val(tag.value);
     addPlace = {id: $(tag).attr("bid"), ref: $(tag).attr("ref")};
 };
 
@@ -118,9 +120,10 @@ $('#add-form').submit(function (e) {
     console.log("add-form submit");
     var form = $("#add-form");
     var date_name = $('#add-name', form).val();
+    var location = $('#add-location', form).val();
     var price = $('input[name="price"]').val();
-    var gender = $('input[name="gender"]:checked').val();
-    var voteDir = $('input[name="rating"]:checked').val();
+    var materials = $('#add-materials').val();
+    var review = $('#add-review', form).val();
     if (!addMarker) { // make sure user entered the page by selecting a marker
         $(".error", form).text("Please go back and select a spot on the map.");
         return;
@@ -129,8 +132,10 @@ $('#add-form').submit(function (e) {
         "lat": addMarker.getPosition().lat(),
         "lng": addMarker.getPosition().lng(),
         "date_name": bathroom_name,
+        "location": location,
         "price": price,
-        "rating": rating
+        "materials": materials,
+        "review": review
     };
     if (addPlace) {
         postData.placesID = addPlace.id;
@@ -146,6 +151,7 @@ $('#add-form').submit(function (e) {
             getDates(map.getCenter(), map);
             form["0"].reset();
             $('#add-details-page').panel("close");
+            toast("Date added! You're a bro.");
         })
         .fail(function(err) {
             

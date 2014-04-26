@@ -49,7 +49,7 @@ $(document).ready(function() {
         }
     });
      $('#addbutton').click(function() {
-        toast("Tap to add...");
+        
         $('#header').panel("close");
     });
     
@@ -207,7 +207,7 @@ function save (key, value) {
 
 function toast(message) {
     $('#toast').text(message);
-    $('#toast').fadeIn("slow");
+    $('#toast').fadeIn();
     setTimeout(function(){$('#toast').fadeOut("slow")}, 2500);
 };
 
