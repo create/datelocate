@@ -50,15 +50,28 @@
                 <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28px" width="28px" src="img/add.png" alt="add"></div>
                 <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" ></div></a>
                 <div id="account-panel" data-role="panel" data-position="left" data-display="push">
-                <h2>Profile</h2>
-                <ul>
-                    <h3>Date History</h3>
-                    <h3>Rep <span id="rep">?</span></h3>
-                    <h3>Friends dates</h3>
-                </ul>
-                
+                    <h2>Profile</h2>
+                    <a href="#history-page">
+                        <div class="account-option">
+                            <h3>Date History</h3>
+                        </div>
+                    </a>
+                    <a href="#friends-page">
+                        <div class="account-option">
+                            <h3>Your Friends Dates</h3>
+                        </div>
+                    </a>
+                    <h3 id="rep">Rep <span>?</span></h3>
+                    
+                </div>
+
             </div>
 
+            <div id="history-page" data-role="page">     
+                Date history!
+            </div>
+            <div id="friends-page" data-role="page">     
+                Friends Dates!
             </div>
             
             

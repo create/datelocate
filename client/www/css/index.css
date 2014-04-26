@@ -20,12 +20,13 @@
 }
 
 .landing-content {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  margin-left: 20px;
-  margin-right: 20px;
+	color: #585858;
+	position: fixed;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 .mapbutton {
@@ -104,4 +105,23 @@
 #map_canvas {
 	height: 100%;
 	width: 100%;
+}
+
+.account-option {
+	margin-bottom: 10px;
+	border: 1px solid gray;
+	padding: 20px;
+	text-align: center;
+	color: #585858;
+}
+
+a {
+	text-decoration: none;
+}
+
+#rep {
+	position: absolute;
+	bottom: 0px;
+	margin-bottom: 0px;
+	right: 10px;
 }
