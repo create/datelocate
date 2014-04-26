@@ -127,7 +127,7 @@ $('#add-form').submit(function (e) {
     var location = $('#add-location', form).val();
     var price = $('input[name="price"]').val();
     var materials = $('#add-materials').val();
-    var review = $('#add-review', form).val();
+    var review = $('#add-review-text', form).val();
     if (!addMarker) { // make sure user entered the page by selecting a marker
         $(".error", form).text("Please go back and select a spot on the map.");
         return;

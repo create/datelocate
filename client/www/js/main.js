@@ -2,7 +2,7 @@ var baseUrl = "http://d-api.herokuapp.com/";
 var map;
 var DIDSet;
 var API_KEY = "AIzaSyA_3-FTpr5X41YFGR-xFHVZMbjcU-BJp1Q"; // google maps api key (jeff's acc)
-var currendDID;
+var currentDID;
 var addMarker; // marker for adding
 var addinfowindow;
 var placesService;
@@ -187,7 +187,7 @@ var showOnMap = function(position) {
 };
 
 function closePanels() {
-    $('.panel').panel("close");
+    $('#account-panel').panel("close");
 }
 
 // gets all bathrooms near LatLng position and displays them to map. called initially and when map is panned
@@ -198,24 +198,29 @@ var getDates = function(LatLng, map) {
             for (var i = 0; i < data.dates.length; i++) {
                 var current = data.dates[i];
                 var did = current._id;
-                var name = current.name;
-                console.log("creating date: "+name);
-                DIDSet.add(did);
-                var newBathPos = new google.maps.LatLng(lat, lng);
-                marker = new google.maps.Marker({
-                    position: newBathPos,
-                    map: map,
-                    title: name
-                    //animation: google.maps.Animation.DROP
-                });
-                var markerClickCallback = function (b_id) {
-                    return function() {
-                        currentBID = b_id;
-                        $('#header').panel("close");
-                        onDetailsLoad();
+                if (!DIDSet.has(did)) {
+                    var name = current.name;
+                    var lat = current.location.lat;
+                    var lng = current.location.lng;
+                    console.log("creating date: "+name);
+                    DIDSet.add(did);
+                    var newBathPos = new google.maps.LatLng(lat, lng);
+                    marker = new google.maps.Marker({
+                        position: newBathPos,
+                        map: map,
+                        title: name
+                        //animation: google.maps.Animation.DROP
+                    });
+                    var markerClickCallback = function (did) {
+                        return function() {
+                            currentDID = did;
+                            $('#account-panel').panel("close");
+
+                            onDetailsLoad();
+                        };
                     };
-                };
-                google.maps.event.addListener(marker, 'click', markerClickCallback(b_id));
+                    google.maps.event.addListener(marker, 'click', markerClickCallback(did));
+                }
             }
         });
 };
@@ -224,24 +229,66 @@ var NUM_REVIEWS = 3; // max number of reviews to show initially
 
 // called when a marker is clicked. gets info and displays in panel
 function onDetailsLoad() {
-    
-    // var current = data.dates[i];
-    // var name = current.name;
-    // var did = current._id;
-    // var lat = current.location.lat;
-    // var lng = current.location.lng;
-    // var rating = current.rating;
-    // var priceNum = current.price;
-    // var price;
-    // if (priceNum == 0) {
-    //     price = "Free";
-    // } else if (priceNum == 1) {
-    //     price = "$";
-    // } else if (priceNum == 2) {
-    //     price = "$$";
-    // } else if (priceNum == 3) {
-    //     price = "$$$";
-    // }
+    var list = $('#detailslist');
+    $('.error', list.parent()).text(""); // clear errors
+    $('#dplace').hide();
+    $('#at').hide();
+    $('#dpicture').hide();
+    $('#dates-details-page').panel("open");
+    getReq(baseUrl + "getdate/" + currentDID, function (res) {
+        $('#dname', list).text(res.date.name);
+        if (res.date.location_name) {
+            $('#dlocation', list).text(res.date.location_name);
+        } else {
+            $('#dlocation', list).text("No specific location!");
+        }
+        var price = res.date.price;
+        if (price == 0) {
+            price = "Free";
+        } else if (price == 1) {
+            price = "$";
+        } else if (price == 2) {
+            price = "$$";
+        } else if (price == 3) {
+            price = "$$$";
+        }
+        $('#dprice', list).text(price);
+        if (res.date.materials) {
+            $('#dmaterials', list).text(res.date.materials);
+        } else {
+            $('#dmaterials', list).text("Nothing to bring!");
+        }
+        $('#dreview', list).text(res.date.review);
+        $('#dpicture').empty();
+        console.log(res);
+        if (res.date.placesRef) {
+            placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
+                console.log(res);
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    console.log("getDetails sucess");
+                    $('#at').show();
+                    $('#bplace').show().text(res.name);
+                    // get picture
+                    //$('#bplace').slideDown().empty().append($('<a target="_blank" href="'+res.url+'">'+res.name+'</a>'));
+                    if (res.photos && res.photos.length > 0) {
+                        console.log("Found photo");
+                        $('#dpicture', list).show().empty().append($('<a target="_blank" href="'+res.url+'"><img style="width: 100%; height: auto;" src='+res.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500})+'alt="photo"></a>'));
+                        list.listview("refresh");
+                    }
+                } else {
+                    console.log("error details");
+                }
+            });
+        } else {
+            console.log("no places ref");
+        }
+    }).fail(function(err) {
+        console.log("get bathroom error");
+        $(".error", list.parent()).text(err.responseJSON.errors);
+    });
+    save('reviews', null);
+    getReviews();
+    $('#review-form')[0].reset();
 };
 
 // called when user clicks on locate div
@@ -298,7 +345,8 @@ function save (key, value) {
 function toast(message) {
     $('#toast').text(message);
     $('#toast').fadeIn();
-    setTimeout(function(){$('#toast').fadeOut("slow")}, 2500);
+    setTimeout(function(){$('#toast').fadeOut("slow")}, 3500);
+    findName();
 };
 
 
@@ -338,3 +386,49 @@ function confirmPopup(event) {
     setTimeout(function() {addinfowindow.open(map, addMarker);}, 300);
 };
 
+var getReviews = function() {
+    var list = $('#detailslist');
+    getReq(baseUrl+"getreviews/"+currentDID, function (res) {
+        $('.review', list).remove();
+        var moreReviewsBtn = $('#more-reviews');
+        var reviews = res.date.reviews.reverse();
+        if (reviews.length == 0) {
+            list.append($('<li class="review">Nothing... yet!</li>')).listview("refresh");
+            moreReviewsBtn.hide();
+        } else {
+            for (var i = 0; i < Math.min(reviews.length, NUM_REVIEWS); i++) {
+                appendReview(list, reviews[i]);
+            }
+            if (reviews.length > NUM_REVIEWS) {
+                moreReviewsBtn.show();
+                window.localStorage.reviews = JSON.stringify(reviews);
+            } else {
+                moreReviewsBtn.hide();
+            }
+        }
+    }).fail(function (err) {
+        $(".error", list.parent()).text(err.responseJSON.errors);
+    })
+}
+function appendReview(list, myReview) {
+    $('<li class="review"><q>'+myReview.review+'</q></li>').hide().appendTo(list).slideDown();
+}
+
+$('#review-form').submit(function (e) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    var form = $('#review-form');
+    $('.error', form).text("");
+    var review = $('#add-review-texta').val();
+    var formData = {
+        "did": currentDID,
+        "review": review
+    };
+    postReq(baseUrl + "addreview", formData, function(res) {
+        $('#review-form')[0].reset();
+        getReviews();
+        console.log("successfully added review");
+    }).fail(function(err) {
+        $("#review-form .error").text(err.responseJSON.errors);
+    });
+});

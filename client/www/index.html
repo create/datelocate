@@ -53,19 +53,27 @@
                 <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" onclick="findName()"></div></a>
                     
                 <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
-                    <h2 id="username">Profile</h2>
+                    <div id="not-logged-in" style="display: none;">
+                        Uh oh! It looks like you're not logged in!
+                        Log in now to help a bro out with a date.
+                        <div><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
+                    </div>
 
-                    <a href="#history-page">
-                        <div class="account-option">
-                            <h3>Date History</h3>
-                        </div>
-                    </a>
-                    <a href="#friends-page">
-                        <div class="account-option">
-                            <h3>Your Friends Dates</h3>
-                        </div>
-                    </a>
-                    <h3 id="rep">Rep <span>?</span></h3>
+                    <div id="logged-in" style="display: none;">
+                        <h2 id="username">Profile</h2>
+
+                        <a href="#history-page">
+                            <div class="account-option">
+                                <h3>Date History</h3>
+                            </div>
+                        </a>
+                        <a href="#friends-page">
+                            <div class="account-option">
+                                <h3>Your Friends Dates</h3>
+                            </div>
+                        </a>
+                        <h3 id="rep">Rep <span>?</span></h3>
+                    </div>
                     
                 </div>
                 <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="add-details-page">
@@ -87,6 +95,39 @@
                             <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
                         </div>  
                     </form>
+                </div>
+
+                <!-- The date details -->
+                <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="dates-details-page">
+                    <ul data-role="listview" id="detailslist">
+                        <!-- <li data-role="list-divider">Name</li> -->
+                        <li class="title"><strong><span id="dname"></span></strong><span style="display: none;" id="at"> at </span><span id="bplace"></span><span id="dprice"></span></li>
+                        <div id="dpicture" data-role="none"></div>
+                        <!-- <li data-role="list-divider">Location</li>
+                        <li id="dlocation"></li> -->
+                        <!-- <li data-role="list-divider">Price</li>
+                        <li id="dprice"></li> -->
+                        <li data-role="list-divider">Things to bring</li>
+                        <li id="dmaterials"></li>
+                        <li data-role="list-divider">What to do</li>
+                        <li id="dreview"></li>
+                        <!-- <li data-role="list-divider">Photo</li> -->
+                        <li data-role="list-divider">What fellow bros have to say...</li>
+                        <!-- Reviews inserted here -->
+                        <li class="review">
+                        <p>Nothing... yet!</p>
+                        </li>
+                    </ul>
+                    <div class="error"></div>
+                    <a href="#" data-role="button" style='display: none;' id="more-reviews" data-icon="arrow-d">More</a>
+                    
+                    <form id="review-form">
+                       <h1 class="subtitle">Your opinion</h1>
+                        <textarea required="required" type="text" placeholder="What worked well on this date?" name="review" id="add-review-texta"></textarea>
+                        <div class="error"></div>
+                        <input type="submit" value="Date complete" id="add-review-submit" data-icon="check">
+                    </form>
+                        
                 </div>
 
             </div>

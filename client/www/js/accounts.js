@@ -71,8 +71,19 @@ window.fbAsyncInit = function() {
     });
   }
 function findName() {
+	
 	FB.api('/me', function(response) {
-    $('#username').html("Welcome " + response.name);
-    console.log(response.id);
+		console.log("Success" + response.name);
+		if (response.name != undefined) {
+			$('#not-logged-in').css("display", "none");
+			$('#logged-in').css("display", "default");
+			$('#username').html("Welcome " + response.name);
+		} else {
+			$('#logged-in').css("display", "none");
+			$('#not-logged-in').css("display", "default");
+			$('#username').html("Not logged in");
+		}
+    
+    
 	});
 }
