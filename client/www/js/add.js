@@ -16,6 +16,7 @@ var addInit = function () {
                 '<div id="bodyContent">' +
                 "<a href='#add-details-page' id='add-confirm' data-theme='b' style='color:#009900;' role='button' data-icon='check' class='ui-link ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all' onclick='fillNamePlaces()' data-role='button' data-transition='slide'>Confirm</a>" + '</div></div>'
             addinfowindow.setContent(content);
+
         }
         addListener = google.maps.event.addListener(map, "click", confirmPopup);
     }
@@ -23,6 +24,8 @@ var addInit = function () {
         placesService = new google.maps.places.PlacesService(map);
     }
     $('#addbutton img').attr("src", "img/addcancel.png");
+    $('#pac-input').css("display", "none");
+
     $('#addbutton').attr("onclick", "addDeInit()");
 
 };
@@ -111,6 +114,7 @@ var addDeInit = function () {
     }
     google.maps.event.removeListener(addListener);
     addListener = null;
+    $('#pac-input').css("display", "default");
     $('#addbutton img').attr("src", "img/add.png");
     $('#addbutton').attr("onclick", "addInit()");
 };
