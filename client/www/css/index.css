@@ -1,0 +1,40 @@
+/*Css for Date finder */
+
+#landing-background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  display: block;
+  background-image: url('../img/map.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.landing-content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#fb-login {
+	float: left;
+	margin-left: 45%;
+}
+
+#arrow {
+	position: fixed;
+	bottom: 10px;
+	left: 45%;
+}
