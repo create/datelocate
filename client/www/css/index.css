@@ -298,7 +298,6 @@ a {
   #filter {
     position: absolute;
     border-bottom-width: 0;
-    padding: 0;
     top: 6px;
     right: 10px;
     min-width: 70px;
