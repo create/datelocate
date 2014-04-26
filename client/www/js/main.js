@@ -80,7 +80,7 @@ var showOnMap = function(position) {
     var mapOptions = {
         center: myLatlng,
         mapTypeControl: false,
-        //streetViewControl: false,
+        streetViewControl: false,
         panControl: false,
         zoomControl: false,
         //minZoom: 12,
@@ -234,6 +234,10 @@ function onDetailsLoad() {
     $('#dplace').hide();
     $('#at').hide();
     $('#dpicture').hide();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     $('#dates-details-page').panel("open");
     getReq(baseUrl + "getdate/" + currentDID, function (res) {
         $('#dname', list).text(res.date.name);
@@ -395,6 +399,10 @@ var getReviews = function() {
         var reviews = res.date.reviews.reverse();
         if (reviews.length == 0) {
             list.append($('<li class="review">Nothing... yet!</li>')).listview("refresh");
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             moreReviewsBtn.hide();
         } else {
             for (var i = 0; i < Math.min(reviews.length, NUM_REVIEWS); i++) {
@@ -433,3 +441,7 @@ $('#review-form').submit(function (e) {
         $("#review-form .error").text(err.responseJSON.errors);
     });
 });
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

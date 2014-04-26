@@ -1,3 +1,4 @@
+var baseUrl = "http://d-api.herokuapp.com/";
 //accounts.js
 window.fbAsyncInit = function() {
   FB.init({
