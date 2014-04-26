@@ -167,10 +167,10 @@ a {
   }
 
   #pac-input {
-
     background-color: #fff;
     padding: 0 11px 0 13px;
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     font-family: Roboto;
     font-size: 15px;
     font-weight: 300;
@@ -178,6 +178,12 @@ a {
     position: absolute;
     left: 5%;
     top: 10px;
+  }
+
+  @media (max-width: 600px) {
+  	#pac-input {
+  		
+  	}
   }
 
   #pac-input:focus {
@@ -206,7 +212,6 @@ a {
   }
   #target {
     width: 345px;
-    
   }
 
   .account-login-button {
