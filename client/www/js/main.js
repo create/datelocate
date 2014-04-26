@@ -144,7 +144,7 @@ function closePanels() {
 
 // gets all bathrooms near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {
-    $.get(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
+    getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
         function (data, status) {
             var marker;
             for (var i = 0; i < data.dates.length; i++) {
@@ -217,7 +217,7 @@ function getReq(url, success) {
     return $.ajax({
         url: url,
         type: "GET",
-        beforeSend: function(xhr){xhr.setRequestHeader('access', window.localStorage.token)},
+        beforeSend: function(xhr){xhr.setRequestHeader('access', window.localStorage.userid)},
         success: success
     });
 }
@@ -226,7 +226,7 @@ function postReq(url, data, success) {
         url: url,
         type: "POST",
         data: data,
-        beforeSend: function(xhr){xhr.setRequestHeader('access', window.localStorage.token)},
+        beforeSend: function(xhr){xhr.setRequestHeader('access', window.localStorage.userid)},
         success: success
     });
 }
@@ -292,12 +292,3 @@ function confirmPopup(event) {
 
 
 
-function tryLogin(err) {
-    if (err.status == 401) {
-        $.get(baseUrl+"validatetoken/"+window.localStorage.token, function(res) {
-            console.log("signin successful");
-        }).fail(function(err) {
-            window.location.replace('index.html');
-        });
-    }
-}
