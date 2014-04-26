@@ -45,26 +45,26 @@
             <div id="map-page" data-role="page">
             
                 <div id="map_canvas"><div class="toast">Please allow date finder to use your location.</div></div>
+
+
                 <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28px" width="28px" src="img/add.png" alt="add"></div>
-                    <a href="#account-page"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" ></div></a>
-            
-            <div id="account-page" data-role="page">
-                <div data-role="header">
-                    <h2>Profile</h2>
-                    <ul>
-                        <h3>Date History</h3>
-                        <h3>Rep <span id="rep"></span></h3>
-                        <h3>Friends dates</h3>
-                    </ul>
-                    
-                </div>
-                <div>
-                </div>
+                <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" ></div></a>
+                <div id="account-panel" data-role="panel" data-position="left" data-display="push">
+                <h2>Profile</h2>
+                <ul>
+                    <h3>Date History</h3>
+                    <h3>Rep <span id="rep">?</span></h3>
+                    <h3>Friends dates</h3>
+                </ul>
+                
             </div>
+
             </div>
             
             
-        </div>
+            
+            
+        </datesiv>
 
         <script type="text/javascript"
           src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&sensor=true"></script>
