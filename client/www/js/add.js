@@ -57,7 +57,7 @@ function fillNamePlaces() {
                     curResult.geometry.location.lat(), curResult.geometry.location.lng()) * 1000;
                 if (distance <= MAX_PLACE_DISTANCE) {
                     fieldset.append($('<label><input type="radio" onchange="pickPlace(this)" ref="'+ref+'"bid="'+id+'" name="place" value="'+results[i].name+'">' + results[i].name + '</label>'));
-                    numadded = numadded + 1;
+                    numadded = numadded + 1
                 }
             }
             if (numadded > 0) {
@@ -129,7 +129,8 @@ $('#add-form').submit(function (e) {
     var form = $("#add-form");
     var date_name = $('#add-name', form).val();
     var location = $('#add-location', form).val();
-    var price = $('input[name="price"]').val();
+    var price = $('input[name="price"]:checked', form).val();
+    console.log("price: " + price);
     var materials = $('#add-materials').val();
     var review = $('#add-review-text', form).val();
     if (!addMarker) { // make sure user entered the page by selecting a marker

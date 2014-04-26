@@ -28,7 +28,7 @@ $(document).ajaxStop(function() {
     $.mobile.loading('hide');
 });
 
-// Show the main map with user's position and bathrooms close to the user
+// Show the main map with user's position and dates close to the user
 //$(document).on('pageinit', '#landing-page', function() {
 $(document).ready(function() {
     $('#continue-button').click(function() {
@@ -61,6 +61,7 @@ $(document).ready(function() {
         
         $('#header').panel("close");
     });
+    $('img', $('#dpicture')).load(function() {console.log("onload"); $('#dpicture').fadeTo(300,1);})
     
 });
 $(document).bind('pagechange', '#main-app', function (event, data) {
@@ -242,7 +243,6 @@ function onDetailsLoad() {
     $('.error', list.parent()).text(""); // clear errors
     $('#dplace').hide();
     $('#at').hide();
-    $('#dpicture').hide();
     $('#dates-details-page').panel("open");
     getReq(baseUrl + "getdate/" + currentDID, function (res) {
         $('#dname', list).text(res.date.name);
@@ -269,7 +269,7 @@ function onDetailsLoad() {
             $('#dmaterials', list).text("Nothing to bring!");
         }
         $('#dreview', list).text(res.date.review);
-        $('#dpicture').empty();
+        
         console.log(res);
         if (res.date.placesRef) {
             placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
@@ -282,8 +282,16 @@ function onDetailsLoad() {
                     //$('#bplace').slideDown().empty().append($('<a target="_blank" href="'+res.url+'">'+res.name+'</a>'));
                     if (res.photos && res.photos.length > 0) {
                         console.log("Found photo");
-                        $('#dpicture', list).show().empty().append($('<a target="_blank" href="'+res.url+'"><img style="width: 100%; height: auto;" src='+res.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500})+'alt="photo"></a>'));
-                        list.listview("refresh");
+                        var picture = $('#dpicture', list);
+                        //$('#dpicture', list).fadeOut(200).empty().append($('<a target="_blank" href="'+res.url+'"><img style="width: 100%; height: auto;" src='+res.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500})+'alt="photo"></a>')).fadeIn(200);
+                        picture.fadeTo(300,0.30, function() {
+                          picture.attr("href", res.url);
+                          $('#dcont', list).fadeIn(200);
+                          $('img', picture).attr("src", res.photos[0].getUrl({'maxWidth': 305, 'maxHeight': 500}));
+                        });
+                        //list.listview("refresh");
+                    } else {
+                        $('#dcont', list).fadeOut(200);
                     }
                 } else {
                     console.log("error details");
@@ -291,9 +299,10 @@ function onDetailsLoad() {
             });
         } else {
             console.log("no places ref");
+            $('#dpicture').fadeOut();
         }
     }).fail(function(err) {
-        console.log("get bathroom error");
+        console.log("get date error");
         $(".error", list.parent()).text(err.responseJSON.errors);
     });
     save('reviews', null);
@@ -426,17 +435,33 @@ var getReviews = function() {
             for (var i = 0; i < Math.min(reviews.length, NUM_REVIEWS); i++) {
                 appendReview(list, reviews[i]);
             }
+            list.listview("refresh");
             if (reviews.length > NUM_REVIEWS) {
                 moreReviewsBtn.show();
                 window.localStorage.reviews = JSON.stringify(reviews);
             } else {
                 moreReviewsBtn.hide();
             }
+
         }
     }).fail(function (err) {
         $(".error", list.parent()).text(err.responseJSON.errors);
     })
 }
+
+// Handler for clicking the more button to show more reviews
+$('#more-reviews').click(function() {
+    var reviews = JSON.parse(window.localStorage.reviews);
+    var list = $('#bdetailslist');
+    if (reviews) {
+        for (var i = NUM_REVIEWS; i < reviews.length; i++) {
+            appendReview(list, reviews[i]);
+        }
+    }
+    list.listview("refresh");
+    $('#more-reviews').hide();
+});
+
 function appendReview(list, myReview) {
     $('<li class="review"><q>'+myReview.review+'</q></li>').hide().appendTo(list).slideDown();
 }

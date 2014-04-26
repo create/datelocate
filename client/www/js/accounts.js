@@ -83,12 +83,28 @@ function findName() {
 			$('#not-logged-in').css("display", "none");
 			$('#logged-in').css("display", "default");
 			$('#username').html("Welcome " + response.name);
+			//get array of date id's 
+			//for each one, add it to the div in a similar fashion to the reviews
+			getReq(baseUrl+"account", function(data, status) {
+				console.log(data);
+				var datesArr = data.user.voted_dates;
+				for (var i = 0; i < datesArr.length; i++) {
+					getReq(baseUrl+"getdate/" + datesArr[i], function(data, status) {
+						console.log(data.name);
+					});
+					$('#dates-list').append($('<div class="date-item">' + datesArr[i] + '</div>'));
+				}
+
+				$('#score-number').html(datesArr.length + 1);
+			}).fail(function(err) {
+		        console.log("get account error");
+		        $(".error", list.parent()).text(err.responseJSON.errors);
+		    });
 		} else {
 			$('#logged-in').css("display", "none");
 			$('#not-logged-in').css("display", "default");
 			$('#username').html("Not logged in");
 		}
-    
     
 	});
 }
