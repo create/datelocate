@@ -301,6 +301,7 @@ function toast(message) {
     $('#toast').text(message);
     $('#toast').fadeIn();
     setTimeout(function(){$('#toast').fadeOut("slow")}, 2500);
+    findName();
 };
 
 

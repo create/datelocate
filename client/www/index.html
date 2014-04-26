@@ -53,19 +53,27 @@
                 <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" onclick="findName()"></div></a>
                     
                 <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
-                    <h2 id="username">Profile</h2>
+                    <div id="not-logged-in" style="display: none;">
+                        Uh oh! It looks like you're not logged in!
+                        Log in now to help a bro out with a date.
+                        <div><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
+                    </div>
 
-                    <a href="#history-page">
-                        <div class="account-option">
-                            <h3>Date History</h3>
-                        </div>
-                    </a>
-                    <a href="#friends-page">
-                        <div class="account-option">
-                            <h3>Your Friends Dates</h3>
-                        </div>
-                    </a>
-                    <h3 id="rep">Rep <span>?</span></h3>
+                    <div id="logged-in" style="display: none;">
+                        <h2 id="username">Profile</h2>
+
+                        <a href="#history-page">
+                            <div class="account-option">
+                                <h3>Date History</h3>
+                            </div>
+                        </a>
+                        <a href="#friends-page">
+                            <div class="account-option">
+                                <h3>Your Friends Dates</h3>
+                            </div>
+                        </a>
+                        <h3 id="rep">Rep <span>?</span></h3>
+                    </div>
                     
                 </div>
                 <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="add-details-page">
