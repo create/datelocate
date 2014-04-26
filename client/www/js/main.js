@@ -30,6 +30,11 @@ $(document).ajaxStop(function() {
 // Show the main map with user's position and bathrooms close to the user
 //$(document).on('pageinit', '#landing-page', function() {
 $(document).ready(function() {
+    $('#continue-button').click(function() {
+        setTimeout(function(){
+            navigator.geolocation.getCurrentPosition(centerMap);
+        }, 500);
+    })
     console.log("page loaded");
     if (window.localStorage.userid) {
         // say already logged in
@@ -151,28 +156,28 @@ var showOnMap = function(position) {
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(searchBox, 'places_changed', function() {
-    var places = searchBox.getPlaces();
-    // for (var i = 0, marker; marker = markers[i]; i++) {
-    //     marker.setMap(null);
-    // }
+        var places = searchBox.getPlaces();
+        // for (var i = 0, marker; marker = markers[i]; i++) {
+        //     marker.setMap(null);
+        // }
 
-    // For each place, get the icon, place name, and location.
-    //markers = [];
-    var bounds = new google.maps.LatLngBounds();
+        // For each place, get the icon, place name, and location.
+        //markers = [];
+        var bounds = new google.maps.LatLngBounds();
 
-    for (var i = 0, place; place = places[i]; i++) {
-      var image = {
-        // url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-      map.panTo(place.geometry.location);
-        var zoom = map.getZoom();
-        setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
-      bounds.extend(place.geometry.location);
-    }
+        for (var i = 0, place; place = places[i]; i++) {
+          var image = {
+            // url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+          map.panTo(place.geometry.location);
+            var zoom = map.getZoom();
+            setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
+          bounds.extend(place.geometry.location);
+        }
 
     
     });

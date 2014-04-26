@@ -18,7 +18,7 @@ window.fbAsyncInit = function() {
       // The response object is returned with a status field that lets the app know the current
       // login status of the person. In this case, we're handling the situation where they 
       // have logged in to the app.
-      window.top.location = "http://datefinder.herokuapp.com/#map-page";
+      
       testAPI();
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
@@ -63,11 +63,13 @@ window.fbAsyncInit = function() {
         window.localStorage.userid = response.id;
         $.post(baseUrl+"signin", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signin success");
+            redirectOnLogin();
         })
         .fail(function(err) {
             console.log(err.responseJSON.errors);
             $.post(baseUrl+"signup", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signup success");
+            redirectOnLogin();
           }).fail(function(err) {
             console.log(err.responseJSON.errors);
           });
@@ -89,4 +91,10 @@ function findName() {
     
     
 	});
+}
+function redirectOnLogin() {
+	$.mobile.changePage('#map-page', {allowSamePageTransition: true, transition: "slideup"});
+	setTimeout(function(){
+            navigator.geolocation.getCurrentPosition(centerMap);
+        }, 500);
 }
