@@ -72,7 +72,12 @@ window.fbAsyncInit = function() {
   }
 function findName() {
 	FB.api('/me', function(response) {
-    $('#username').html("Welcome " + response.name);
+		if (response.status === connected) {
+			$('#username').html("Welcome " + response.name);
+		} else {
+			$('#username').html("Wrong");
+		}
+    
     console.log(response.id);
 	});
 }
