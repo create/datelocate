@@ -62,6 +62,7 @@ window.fbAsyncInit = function() {
 function findName() {
 	FB.api('/me', function(response) {
     $('#username').html("Welcome, " + response.name + "!");
+    $('#userpic').src(response.picture);
     console.log(response.id);
 	});
 }
