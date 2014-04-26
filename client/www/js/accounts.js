@@ -71,18 +71,14 @@ window.fbAsyncInit = function() {
     });
   }
 function findName() {
+	console.log("Success");
 	FB.api('/me', function(response) {
-		FB.Event.subscribe('auth.authResponseChange', function(response) {
-    // Here we specify what we do with the response anytime this event occurs. 
-    if (response.status === 'connected') {
-    	$('#username').html("Welcome " + response.name);
-    	console.log("YES")
-    } else {
-    	$('#username').html("Wrong");
-    	console.log("NO")
-    }
-  	});
+		if (response.status != undefined) {
+			$('#username').html("Welcome " + response.name);
+		} else {
+			$('#username').html("Wrong");
+		}
     
-    console.log(response.id);
+    
 	});
 }
