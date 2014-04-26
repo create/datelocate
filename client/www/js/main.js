@@ -48,6 +48,10 @@ $(document).ready(function() {
             }
         }
     });
+     $('#add-page-link').click(function() {
+        toast("Tap to add...");
+        $('#header').panel("close");
+    });
     
 });
 $(document).bind('pagechange', '#main-app', function (event, data) {
