@@ -145,7 +145,8 @@ $('#add-form').submit(function (e) {
         postData.placesID = addPlace.id;
         postData.placesRef = addPlace.ref;
     }
-    //console.log(postData);
+
+    console.log(postData);
     if (true) { // TODO validate input
         postReq(baseUrl+"adddate", postData, function(res) {
             console.log("adddate success");

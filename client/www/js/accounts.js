@@ -57,18 +57,22 @@ window.fbAsyncInit = function() {
     FB.api('/me', function(response) {
         console.log("fb id: "+response.id);
         window.localStorage.userid = response.id;
-        $.post(baseUrl+"signup", {id: window.localStorage.userid}, function(res) {
-            console.log("signup success");
+        $.post(baseUrl+"signin", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
+            console.log("signin success");
         })
         .fail(function(err) {
-            console.log(err);
+            console.log(err.responseJSON.errors);
+            $.post(baseUrl+"signup", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
+            console.log("signup success");
+          }).fail(function(err) {
+            console.log(err.responseJSON.errors);
+          });
         });
     });
   }
 function findName() {
 	FB.api('/me', function(response) {
-    $('#username').html("Welcome, " + response.name + "!");
-    $('#userpic').src(response.picture);
+    $('#username').html("Welcome " + response.name);
     console.log(response.id);
 	});
 }
