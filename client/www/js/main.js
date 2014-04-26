@@ -19,12 +19,10 @@ $(document).bind("mobileinit", function() {
 
 
 $(document).ajaxStop(function() {
-    // console.log("in stop animation");
     $.mobile.loading('hide');
 });
 
 // Show the main map with user's position and dates close to the user
-//$(document).on('pageinit', '#landing-page', function() {
 $(document).ready(function() {
     setTimeout(function() {$('#loginbox').slideDown(); $(document).ajaxStart(function() {
     // console.log("in loading animation");
@@ -125,7 +123,7 @@ var showOnMap = function(position) {
         map: map,
         icon: {path: google.maps.SymbolPath.CIRCLE,
             fillColor: '#33CCFF',
-            fillOpacity: 0.8,
+            fillOpacity: 0.9,
             strokeWeight: 2,
             strokeColor: 'silver',
             scale: 8}
@@ -394,10 +392,7 @@ function toast(message) {
 };
 
 
-
-
-
-//infowindow fix:
+//infowindow POI fix:
 function fixInfoWindow() {
     //If it is called for map option, we hide InfoWindow, if "noSupress" option isnt true.
     var set = google.maps.InfoWindow.prototype.set;
@@ -451,7 +446,6 @@ var getReviews = function() {
             } else {
                 moreReviewsBtn.hide();
             }
-
         }
     }).fail(function (err) {
         $(".error", list.parent()).text(err.responseJSON.errors);
