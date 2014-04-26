@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Date Finder</title>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <!-- theme -->
+
+        <!-- DEFAULT THEME -->
+        <link rel="stylesheet" type="text/css" href="css/lib/jquery.mobile-1.4.2.min.css" />
+        <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <!-- /theme -->
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/cards.css" />
+        <link rel="stylesheet" type="text/css" href="css/dabblet.css" />
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:500,400,300" rel="stylesheet" type="text/css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/nav.css" /> -->
+        <link href="//fonts.googleapis.com/css?family=Roboto:100italic,100,300italic,300,400italic,400,500italic,500,700italic,700,900italic,900" rel="stylesheet" type="text/css">
+
+    </head>
+    <body>
+        <div id="loading" class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span></div>
+        <div id="toast"></div>
+        <div id="content" style="display: none;">
+            <div id="main-app" class="app" data-role="page">
+                <div class="contents" data-role="tabs">
+                    <div class="panel left" id="header" data-display="overlay" data-dismissible="false" data-role="panel" data-position="left">
+                        <!-- <div data-role="navbar" data-type="vertical"> -->
+                            <ul data-role="listview" class="ui-nodisc-icon ui-alt-icon">
+                                <li class="find" data-icon="navigation"><a id="map-page-link" href="#map-page">Bathroom Finder</a></li>
+                                <li class="add" data-icon="plus"><a id="add-page-link" href="#map-page">Add Bathroom</a></li>
+                                <li class="me" data-icon="user"><a id="account-page-link" href="#account-page">Account</a></li>
+                                <li class="me" data-icon="info"><a id="about-page-link" href="#account-page">About</a></li>
+                            </ul>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&sensor=true"></script>
+        <script type="text/javascript" src="js/cordova.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.mobile-1.4.2.min.js"></script>
+        <script type="text/javascript" src="js/lib/miniset.js"></script>
+        <script type="text/javascript" src="js/lib/countUp.min.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
+    </body>
+</html>
