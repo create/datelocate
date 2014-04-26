@@ -4,6 +4,10 @@
 body {
   font-family: 'Roboto', sans-serif;vertical-align:middle;
   font-weight: 200;
+  margin: 0px;
+}
+.ui-mobile body {
+  height: 100%;
 }
 strong {
   font-weight:300;
@@ -12,6 +16,28 @@ strong {
 .ui-listview>.ui-li-static {
   white-space: normal;
 }
+#map-page {
+  min-height:100vh !important;
+}
+.panel {
+  overflow: auto;
+  min-height: 100vh;
+  height: 100vh;
+}
+/*
+.ui-panel-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    
+    
+}
+.ui-panel {
+  min-height: 100vh;
+}*/
+
 #landing-background-image {
   position: fixed;
   left: 0;
@@ -153,6 +179,13 @@ a {
 	margin-bottom: 0px;
 	right: 10px;
 }
+/*.panel {
+  height: 100vh;
+  min-height: 100vh;
+  overflow-y: scroll;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}*/
 
   .controls {
     margin-top: 16px;
