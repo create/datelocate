@@ -45,3 +45,13 @@
 	color: black;
 	text-shadow: none;
 }
+#map-page {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	bottom: 0px;
+}
+#map_canvas {
+	height: 100%;
+	width: 100%;
+}

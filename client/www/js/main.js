@@ -28,7 +28,7 @@ $(document).ajaxStop(function() {
 });
 
 // Show the main map with user's position and bathrooms close to the user
-$(document).on('pageinit', '#main-app', function() {
+$(document).on('pageinit', '#landing-page', function() {
     console.log("page loaded");
     $('#loading').hide();
     $('#content').show();
