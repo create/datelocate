@@ -30,6 +30,11 @@ $(document).ajaxStop(function() {
 // Show the main map with user's position and bathrooms close to the user
 //$(document).on('pageinit', '#landing-page', function() {
 $(document).ready(function() {
+    $('#continue-button').click(function() {
+        setTimeout(function(){
+            navigator.geolocation.getCurrentPosition(centerMap);
+        }, 500);
+    })
     console.log("page loaded");
     if (window.localStorage.userid) {
         // say already logged in
@@ -55,6 +60,7 @@ $(document).ready(function() {
         
         $('#header').panel("close");
     });
+    $('img', $('#dpicture')).load(function() {console.log("onload"); $('#dpicture').fadeTo(300,1);})
     
 });
 $(document).bind('pagechange', '#main-app', function (event, data) {
@@ -151,28 +157,28 @@ var showOnMap = function(position) {
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(searchBox, 'places_changed', function() {
-    var places = searchBox.getPlaces();
-    // for (var i = 0, marker; marker = markers[i]; i++) {
-    //     marker.setMap(null);
-    // }
+        var places = searchBox.getPlaces();
+        // for (var i = 0, marker; marker = markers[i]; i++) {
+        //     marker.setMap(null);
+        // }
 
-    // For each place, get the icon, place name, and location.
-    //markers = [];
-    var bounds = new google.maps.LatLngBounds();
+        // For each place, get the icon, place name, and location.
+        //markers = [];
+        var bounds = new google.maps.LatLngBounds();
 
-    for (var i = 0, place; place = places[i]; i++) {
-      var image = {
-        // url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-      map.panTo(place.geometry.location);
-        var zoom = map.getZoom();
-        setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
-      bounds.extend(place.geometry.location);
-    }
+        for (var i = 0, place; place = places[i]; i++) {
+          var image = {
+            // url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+          map.panTo(place.geometry.location);
+            var zoom = map.getZoom();
+            setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
+          bounds.extend(place.geometry.location);
+        }
 
     
     });
@@ -233,7 +239,6 @@ function onDetailsLoad() {
     $('.error', list.parent()).text(""); // clear errors
     $('#dplace').hide();
     $('#at').hide();
-    $('#dpicture').hide();
     $('#dates-details-page').panel("open");
     getReq(baseUrl + "getdate/" + currentDID, function (res) {
         $('#dname', list).text(res.date.name);
@@ -260,7 +265,7 @@ function onDetailsLoad() {
             $('#dmaterials', list).text("Nothing to bring!");
         }
         $('#dreview', list).text(res.date.review);
-        $('#dpicture').empty();
+        
         console.log(res);
         if (res.date.placesRef) {
             placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
@@ -273,8 +278,16 @@ function onDetailsLoad() {
                     //$('#bplace').slideDown().empty().append($('<a target="_blank" href="'+res.url+'">'+res.name+'</a>'));
                     if (res.photos && res.photos.length > 0) {
                         console.log("Found photo");
-                        $('#dpicture', list).show().empty().append($('<a target="_blank" href="'+res.url+'"><img style="width: 100%; height: auto;" src='+res.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500})+'alt="photo"></a>'));
-                        list.listview("refresh");
+                        var picture = $('#dpicture', list);
+                        //$('#dpicture', list).fadeOut(200).empty().append($('<a target="_blank" href="'+res.url+'"><img style="width: 100%; height: auto;" src='+res.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500})+'alt="photo"></a>')).fadeIn(200);
+                        picture.fadeTo(300,0.30, function() {
+                          picture.attr("href", res.url);
+                          $('#dcont', list).fadeIn(200);
+                          $('img', picture).attr("src", res.photos[0].getUrl({'maxWidth': 305, 'maxHeight': 500}));
+                        });
+                        //list.listview("refresh");
+                    } else {
+                        $('#dcont', list).fadeOut(200);
                     }
                 } else {
                     console.log("error details");
@@ -282,6 +295,7 @@ function onDetailsLoad() {
             });
         } else {
             console.log("no places ref");
+            $('#dpicture').fadeOut();
         }
     }).fail(function(err) {
         console.log("get bathroom error");

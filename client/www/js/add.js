@@ -57,7 +57,7 @@ function fillNamePlaces() {
                     curResult.geometry.location.lat(), curResult.geometry.location.lng()) * 1000;
                 if (distance <= MAX_PLACE_DISTANCE) {
                     fieldset.append($('<label><input type="radio" onchange="pickPlace(this)" ref="'+ref+'"bid="'+id+'" name="place" value="'+results[i].name+'">' + results[i].name + '</label>'));
-                    numadded = numadded + 1;
+                    numadded = numadded + 1
                 }
             }
             if (numadded > 0) {

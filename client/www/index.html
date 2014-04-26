@@ -33,7 +33,7 @@
                     <h2>Bros helping bros...</h2>
                     <a href="#map-page">
                         <div class="account-login-button"><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button>
-                            <a href="#map-page" data-transition="slide-up">
+                            <a href="#map-page" id="continue-button" data-transition="slideup">
                                 <div id="continue">
                                     <div id="continue-text">Continue without logging in</div>
                                 </div>
@@ -53,8 +53,8 @@
                     
                 <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
                     <div id="not-logged-in" style="display: none;">
-                        Uh oh! It looks like you're not logged in!
-                        Log in now to help a bro out with a date.
+                        <h1 class="title">Uh oh! It looks like you're not logged in!</h1>
+                        <h2 class="subtitle">Log in now to help a bro out with a date.</h2>
 
                         <div class="account-login-button"><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
 
@@ -103,13 +103,13 @@
                     <ul data-role="listview" id="detailslist">
                         <!-- <li data-role="list-divider">Name</li> -->
                         <li class="title"><strong><span id="dname"></span></strong><span style="display: none;" id="at"> at </span><span id="bplace"></span><span id="dprice"></span></li>
-                        <div id="dpicture" data-role="none"></div>
+                        <div data-role="none" id="dcont" style="display: none; background-color: #111111;"><a target="_blank" id="dpicture" href=""><img style="width: 100%; " src=''alt="photo"></a></div>
                         <!-- <li data-role="list-divider">Location</li>
                         <li id="dlocation"></li> -->
                         <!-- <li data-role="list-divider">Price</li>
                         <li id="dprice"></li> -->
 
-                        <li data-role="list-divider">Things to bring</li>
+                        <li data-role="list-divider" style="margin-top: -4px;">Things to bring</li>
                         <li id="dmaterials"></li>
                         <li data-role="list-divider">What to do</li>
                         <li id="dreview"></li>
