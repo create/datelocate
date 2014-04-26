@@ -57,6 +57,12 @@ window.fbAsyncInit = function() {
     FB.api('/me', function(response) {
         console.log("fb id: "+response.id);
         window.localStorage.userid = response.id;
+        $.post(baseUrl+"signup", {id: window.localStorage.userid}, function(res) {
+            console.log("signup success");
+        })
+        .fail(function(err) {
+            console.log(err);
+        });
     });
   }
 function findName() {

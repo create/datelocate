@@ -31,7 +31,9 @@ $(document).ajaxStop(function() {
 //$(document).on('pageinit', '#landing-page', function() {
 $(document).ready(function() {
     console.log("page loaded");
-    
+    if (window.localStorage.userid) {
+        // say already logged in
+    }
     $('#loading').hide();
     $('#content').show();
     DIDSet = new MiniSet();
