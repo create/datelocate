@@ -49,9 +49,10 @@
 
                 <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28px" width="28px" src="img/add.png" alt="add"></div>
                 <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" ></div></a>
-
-                <div id="account-panel" data-role="panel" data-position="left" data-display="push">
+                    
+                <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
                     <h2 id="username">Profile</h2>
+
                     <a href="#history-page">
                         <div class="account-option">
                             <h3>Date History</h3>
@@ -79,7 +80,6 @@
                             <br>
                             <textarea type="text" placeholder="Things to bring" name="materials" id="add-materials"></textarea>
                            
-                            
                             <textarea required="required" type="text" placeholder="Insider tips/Review" name="review" id="add-review-text"></textarea>
                             <div class="error"></div>
                             <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
@@ -87,19 +87,16 @@
                     </form>
                 </div>
 
-              </div>
+            </div>
 
-              <div id="history-page" data-role="page">     
-                  Date history!
-              </div>
-              <div id="friends-page" data-role="page">     
-                  Friends Dates!
-              </div>
-
-      
+            <div id="history-page" data-role="page">     
+                Date history!
+            </div>
+            <div id="friends-page" data-role="page">     
+                Friends Dates!
+            </div>
+        </div>
                 
-          
-
         <script type="text/javascript"
           src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&sensor=true"></script>
         <script type="text/javascript" src="js/cordova.js"></script>
