@@ -185,3 +185,9 @@ a {
   #target {
     width: 345px;
   }
+
+  #account-login-button {
+  	margin-top: 50px;
+  	width: 50%;
+  	margin-left: 25%;
+  }

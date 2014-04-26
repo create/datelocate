@@ -56,7 +56,7 @@
                     <div id="not-logged-in" style="display: none;">
                         Uh oh! It looks like you're not logged in!
                         Log in now to help a bro out with a date.
-                        <div><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
+                        <div id="account-login-button"><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
                     </div>
 
                     <div id="logged-in" style="display: none;">
@@ -95,6 +95,58 @@
                             <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
                         </div>  
                     </form>
+                </div>
+
+                <!-- The date details -->
+                <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="dates-details-page">
+                    <ul data-role="listview" id="detailslist">
+                        <li id="dname"></li>
+                        <li id="dlocation"></li>
+                        <li id="dprice"></li>
+                        <li id="dmaterials"></li>
+                        <li id="dreview"></li>
+                        <li id="dpicture"></li>
+                        <li data-role="listdivider">What fellow bros have to say...</li>
+                        <!-- Reviews inserted here -->
+                        <li class="review"><div class="card">
+                        <p>No reviews... yet!</p>
+                        </div></li>
+                    </ul>
+                    <div class="error"></div>
+                    <a href="#" data-role="button" style='display: none;' id="more-reviews" data-icon="arrow-d">More</a>
+                    <br>
+                    <form id="review-form">
+                        <fieldset data-role="controlgroup">
+                            <div class="ui-field-contain">
+                                <label for="clean">Clean:</label>
+                                <select name="clean" id="clean" data-role="slider">
+                                    <option value="off">No</option>
+                                    <option value="on">Yes</option>
+                                </select>
+                            </div>
+                            <div class="ui-field-contain">
+                                <label for="amenities">Amenities Stocked:</label>
+                                <select name="amenities" id="amenities" data-role="slider">
+                                    <option value="off">No</option>
+                                    <option value="on">Yes</option>
+                                </select>
+                            </div>
+                            <div class="ui-field-contain">
+                                <label for="nosmell">Smell:</label>
+                                <select name="nosmell" id="nosmell" data-role="slider">
+                                    <option value="off">No</option>
+                                    <option value="on">Yes</option>
+                                </select>
+                            </div>
+                            <!-- <label><input type="checkbox" name="clean">Clean</label>
+                            <label><input type="checkbox" name="amenities">Amenities Stocked</label>
+                            <label><input type="checkbox" name="nosmell">No Smell</label> -->
+                        </fieldset>
+                        <textarea required="required" type="text" placeholder="Comments" name="review" id="add-review-text"></textarea>
+                        <div class="error"></div>
+                        <input type="submit" value="Add Review" id="add-review-submit" data-icon="plus">
+                    </form>
+                        
                 </div>
 
             </div>
