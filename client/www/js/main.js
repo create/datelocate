@@ -144,7 +144,32 @@ function closePanels() {
 
 // gets all bathrooms near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {
-    
+    $.get(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
+        function (data, status) {
+            var marker;
+            for (var i = 0; i < data.dates.length; i++) {
+                var current = data.dates[i];
+                var did = current._id;
+                var name = current.name;
+                console.log("creating date: "+name);
+                DIDSet.add(did);
+                var newBathPos = new google.maps.LatLng(lat, lng);
+                marker = new google.maps.Marker({
+                    position: newBathPos,
+                    map: map,
+                    title: name
+                    //animation: google.maps.Animation.DROP
+                });
+                var markerClickCallback = function (b_id) {
+                    return function() {
+                        currentBID = b_id;
+                        $('#header').panel("close");
+                        onDetailsLoad();
+                    };
+                };
+                google.maps.event.addListener(marker, 'click', markerClickCallback(b_id));
+            }
+        });
 };
 
 var NUM_REVIEWS = 3; // max number of reviews to show initially
@@ -152,6 +177,23 @@ var NUM_REVIEWS = 3; // max number of reviews to show initially
 // called when a marker is clicked. gets info and displays in panel
 function onDetailsLoad() {
     
+    // var current = data.dates[i];
+    // var name = current.name;
+    // var did = current._id;
+    // var lat = current.location.lat;
+    // var lng = current.location.lng;
+    // var rating = current.rating;
+    // var priceNum = current.price;
+    // var price;
+    // if (priceNum == 0) {
+    //     price = "Free";
+    // } else if (priceNum == 1) {
+    //     price = "$";
+    // } else if (priceNum == 2) {
+    //     price = "$$";
+    // } else if (priceNum == 3) {
+    //     price = "$$$";
+    // }
 };
 
 // called when user clicks on locate div

@@ -42,6 +42,7 @@ function fillNamePlaces() {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             console.log(results);
             var fieldset = $('<fieldset data-role="controlgroup" id="namesuggestions" ><h4>Is this...</h4></fieldset>');
+            var numadded = 0;
             for (var i = 0; i < Math.min(results.length, 3); i++) {
                 var curResult = results[i];
                 var ref = curResult.reference;
@@ -53,9 +54,12 @@ function fillNamePlaces() {
                     curResult.geometry.location.lat(), curResult.geometry.location.lng()) * 1000;
                 if (distance <= MAX_PLACE_DISTANCE) {
                     fieldset.append($('<label><input type="radio" onchange="pickPlace(this)" ref="'+ref+'"bid="'+id+'" name="place" value="'+results[i].name+'">' + results[i].name + '</label>'));
+                    numadded = numadded + 1;
                 }
             }
-            fieldset.hide().prependTo('#add-form div.ui-field-contain').trigger("create").slideDown();
+            if (numadded > 0) {
+                fieldset.hide().prependTo('#add-form div.ui-field-contain').trigger("create").slideDown();
+            }
             
         } else {
             console.log("error places " + status);
@@ -113,7 +117,7 @@ var addDeInit = function () {
 
 
 
-// Handler for submitting the bathroom details to add a bathroom
+// Handler for submitting the date details to add a date
 $('#add-form').submit(function (e) {
     e.stopImmediatePropagation();
     e.preventDefault();
@@ -131,7 +135,7 @@ $('#add-form').submit(function (e) {
     var postData = {
         "lat": addMarker.getPosition().lat(),
         "lng": addMarker.getPosition().lng(),
-        "date_name": bathroom_name,
+        "date_name":date_name,
         "location": location,
         "price": price,
         "materials": materials,
