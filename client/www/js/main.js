@@ -253,6 +253,7 @@ function onDetailsLoad() {
             price = "$$$";
         }
         $('#dprice', list).text(price);
+
         if (res.date.materials) {
             $('#dmaterials', list).text(res.date.materials);
         } else {
