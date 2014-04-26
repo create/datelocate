@@ -33,8 +33,15 @@
 	margin-left: 45%;
 }
 
-#arrow {
+#continue {
 	position: fixed;
 	bottom: 10px;
-	left: 45%;
+	width: 20%;
+	text-align: center;
+	left: 40%;
+	background-color:rgba(70,255,255,0.5);
+	padding: 10px;
+	border-radius: 5px;
+	color: black;
+	text-shadow: none;
 }
