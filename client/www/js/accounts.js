@@ -71,12 +71,13 @@ window.fbAsyncInit = function() {
     });
   }
 function findName() {
-	console.log("Success");
+	
 	FB.api('/me', function(response) {
-		if (response.status != undefined) {
+		console.log("Success" + response.name);
+		if (response.name != undefined) {
 			$('#username').html("Welcome " + response.name);
 		} else {
-			$('#username').html("Wrong");
+			$('#username').html("Not logged in");
 		}
     
     

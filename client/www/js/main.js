@@ -2,7 +2,7 @@ var baseUrl = "http://d-api.herokuapp.com/";
 var map;
 var DIDSet;
 var API_KEY = "AIzaSyA_3-FTpr5X41YFGR-xFHVZMbjcU-BJp1Q"; // google maps api key (jeff's acc)
-var currendDID;
+var currentDID;
 var addMarker; // marker for adding
 var addinfowindow;
 var placesService;
@@ -199,6 +199,8 @@ var getDates = function(LatLng, map) {
                 var current = data.dates[i];
                 var did = current._id;
                 var name = current.name;
+                var lat = current.location.lat;
+                var lng = current.location.lng;
                 console.log("creating date: "+name);
                 DIDSet.add(did);
                 var newBathPos = new google.maps.LatLng(lat, lng);
@@ -208,14 +210,14 @@ var getDates = function(LatLng, map) {
                     title: name
                     //animation: google.maps.Animation.DROP
                 });
-                var markerClickCallback = function (b_id) {
+                var markerClickCallback = function (did) {
                     return function() {
-                        currentBID = b_id;
+                        currentDID = did;
                         $('#header').panel("close");
                         onDetailsLoad();
                     };
                 };
-                google.maps.event.addListener(marker, 'click', markerClickCallback(b_id));
+                google.maps.event.addListener(marker, 'click', markerClickCallback(did));
             }
         });
 };
