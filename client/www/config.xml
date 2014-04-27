@@ -6,10 +6,10 @@
         id        = "com.datefinder"
         version   = "1.0.0">
 
-    <name>HelloWorld</name>
+    <name>DateFinder</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Date Finder is an app to help bros out with date ideas.
     </description>
 
     <author href="http://datefinder.herokuapp.com" email="jeffrey.pyke@gmail.com">

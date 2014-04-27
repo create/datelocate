@@ -24,25 +24,27 @@
                     <h1 class="hometitle center">Date Finder</h1>
                     <h2 class="homesubtitle center">Bros helping bros...</h2>
                     <a href="#map-page">
-                    <div id="loginbox" style="display:none;">
-                    <div id="fblogin" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div >
-                  </div>
-                        <div class="account-login-button">
-                            <a href="#map-page" id="continue-button" data-role="button" data-theme="b" data-icon="arrow-u" data-transition="slideup">
-                                Continue without logging in
-                            </a>
+                        <div id="loginbox" style="display:none;">
+                            <div id="fblogin" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div >
                         </div>
                     </a>
+                    <div class="account-login-button">
+                        <a href="#map-page" id="continue-button" data-role="button" data-theme="b" data-icon="arrow-d" data-transition="slideup">
+                            Continue without logging in
+                        </a>
+                    </div>
+                    
                     
                 </div>
                 <div id="landing-background-image"></div>
+                <img style="display: none;" alt="splash" src="img/splash.jpg">
             </div>
             <div id="map-page" data-role="page">
                 
                 <div id="map_canvas"><div class="toast">Please allow Date Finder to use your location.</div></div>
                 <input id="pac-input" class="controls" type="text" placeholder="Search City" data-role="none">
 
-                <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28px" width="28px" src="img/add.png" alt="add"></div>
+                <div id="addbutton" class="mapbutton" onclick="addInit()"><img height="28" width="28" src="img/add.png" alt="add"></div>
                 <div data-role="fieldcontain" id="filter">
                     <select name="select-choice-11" id="filter-dates" data-theme="e" data-mini="true" data-icon="arrow-d" data-inline="true" data-native-menu="false">
                         <option value="3">Filter</option>
@@ -52,7 +54,7 @@
                         <option value="3">$$$</option>
                     </select>
                 </div>
-                <a href="#account-panel"><div date-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28px" width="28px" src="img/panel.png" alt="panel" onclick="findName()"></div></a>
+                <a href="#account-panel"><div data-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28" width="28" src="img/panel.png" alt="panel" onclick="findName()"></div></a>
                     
                 <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
                     <div id="not-logged-in">
@@ -65,10 +67,11 @@
 
                     <div id="logged-in" style="display: none;">
                         <h1 class="title" id="username">Profile</h1>  
-                        <ul id="dates-list" data-role="listview">
-                            <h1 class="title"><strong><span id="reviewcount"></span></strong> bro points</h1>
-                            
-                            <h1 class="subtitle">Dates Completed</h1>
+                        
+                        <h1 class="title"><strong><span id="reviewcount"></span></strong> bro points</h1>
+                        <h1 class="subtitle">Dates Completed</h1>
+                        <ul id="dates-list" data-role="listview">    
+                        
                         </ul>
                         <a href="/" data-role="button" data-icon="delete">Log out</a>
                     </div>
@@ -86,9 +89,9 @@
                                 <label><input type="radio" name="price" value="2">$$ </label>
                                 <label><input type="radio" name="price" value="3">$$$</label>
                             </fieldset>
-                            <textarea type="text" placeholder="Things to bring" name="materials" id="add-materials"></textarea>
+                            <textarea placeholder="Things to bring" name="materials" id="add-materials"></textarea>
                            
-                            <textarea required="required" type="text" placeholder="Insider tips/Review" name="review" id="add-review-text"></textarea>
+                            <textarea required="required" placeholder="Insider tips/Review" name="review" id="add-review-text"></textarea>
                             <div class="error"></div>
                             <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
                         
