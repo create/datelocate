@@ -89,7 +89,7 @@ h4 {
 .hometitle, .homesubtitle {
   color: #FFF;
   font-size: 48px;
-  font-family: Open Sans;
+  font-family: Open Sans, sans-serif;
 }
 .hometitle {
   margin-top: 80px;
@@ -276,7 +276,7 @@ a {
   }
 
   .pac-container {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
 
   }
 
@@ -288,7 +288,7 @@ a {
   }
 
   #type-selector label {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 13px;
     font-weight: 300;
   }

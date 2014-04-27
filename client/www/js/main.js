@@ -205,6 +205,7 @@ function closePanels() {
 var getDates = function(LatLng, map) {
     getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
         function (data, status) {
+            console.log(data);
             var marker;
             for (var i = 0; i < data.dates.length; i++) {
                 var current = data.dates[i];
@@ -241,32 +242,36 @@ var getDates = function(LatLng, map) {
 
 var NUM_REVIEWS = 3; // max number of reviews to show initially
 
+// accepts 0, 1, 2, 3 and returns Free, $, $$, $$
+function priceToText(price) {
+    if (price == 0) {
+        return "Free";
+    } else if (price == 1) {
+        return "$";
+    } else if (price == 2) {
+        return "$$";
+    } else if (price == 3) {
+        return "$$$";
+    }
+}
 // called when a marker is clicked. gets info and displays in panel
 function onDetailsLoad() {
     var list = $('#detailslist');
-    $('.error', list.parent()).text(""); // clear errors
-    $('#dplace').hide();
-    $('#at').hide();
-    $('#dates-details-page').panel("open");
-    getReq(baseUrl + "getdate/" + currentDID, function (res) {
-        $('#dname', list).text(res.date.name);
-        if (res.date.location_name) {
-            $('#dlocation', list).text(res.date.location_name);
-        } else {
-            $('#dlocation', list).text("No specific location!");
-        }
-        var price = res.date.price;
-        if (price == 0) {
-            price = "Free";
-        } else if (price == 1) {
-            price = "$";
-        } else if (price == 2) {
-            price = "$$";
-        } else if (price == 3) {
-            price = "$$$";
-        }
-        $('#dprice', list).text(price);
+    var panel = $('#dates-details-page');
+    $('.error', panel).text(""); // clear errors
+    panel.panel("open");
 
+    getReq(baseUrl + "getdate/" + currentDID, function (res) {
+        $('#dname', panel).text(res.date.name);
+        if (res.date.location_name) {
+            $('#at', panel).show();
+            $('#dplace', panel).show().text(res.date.location_name);
+        } else {
+            $('#at', panel).hide();
+            $('#dplace', panel).hide();
+        }
+        var price = priceToText(res.date.price);
+        $('#dprice', list).text(price);
         if (res.date.materials) {
             $('#dmaterials', list).text(res.date.materials);
         } else {
@@ -281,7 +286,7 @@ function onDetailsLoad() {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     console.log("getDetails sucess");
                     $('#at').show();
-                    $('#bplace').show().text(res.name);
+                    $('#dplace').show().text(res.name);
                     // get picture
                     //$('#bplace').slideDown().empty().append($('<a target="_blank" href="'+res.url+'">'+res.name+'</a>'));
                     if (res.photos && res.photos.length > 0) {
