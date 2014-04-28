@@ -328,3 +328,7 @@ a {
     right: 10px;
     min-width: 70px;
   }
+  /*Fix to margin of display panel*/
+  .ui-panel-inner>.ui-listview {
+    margin-top: 0;
+  }

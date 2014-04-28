@@ -16,6 +16,11 @@ $(document).bind("mobileinit", function() {
     $.mobile.allowCrossDomainPages = true;
 });
 
+if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+    $('#accountbutton').css("bottom", "75px");
+    $('#addbutton').css("bottom", "75px");
+}
+
 
 
 $(document).ajaxStop(function() {
