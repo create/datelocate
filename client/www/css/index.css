@@ -73,7 +73,8 @@ strong {
 #dtitle {
   display: block;
   margin-bottom: 0.3em;
-  margin-left: 0.3em;
+  margin-left: 0.5em;
+  margin-right: 0.2em;
 }
 *.unselectable {
   -webkit-touch-callout: none;
