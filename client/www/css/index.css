@@ -112,12 +112,20 @@ h4 {
 @media (max-width: 500px) {
 	.hometitle {
 		font-size: 80px;
-		margin-top: 10px;
+		margin-top: 20px;
+    position: relative;
+    top: -40px;
+    line-height: 1;
 	}
 
 	.homesubtitle {
 		font-size: 36px;
+    position: relative;
+    top: -80px;
+    margin-bottom: -50px;
 	}
+
+
 }
 
 .subtitle {
@@ -190,10 +198,12 @@ h4 {
     display: inline-block;
 }
 #addbutton {
+    position: fixed;
     bottom: 16px;
     right: 16px;
 }
 #accountbutton {
+    position: fixed;
     bottom: 16px;
     left: -17px;
 }
