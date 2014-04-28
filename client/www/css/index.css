@@ -4,7 +4,8 @@
 body {
   font-family: 'Roboto', sans-serif;vertical-align:middle;
   font-weight: 200;
-  margin: 0px;
+  margin: 0;
+  padding: 0;
   height: 100%;
   background-color: #333;
 }
@@ -26,6 +27,37 @@ strong {
 .center {
   margin-left: auto;
   margin-right: auto;
+}
+div#details-menu {
+  width: 10px;
+  height: 0;
+  border-radius: 2px;
+  background-color: #e9e9e9;
+  border: 1px solid #eee;
+  padding-top: 10px;
+  overflow: hidden;
+  -webkit-transition: height 0.5s, width 0.5s; /* For Safari 3.1 to 6.0 */
+  transition: height 0.5s, width 0.5s;
+
+  text-align: center;
+  float: right;
+  margin-top: -5px;
+  margin-right: -5px;
+}
+div#details-menu:hover {
+  height: 46px;
+  width: 24px;
+  margin-left: 5px;
+}
+
+#details-menu img {
+  opacity: 0.7;
+  cursor: pointer;
+  height: 20px;
+  max-width: 20px;
+}
+#details-menu img:hover {
+  opacity: 1;
 }
 /*
 .ui-panel-inner {
@@ -234,7 +266,7 @@ h4 {
 }
 #map_canvas {
 	height: 100vh !important;
-	width: 100%vw !important;
+	width: 100vw !important;
 }
 
 .account-option {
