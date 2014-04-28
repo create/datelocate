@@ -17,8 +17,8 @@ $(document).bind("mobileinit", function() {
 });
 
 if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-    $('#accountbutton').css("bottom", "100px");
-    $('#addbutton').css("bottom", "100px");
+    $('#accountbutton').css("bottom", "75px");
+    $('#addbutton').css("bottom", "75px");
 }
 
 
@@ -276,7 +276,7 @@ function onDetailsLoad() {
             $('#dplace', panel).hide();
         }
         var price = priceToText(res.date.price);
-        $('#dprice', list).text(price);
+        $('#dprice', panel).text(price);
         if (res.date.materials) {
             $('#dmaterials', list).text(res.date.materials);
         } else {
