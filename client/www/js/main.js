@@ -34,7 +34,7 @@ $(document).ready(function() {
         setTimeout(function(){
             navigator.geolocation.getCurrentPosition(centerMap);
         }, 500);
-    })
+    });
     console.log("page loaded");
     if (window.localStorage.userid) {
         // say already logged in
@@ -260,18 +260,20 @@ function onDetailsLoad() {
     var panel = $('#dates-details-page');
     $('.error', panel).text(""); // clear errors
     panel.panel("open");
+    var currentDate = dates[currentDID];
 
     getReq(baseUrl + "getdate/" + currentDID, function (res) {
         $('#dname', panel).text(res.date.name);
         if (res.date.location_name) {
             $('#at', panel).show();
+            console.log("location name: " + res.date.location_name);
             $('#dplace', panel).show().text(res.date.location_name);
         } else {
             $('#at', panel).hide();
             $('#dplace', panel).hide();
         }
         var price = priceToText(res.date.price);
-        $('#dprice', list).text(price);
+        $('#dprice', panel).text(price);
         if (res.date.materials) {
             $('#dmaterials', list).text(res.date.materials);
         } else {
@@ -288,19 +290,16 @@ function onDetailsLoad() {
                     $('#at').show();
                     $('#dplace').show().text(res.name);
                     // get picture
-                    //$('#bplace').slideDown().empty().append($('<a target="_blank" href="'+res.url+'">'+res.name+'</a>'));
                     if (res.photos && res.photos.length > 0) {
                         console.log("Found photo");
-                        var picture = $('#dpicture', list);
-                        //$('#dpicture', list).fadeOut(200).empty().append($('<a target="_blank" href="'+res.url+'"><img style="width: 100%; height: auto;" src='+res.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500})+'alt="photo"></a>')).fadeIn(200);
+                        var picture = $('#dpicture', panel);
                         picture.fadeTo(300,0.30, function() {
-                          picture.attr("href", res.url);
-                          $('#dcont', list).fadeIn(200);
-                          $('img', picture).attr("src", res.photos[0].getUrl({'maxWidth': 305, 'maxHeight': 500}));
+                            picture.attr("href", res.url);
+                            $('#dcont', panel).fadeIn(200);
+                            $('img', picture).attr("src", res.photos[0].getUrl({'maxWidth': 305, 'maxHeight': 500}));
                         });
-                        //list.listview("refresh");
                     } else {
-                        $('#dcont', list).fadeOut(200);
+                        $('#dcont', panel).fadeOut(200);
                     }
                 } else {
                     console.log("error details");
@@ -312,7 +311,7 @@ function onDetailsLoad() {
         }
     }).fail(function(err) {
         console.log("get date error");
-        $(".error", list.parent()).text(err.responseJSON.errors);
+        $(".error", panel.parent()).text(err.responseJSON.errors);
     });
     save('reviews', null);
     getReviews();
@@ -395,7 +394,6 @@ function toast(message) {
     setTimeout(function(){$('#toast').fadeOut("slow")}, 3500);
     findName();
 };
-
 
 //infowindow POI fix:
 function fixInfoWindow() {

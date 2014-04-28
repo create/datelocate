@@ -64,6 +64,17 @@ strong {
 #landing-page {
   text-align: center;
 }
+#dcont {
+  margin-left: -1em;
+  margin-right: -1em;
+  clear: both;
+  margin-bottom: -0.8em;
+}
+#dtitle {
+  display: block;
+  margin-bottom: 0.3em;
+  margin-left: 0.3em;
+}
 *.unselectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -114,10 +125,14 @@ h4 {
 #dprice {
   float: right;
   color: #828282;
+  margin-bottom: 0.4em;
 }
 #dname {
   white-space: normal;
   margin-left: -.5em;
+}
+#dtitle {
+
 }
 .landing-content {
 	position: relative;
@@ -126,7 +141,10 @@ h4 {
 	margin-left: auto;
 	margin-right: auto;
 }
-
+#detailslist {
+  margin-top: 0.5em;
+  clear: both;
+}
 .mapbutton {
     width: 40px;
     height: 40px;
