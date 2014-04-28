@@ -17,8 +17,12 @@ $(document).bind("mobileinit", function() {
 });
 
 if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-    $('#accountbutton').css("bottom", "125px");
-    $('#addbutton').css("bottom", "125px");
+    $('.landing-content').css("padding-top", "0");
+    $('.landing-content').css("padding-top", "5px");
+    $('.homesubtitle').css("margin-top", "0");
+    $('.homesubtitle').css("padding-top", "0");
+    $('#accountbutton').css("bottom", "110px");
+    $('#addbutton').css("bottom", "110px");
 }
 
 
