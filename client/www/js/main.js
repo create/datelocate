@@ -16,17 +16,6 @@ $(document).bind("mobileinit", function() {
     $.mobile.allowCrossDomainPages = true;
 });
 
-if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-    $('.landing-content').css("padding-top", "0");
-    $('.landing-content').css("padding-top", "5px");
-    $('.homesubtitle').css("margin-top", "0");
-    $('.homesubtitle').css("padding-top", "0");
-    $('#accountbutton').css("bottom", "110px");
-    $('#addbutton').css("bottom", "110px");
-}
-
-
-
 $(document).ajaxStop(function() {
     $.mobile.loading('hide');
 });
