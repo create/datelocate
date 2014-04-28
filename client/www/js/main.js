@@ -16,13 +16,6 @@ $(document).bind("mobileinit", function() {
     $.mobile.allowCrossDomainPages = true;
 });
 
-if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-    $('#accountbutton').css("bottom", "75px");
-    $('#addbutton').css("bottom", "75px");
-}
-
-
-
 $(document).ajaxStop(function() {
     $.mobile.loading('hide');
 });
@@ -268,14 +261,16 @@ function onDetailsLoad() {
     var currentDate = dates[currentDID];
 
     getReq(baseUrl + "getdate/" + currentDID, function (res) {
+        var dplace = $('#dplace', panel);
+        var oldName = dplace.text();
         $('#dname', panel).text(res.date.name);
         if (res.date.location_name) {
             $('#at', panel).show();
             console.log("location name: " + res.date.location_name);
-            $('#dplace', panel).show().text(res.date.location_name);
+            dplace.show().text(res.date.location_name);
         } else {
             $('#at', panel).hide();
-            $('#dplace', panel).hide();
+            dplace.hide();
         }
         var price = priceToText(res.date.price);
         $('#dprice', panel).text(price);
@@ -286,25 +281,28 @@ function onDetailsLoad() {
         }
         $('#dreview', list).text(res.date.review);
         
-        console.log(res);
+        //console.log(res);
         if (res.date.placesRef) {
             placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
                 console.log(res);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     console.log("getDetails sucess");
-                    $('#at').show();
-                    $('#dplace').show().text(res.name);
-                    // get picture
-                    if (res.photos && res.photos.length > 0) {
-                        console.log("Found photo");
-                        var picture = $('#dpicture', panel);
-                        picture.fadeTo(300,0.30, function() {
-                            picture.attr("href", res.url);
-                            $('#dcont', panel).fadeIn(200);
-                            $('img', picture).attr("src", res.photos[0].getUrl({'maxWidth': 305, 'maxHeight': 500}));
-                        });
-                    } else {
-                        $('#dcont', panel).fadeOut(200);
+                    if (oldName != res.name) {
+                        $('#at', panel).show();
+                        dplace.show().text(res.name);
+                        // get picture
+                        if (res.photos && res.photos.length > 0) {
+                            console.log("Found photo");
+                            var picture = $('#dpicture', panel);
+                            var newUrl = res.photos[0].getUrl({'maxWidth': 305, 'maxHeight': 500});
+                            picture.fadeTo(300,0.30, function() {
+                                picture.attr("href", res.url);
+                                $('#dcont', panel).fadeIn(200);
+                                $('img', picture).attr("src", newUrl);
+                            });
+                        } else {
+                            $('#dcont', panel).fadeOut(200);
+                        }
                     }
                 } else {
                     console.log("error details");
