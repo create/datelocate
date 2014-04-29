@@ -169,11 +169,9 @@ var showOnMap = function(position) {
 
         getDates(myLatlng, map);
         if(navigator.userAgent.match('CriOS')) {
-            $('#accountbutton').css("bottom", "16px");
-            $('#addbutton').css("bottom", "16px");
             setTimeout(function(){ 
                 navigator.geolocation.getCurrentPosition(centerMap);
-            }, 1000);
+            }, 3000);
 
         }
 

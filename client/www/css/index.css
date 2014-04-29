@@ -248,12 +248,12 @@ h4 {
 #addbutton {
     position: fixed;
     bottom: 72px;
-    left: -17px;
+    left: 5px;
 }
 #accountbutton {
     position: fixed;
     bottom: 16px;
-    left: -17px;
+    left: 5px;
 }
 
 .mapbutton img {
