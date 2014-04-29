@@ -221,6 +221,7 @@ h4 {
 }
 #toast, .toast {
     color: #fff;
+    display: inline-block;
     display: none;
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
@@ -233,18 +234,16 @@ h4 {
     margin-right: auto;
     z-index: 100;
     text-align: center;
-    max-width: 145px;
+    max-width: 40%;
     padding: 5px;
     border-radius: 8px;
     background-color: #333;
     opacity: 0.7;
     text-shadow: none;
     font-style: italic;
+    
 }
-.toast {
-    max-width: 40%;
-    display: inline-block;
-}
+
 #addbutton {
     position: fixed;
     bottom: 72px;
@@ -339,7 +338,13 @@ a {
     -webkit-transition: height 0.5s, width 0.5s, padding-top 0.5s; /* For Safari 3.1 to 6.0 */
     transition: height 0.5s, width 0.5s, padding-top 0.5s;
   }
-
+  #pac-input:focus {
+    border-color: #4d90fe;
+    margin-left: -1px;
+    padding-left: 14px;  /* Regular padding-left + 1. */
+    width: 400px;
+    max-width: 420px;
+  }
   @media (max-width: 600px) {
   	#pac-input {
   		width: 50%;
@@ -349,13 +354,7 @@ a {
     }
   }
 
-  #pac-input:focus {
-    border-color: #4d90fe;
-    margin-left: -1px;
-    padding-left: 14px;  /* Regular padding-left + 1. */
-    width: 400px;
-    max-width: 420px;
-  }
+
 
   .pac-container {
     font-family: Roboto, sans-serif;
