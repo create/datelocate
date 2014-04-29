@@ -101,10 +101,7 @@
 
                 <!-- The date details -->
                 <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="dates-details-page">
-                    <div id="details-menu">
-                        <img src="img/link.png" title="Copy link to clipboard" alt="link">
-                        <img src="img/flag.png" title="Flag unbroworthy" alt="flag">
-                    </div>
+                    
 
                     <span id="dtitle" class="title"><strong><span id="dname"></span></strong><span style="display: none;" id="at"> at </span><span id="dplace"></span><span id="dprice"></span></span>
                     <div data-role="none" id="dcont" style="display: none; background-color: #111111;"><a target="_blank" id="dpicture" href=""><img style="width: 100%; " src=''alt="photo"></a></div>
@@ -126,6 +123,13 @@
                     <a href="#" data-role="button" style='display: none;' id="more-reviews" data-icon="arrow-d">More</a>
                     
                     <form id="review-form">
+                        <div id="details-menu">
+                            <input id="linktext" type="text" data-role="none">
+                            <img src="img/link.png" id="linkclick" title="Get link " alt="link">
+                            <div id="flagclick">
+                                <img src="img/flag.png" title="Flag unbroworthy" alt="flag">
+                            </div>
+                        </div>
                        <h1 class="subtitle">Your opinion</h1>
                         <textarea required="required" type="text" placeholder="What worked well on this date?" name="review" id="add-review-texta"></textarea>
                         <div class="error"></div>

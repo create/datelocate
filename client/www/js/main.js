@@ -1,4 +1,5 @@
 var baseUrl = "http://d-api.herokuapp.com/";
+
 var map;
 var DIDSet;
 var API_KEY = "AIzaSyA_3-FTpr5X41YFGR-xFHVZMbjcU-BJp1Q"; // google maps api key (jeff's acc)
@@ -19,21 +20,33 @@ $(document).bind("mobileinit", function() {
 $(document).ajaxStop(function() {
     $.mobile.loading('hide');
 });
+//gets a get parameter
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(window.location.href))
+      return decodeURIComponent(name[1]);
+}
+$(document).on('pageinit', '#map-page', function (event) {
+    var getDid = get("did");
+    if (getDid) {
+        currentDID = getDid;
+        onDetailsLoad(true);
 
+    }
+});
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
     setTimeout(function() {$('#loginbox').slideDown(); $(document).ajaxStart(function() {
-    // console.log("in loading animation");
-    $.mobile.loading('show', {
-        text: "Fetching..."
-    });
-});}, 1500);
+        // console.log("in loading animation");
+        $.mobile.loading('show', {
+            text: "Fetching..."
+        });
+    });}, 1500);
     $('#continue-button').click(function() {
         setTimeout(function(){
             navigator.geolocation.getCurrentPosition(centerMap);
         }, 500);
     });
-    console.log("page loaded");
+    //console.log("page loaded");
     if (window.localStorage.userid) {
         // say already logged in
     }
@@ -43,7 +56,7 @@ $(document).ready(function() {
     fixInfoWindow();
     showOnMap();
     navigator.geolocation.getCurrentPosition(centerMap);
-     $( document ).on( "swipeleft swiperight", "#account-page", function( e ) {
+    $( document ).on( "swipeleft swiperight", "#account-page", function( e ) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
         // We do this by checking the data that the framework stores on the page element (panel: open).
@@ -55,11 +68,19 @@ $(document).ready(function() {
             }
         }
     });
-     $('#addbutton').click(function() {
-        
+    $('#addbutton').click(function() {
         $('#header').panel("close");
     });
-    $('img', $('#dpicture')).load(function() {console.log("onload"); $('#dpicture').fadeTo(300,1);})
+
+    $('#linkclick').click(function() {
+        $('#linktext').show().val("localhost:8000/#map-page" + "?did="+currentDID).select();
+        $('#linkclick').hide();
+        toast("Hit Ctrl+C now to copy the link.")
+    });
+
+
+    $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);})
+    
     
 });
 $(document).bind('pagechange', '#main-app', function (event, data) {
@@ -78,9 +99,9 @@ var showOnMap = function(position) {
         new google.maps.Point(0, 0),
         new google.maps.Point(10, 34));
     $.get("http://ipinfo.io", function (response) {
-        console.log(response);
+        //console.log(response);
         var loc = response.loc.split(',');
-        console.log(loc);
+        //console.log(loc);
         var latitude = loc[0];
         var longitude = loc[1];
         var myLatlng = new google.maps.LatLng(latitude, longitude);
@@ -192,6 +213,7 @@ var showOnMap = function(position) {
         searchBox.setBounds(bounds);
         });
     }, "jsonp");
+
 };
 
 function closePanels() {
@@ -207,7 +229,7 @@ function closePanels() {
 var getDates = function(LatLng, map) {
     getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
         function (data, status) {
-            console.log(data);
+            //console.log(data);
             var marker;
             for (var i = 0; i < data.dates.length; i++) {
                 var current = data.dates[i];
@@ -216,12 +238,12 @@ var getDates = function(LatLng, map) {
                     var name = current.name;
                     var lat = current.location.lat;
                     var lng = current.location.lng;
-                    console.log("creating date: "+name);
+                    //console.log("creating date: "+name);
                     DIDSet.add(did);
                     dates[did] = current;
-                    var newBathPos = new google.maps.LatLng(lat, lng);
+                    var newDatePos = new google.maps.LatLng(lat, lng);
                     marker = new google.maps.Marker({
-                        position: newBathPos,
+                        position: newDatePos,
                         map: map,
                         title: name
                         //animation: google.maps.Animation.DROP
@@ -257,20 +279,22 @@ function priceToText(price) {
     }
 }
 // called when a marker is clicked. gets info and displays in panel
-function onDetailsLoad() {
+function onDetailsLoad(boolCenter) {
     var list = $('#detailslist');
     var panel = $('#dates-details-page');
     $('.error', panel).text(""); // clear errors
     panel.panel("open");
     var currentDate = dates[currentDID];
-
+    $('#linkclick', panel).show();
+    $('#linktext', panel).hide();
     getReq(baseUrl + "getdate/" + currentDID, function (res) {
         var dplace = $('#dplace', panel);
         var oldName = dplace.text();
+
         $('#dname', panel).text(res.date.name);
         if (res.date.location_name) {
             $('#at', panel).show();
-            console.log("location name: " + res.date.location_name);
+            //console.log("location name: " + res.date.location_name);
             dplace.show().text(res.date.location_name);
         } else {
             $('#at', panel).hide();
@@ -288,7 +312,7 @@ function onDetailsLoad() {
         //console.log(res);
         if (res.date.placesRef) {
             placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
-                console.log(res);
+                //console.log(res);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     console.log("getDetails sucess");
                     if (oldName != res.name) {
@@ -315,6 +339,12 @@ function onDetailsLoad() {
         } else {
             console.log("no places ref");
             $('#dpicture').fadeOut();
+        }
+        if (boolCenter) {
+            var lat = res.date.location.lat;
+            var lng = res.date.location.lng;
+
+            setTimeout(function(){centerMap({coords: {latitude: lat, longitude: lng}}, true);}, 2000);
         }
     }).fail(function(err) {
         console.log("get date error");
@@ -347,11 +377,11 @@ function locate() {
     $('#locate img').attr("src", "img/geolocationblue.png");
     navigator.geolocation.getCurrentPosition(centerMap);
 }
-function centerMap(position) {
+function centerMap(position, noMoveMarker) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
-    if (currentLocationMarker) {
+    if (currentLocationMarker && !noMoveMarker) {
         currentLocationMarker.setPosition(myLatlng);
     }
     map.panTo(myLatlng);

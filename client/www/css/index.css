@@ -30,24 +30,36 @@ strong {
 }
 div#details-menu {
   width: 10px;
+  padding-top: 10px;
   height: 0;
   border-radius: 2px;
   background-color: #e9e9e9;
   border: 1px solid #eee;
-  padding-top: 10px;
   overflow: hidden;
-  -webkit-transition: height 0.5s, width 0.5s; /* For Safari 3.1 to 6.0 */
-  transition: height 0.5s, width 0.5s;
-
+  -webkit-transition: height 0.5s, width 0.5s, padding-top 0.5s; /* For Safari 3.1 to 6.0 */
+  transition: height 0.5s, width 0.5s, padding-top 0.5s;
+  
   text-align: center;
   float: right;
-  margin-top: -5px;
-  margin-right: -5px;
+  margin-top: 5px;
+}
+#details-menu input {
+  display: none;
+  height: 20px;
+  width: 20px;
 }
 div#details-menu:hover {
-  height: 46px;
-  width: 24px;
+  height: 26px;
+  width: 46px;
   margin-left: 5px;
+  padding: 3px;
+  padding-top: 6px;
+}
+#flagclick {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
 }
 
 #details-menu img {
@@ -56,6 +68,7 @@ div#details-menu:hover {
   height: 20px;
   max-width: 20px;
 }
+
 #details-menu img:hover {
   opacity: 1;
 }
@@ -115,6 +128,9 @@ div#details-menu:hover {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+#linktext {
+  float: left;
 }
 h4 {
 	color: #444;
@@ -231,8 +247,8 @@ h4 {
 }
 #addbutton {
     position: fixed;
-    bottom: 16px;
-    right: 16px;
+    bottom: 72px;
+    left: -17px;
 }
 #accountbutton {
     position: fixed;
@@ -311,7 +327,7 @@ a {
   #pac-input {
     background-color: #fff;
     padding: 0 11px 0 13px;
-    width: 50%;
+    width: 200px;
     max-width: 400px;
     font-family: Roboto;
     font-size: 15px;
@@ -320,19 +336,24 @@ a {
     position: absolute;
     left: 5%;
     top: 10px;
+    -webkit-transition: height 0.5s, width 0.5s, padding-top 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: height 0.5s, width 0.5s, padding-top 0.5s;
   }
 
   @media (max-width: 600px) {
   	#pac-input {
-  		
+  		width: 50%;
   	}
+    #pac-input:focus {
+      width: 60%;
+    }
   }
 
   #pac-input:focus {
     border-color: #4d90fe;
     margin-left: -1px;
     padding-left: 14px;  /* Regular padding-left + 1. */
-    width: 60%;
+    width: 400px;
     max-width: 420px;
   }
 
