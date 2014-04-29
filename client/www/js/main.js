@@ -31,7 +31,7 @@ $(document).ready(function() {
     $('#continue-button').click(function() {
         setTimeout(function(){
             navigator.geolocation.getCurrentPosition(centerMap);
-        }, 500);
+        }, 1000);
     });
     console.log("page loaded");
     if (window.localStorage.userid) {
