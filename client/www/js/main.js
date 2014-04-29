@@ -36,7 +36,6 @@ $(document).on('pageinit', '#map-page', function (event) {
         setTimeout(function(){ 
             navigator.geolocation.getCurrentPosition(centerMap);
         }, 3000);
-        alert("moved");
 
     }
 });
