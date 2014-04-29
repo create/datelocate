@@ -80,7 +80,7 @@ $(document).ready(function() {
     });
 
     $('#linkclick').click(function() {
-        $('#linktext').show().val("localhost:8000/#map-page" + "?did="+currentDID).select();
+        $('#linktext').show().val(window.location.href.split("?")[0] + "?did="+currentDID).select();
         $('#linkclick').hide();
         toast("Hit Ctrl+C now to copy the link.")
     });
