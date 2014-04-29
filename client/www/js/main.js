@@ -32,6 +32,13 @@ $(document).on('pageinit', '#map-page', function (event) {
         onDetailsLoad(true);
 
     }
+    if(navigator.userAgent.match('CriOS')) {
+        setTimeout(function(){ 
+            navigator.geolocation.getCurrentPosition(centerMap);
+        }, 3000);
+        alert("moved");
+
+    }
 });
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
@@ -50,6 +57,7 @@ $(document).ready(function() {
     if (window.localStorage.userid) {
         // say already logged in
     }
+
     $('#loading').hide();
     $('#content').show();
     DIDSet = new MiniSet();
@@ -168,12 +176,6 @@ var showOnMap = function(position) {
         })
 
         getDates(myLatlng, map);
-        if(navigator.userAgent.match('CriOS')) {
-            setTimeout(function(){ 
-                navigator.geolocation.getCurrentPosition(centerMap);
-            }, 3000);
-
-        }
 
         // Create the search box and link it to the UI element.
         var input = /** @type {HTMLInputElement} */(
