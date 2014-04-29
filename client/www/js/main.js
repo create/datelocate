@@ -44,7 +44,7 @@ $(document).ready(function() {
     $('#continue-button').click(function() {
         setTimeout(function(){
             navigator.geolocation.getCurrentPosition(centerMap);
-        }, 1000);
+        }, 500);
     });
     //console.log("page loaded");
     if (window.localStorage.userid) {
@@ -168,6 +168,14 @@ var showOnMap = function(position) {
         })
 
         getDates(myLatlng, map);
+        if(navigator.userAgent.match('CriOS')) {
+            $('#accountbutton').css("bottom", "16px");
+            $('#addbutton').css("bottom", "16px");
+            setTimeout(function(){ 
+                navigator.geolocation.getCurrentPosition(centerMap);
+            }, 1000);
+
+        }
 
         // Create the search box and link it to the UI element.
         var input = /** @type {HTMLInputElement} */(
