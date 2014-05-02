@@ -20,6 +20,7 @@ $(document).bind("mobileinit", function() {
 $(document).ajaxStop(function() {
     $.mobile.loading('hide');
 });
+
 //gets a get parameter
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(window.location.href))
@@ -30,7 +31,6 @@ $(document).on('pageinit', '#map-page', function (event) {
     if (getDid) {
         currentDID = getDid;
         onDetailsLoad(true);
-
     }
     if(navigator.userAgent.match('CriOS')) {
         setTimeout(function(){ 
@@ -39,6 +39,7 @@ $(document).on('pageinit', '#map-page', function (event) {
 
     }
 });
+
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
     setTimeout(function() {$('#loginbox').slideDown(); $(document).ajaxStart(function() {
@@ -78,6 +79,9 @@ $(document).ready(function() {
     $('#addbutton').click(function() {
         $('#header').panel("close");
     });
+    $('#closebutton').click(function() {
+        $('#dates-details-page').panel("close");
+    });
 
     $('#linkclick').click(function() {
         $('#linktext').show().val(window.location.href.split("?")[0] + "?did="+currentDID).select();
@@ -85,10 +89,7 @@ $(document).ready(function() {
         toast("Hit Ctrl+C now to copy the link.")
     });
 
-
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);})
-    
-    
 });
 $(document).bind('pagechange', '#main-app', function (event, data) {
     if (data.toPage[0].id == 'map-page') {
@@ -144,23 +145,7 @@ var showOnMap = function(position) {
         ];
 
         map.setOptions({styles: noPoi});
-        var infowindow = new google.maps.InfoWindow({
-            content: 'You are here!',
-            noSupress: true
-        });
-        currentLocationMarker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            icon: {path: google.maps.SymbolPath.CIRCLE,
-                fillColor: '#33CCFF',
-                fillOpacity: 0.9,
-                strokeWeight: 2,
-                strokeColor: 'silver',
-                scale: 8}
-        });
-        google.maps.event.addListener(currentLocationMarker, 'click', function() {
-            infowindow.open(map,currentLocationMarker);
-        });
+        
 
         google.maps.event.addListener(map, "idle", function (event) {
                 //console.log("idle");
@@ -209,7 +194,6 @@ var showOnMap = function(position) {
                 setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
               bounds.extend(place.geometry.location);
             }
-
         
         });
 
@@ -223,6 +207,7 @@ var showOnMap = function(position) {
 
 };
 
+//closes panels to show map
 function closePanels() {
     if ($(window).width() > 600) {
         $('#account-panel').panel("close");
@@ -286,12 +271,28 @@ function priceToText(price) {
     }
 }
 // called when a marker is clicked. gets info and displays in panel
+// if boolCenter is true it will center the map on this date ID marker if it exists
 function onDetailsLoad(boolCenter) {
+    var currentDate = dates[currentDID];
+    if (!currentDate) {
+        getReq(baseUrl + "getdate/" + currentDID, function (res, status) {
+            dates[currentDID] = res.date;
+            currentDate = dates[currentDID];
+            actuallyLoadDetails(currentDate, boolCenter);
+        }).fail(function (err) {
+            console.log("couldn't find date: " + currentDID);
+            return;
+        });
+    } else {
+        actuallyLoadDetails(currentDate, boolCenter);
+    }
+}
+
+function actuallyLoadDetails(currenDate, boolCenter) {
     var list = $('#detailslist');
     var panel = $('#dates-details-page');
     $('.error', panel).text(""); // clear errors
     panel.panel("open");
-    var currentDate = dates[currentDID];
     $('#linkclick', panel).show();
     $('#linktext', panel).hide();
     var res = {};
@@ -299,7 +300,7 @@ function onDetailsLoad(boolCenter) {
     if (boolCenter) {
         var lat = res.date.location.lat;
         var lng = res.date.location.lng;
-        setTimeout(function(){centerMap({coords: {latitude: lat, longitude: lng}}, true);}, 2000);
+        setTimeout(function(){centerMap({coords: {latitude: lat, longitude: lng}}, true);}, 1500);
     }
     var dplace = $('#dplace', panel);
     var oldName = dplace.text();
@@ -354,7 +355,6 @@ function onDetailsLoad(boolCenter) {
         $('#dpicture').fadeOut();
     }
     
-
     save('reviews', null);
     getReviews();
     $('#review-form')[0].reset();
@@ -382,11 +382,30 @@ function locate() {
     $('#locate img').attr("src", "img/geolocationblue.png");
     navigator.geolocation.getCurrentPosition(centerMap);
 }
-function centerMap(position, noMoveMarker) {
+function centerMap(position, ignoreMarker) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
-    if (currentLocationMarker && !noMoveMarker) {
+    if (!ignoreMarker) {
+        if (!currentLocationMarker) {
+            var infowindow = new google.maps.InfoWindow({
+                content: 'You are here!',
+                noSupress: true
+            });
+            currentLocationMarker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                icon: {path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: '#33CCFF',
+                    fillOpacity: 0.9,
+                    strokeWeight: 2,
+                    strokeColor: 'silver',
+                    scale: 8}
+            });
+            google.maps.event.addListener(currentLocationMarker, 'click', function() {
+                infowindow.open(map,currentLocationMarker);
+            });
+        }
         currentLocationMarker.setPosition(myLatlng);
     }
     map.panTo(myLatlng);
