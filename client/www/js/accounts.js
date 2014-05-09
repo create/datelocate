@@ -83,41 +83,7 @@ function findName() {
 			$('#not-logged-in').css("display", "none");
 			$('#logged-in').css("display", "default");
 			$('#username').html("Welcome <span style='font-weight: 300;'>" + response.name+"</span>");
-			//get array of date id's 
-			//for each one, add it to the div in a similar fashion to the reviews
-			var list = $('#dates-list');
-			$('.donedate', list).remove();
-			getReq(baseUrl+"account", function(data, status) {
-				
-				var datesArr = data.user.voted_dates;
-				var options = {
-					useEasing:true,
-					useGrouping:true,
-					seperator: ",",
-					decimal:"."
-				}
-				var demo = new countUp("reviewcount", 0, datesArr.length, 0, 2, options);
-				demo.start();
-				var dateSet = new MiniSet();
-				dateSet.add(datesArr);
-				var keys = dateSet.keys();
-				
-				for (var i = 0; i < keys.length; i++) {
-					getReq(baseUrl + "getdate/" + keys[i], function (res) {
-						console.log(res);
-				        if (res != null && res.date != null) {
-				        	list.append('<li class="donedate"><a href="#" onclick="(function(){currentDID = \''+res.date._id+'\'; onDetailsLoad();})();" ><strong>' + res.date.name +
-				        		'</strong> at '+res.date.location_name+'</a></li>');
-				        }
-				        
-					});
-					
-				}
-				list.listview("refresh");
-			}).fail(function(err) {
-		        console.log("get account error");
-		        $(".error", list.parent()).text(err.responseJSON.errors);
-		    });
+			
 		} else {
 			$('#logged-in').css("display", "none");
 			$('#not-logged-in').css("display", "default");
@@ -125,6 +91,39 @@ function findName() {
 		}
     
 	});
+  getReq(baseUrl + "account", function(data, status) {
+        var datesArr = data.user.voted_dates;
+        var options = {
+          useEasing: true,
+          useGrouping: true,
+          seperator: ",",
+          decimal:"."
+        }
+        var list = $('#dates-list');
+        $('.donedate', list).remove();
+        var demo = new countUp("reviewcount", 0, datesArr.length, 0, 2, options);
+        demo.start();
+        var dateSet = new MiniSet();
+        dateSet.add(datesArr);
+        var keys = dateSet.keys();
+
+        //get array of date id's 
+        //for each one, add it to the div in a similar fashion to the reviews
+        for (var i = 0; i < keys.length; i++) {
+          getReq(baseUrl + "getdate/" + keys[i], function (res) {
+            console.log(res);
+                if (res != null && res.date != null) {
+                  $('<li class="donedate"><a href="#" onclick="(function(){currentDID = \''+res.date._id+'\'; onDetailsLoad();})();" ><strong>' + res.date.name +
+                    '</strong> at '+res.date.location_name+'</a></li>').hide().appendTo(list).slideDown();
+                }
+          });
+          
+        }
+        list.listview("refresh");
+      }).fail(function(err) {
+          console.log("get account error");
+          $(".error", list.parent()).text(err.responseJSON.errors);
+      });
 }
 function redirectOnLogin() {
 	$.mobile.changePage('#map-page', {allowSamePageTransition: true, transition: "slideup"});

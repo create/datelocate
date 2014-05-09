@@ -19,6 +19,10 @@ strong {
 .ui-listview>.ui-li-static {
   white-space: normal;
 }
+
+#closebutton {
+margin-top: 50px;
+}
 .panel {
   overflow: auto;
   min-height: 100%;
@@ -72,6 +76,7 @@ div#details-menu:hover {
 #details-menu img:hover {
   opacity: 1;
 }
+
 /*
 .ui-panel-inner {
     position: absolute;
@@ -172,7 +177,9 @@ h4 {
     top: -80px;
     margin-bottom: -50px;
 	}
-
+  #details-menu {
+    display: none;
+  }
 
 }
 
