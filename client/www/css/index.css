@@ -95,7 +95,37 @@ div#details-menu {
   min-height: 100vh;
 }*/
 
-#landing-background-image {
+@keyframes cf3FadeInOut {
+  0% {
+  opacity:1;
+}
+45% {
+opacity:1;
+}
+55% {
+opacity:0;
+}
+100% {
+opacity:0;
+}
+}
+@-webkit-keyframes cf3FadeInOut {
+  0% {
+  opacity:1;
+}
+45% {
+opacity:1;
+}
+55% {
+opacity:0;
+}
+100% {
+opacity:0;
+}
+}
+
+
+.landing-background-image {
   position: fixed;
   left: 0;
   right: 0;
@@ -103,7 +133,7 @@ div#details-menu {
   z-index: 1;
 
   display: block;
-  background-image: url('../img/happy-couple.jpg');
+  background-image: url('../img/happy-couple3.jpg');
   background-size: cover;
   background-position: center top;
   width: 100%;
@@ -115,6 +145,27 @@ div#details-menu {
   -ms-filter: blur(5px);
   filter: blur(5px);
 }
+#dplace {
+  color: #444 !important;
+  font-weight: 200 !important;
+}
+.nopoint {
+  cursor: default;
+}
+/*#landing-background-image {
+animation-name: cf3FadeInOut;
+-webkit-animation-name: cf3FadeInOut;
+animation-timing-function: ease-in-out;
+-webkit-animation-timing-function: ease-in-out;
+animation-iteration-count: infinite;
+-webkit-animation-iteration-count: infinite;
+animation-duration: 10s;
+-webkit-animation-duration:10s;
+animation-direction: alternate;
+-webkit-animation-direction: alternate;
+background-image: url('../img/happy-couple1.jpg');
+}*/
+
 #landing-page {
   text-align: center;
 }
@@ -159,6 +210,9 @@ h4 {
   color: #FFF;
   font-size: 48px;
   font-family: Open Sans, sans-serif;
+}
+#loginbox {
+  height: 40px;
 }
 .hometitle {
   margin-top: 80px;

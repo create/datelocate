@@ -17,9 +17,9 @@ $(document).bind("mobileinit", function () {
     $.mobile.allowCrossDomainPages = true;
 });
 
-$(document).ajaxStop(function() {
-    $.mobile.loading('hide');
-});
+// $(document).ajaxStop(function() {
+//     $.mobile.loading('hide');
+// });
 
 //gets a get parameter
 function get(name){
@@ -38,16 +38,25 @@ $(document).on('pageinit', '#map-page', function (event) {
         }, 3000);
 
     }
+    if(navigator.userAgent.match('CriOS')) {
+        setTimeout(function(){ 
+            navigator.geolocation.getCurrentPosition(centerMap);
+        }, 3000);
+
+    }
 });
 
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
-    setTimeout(function() {$('#loginbox').slideDown(); $(document).ajaxStart(function() {
-        // console.log("in loading animation");
-        $.mobile.loading('show', {
-            text: "Fetching..."
-        });
-    });}, 1500);
+    setTimeout(function() {
+        $('#loginbox a').slideDown();
+        // $(document).ajaxStart(function() {
+        // // console.log("in loading animation");
+        //     $.mobile.loading('show', {
+        //         text: "Fetching..."
+        //     });
+        // });
+    }, 1500);
     $('#continue-button').click(function() {
         setTimeout(function(){
             navigator.geolocation.getCurrentPosition(centerMap);
@@ -303,6 +312,8 @@ function actuallyLoadDetails(currentDate, boolCenter) {
         $('#at', panel).show();
         //console.log("location name: " + res.date.location_name);
         dplace.show().text(res.date.location_name);
+        dplace.attr("href", "");
+        dplace.addClass("nopoint");
     } else {
         $('#at', panel).hide();
         dplace.hide();
@@ -321,10 +332,12 @@ function actuallyLoadDetails(currentDate, boolCenter) {
         placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
             //console.log(res);
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log("getDetails sucess");
+                console.log("google getDetails sucess");
                 if (oldName != res.name) {
                     $('#at', panel).show();
                     dplace.show().text(res.name);
+                    dplace.attr("href", res.url);
+                    dplace.removeClass("nopoint");
                     // get picture
                     if (res.photos && res.photos.length > 0) {
                         console.log("Found photo");

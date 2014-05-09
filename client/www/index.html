@@ -25,11 +25,13 @@
                 <div data-role="content" class="landing-content">
                     <h1 class="hometitle center">Date Finder</h1>
                     <h2 class="homesubtitle center">Bros helping bros...</h2>
-                    <a href="#map-page">
-                        <div id="loginbox" style="display:none;">
+                    
+                    <div id="loginbox">
+                        <a href="#map-page" style="display:none;">
                             <div id="fblogin" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div >
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                    
                     <div class="account-login-button">
                         <a href="#map-page" id="continue-button" data-role="button" data-theme="b" data-icon="arrow-d" data-transition="slideup">
                             Continue without logging in
@@ -38,7 +40,8 @@
                     
                     
                 </div>
-                <div id="landing-background-image"></div>
+                <div class="landing-background-image"></div>
+                <!-- <div id="landing-background-image" class="landing-background-image"></div> -->
             </div>
             <div id="map-page" data-role="page">
                 
@@ -103,8 +106,10 @@
                 <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="dates-details-page">
                     
 
-                    <span id="dtitle" class="title"><strong><span id="dname"></span></strong><span style="display: none;" id="at"> at </span><span id="dplace"></span><span id="dprice"></span></span>
-                    <div data-role="none" id="dcont" style="display: none; background-color: #111111;"><a target="_blank" id="dpicture" href=""><img style="width: 100%; " src=''alt="photo"></a></div>
+                    <span id="dtitle" class="title"><strong><span id="dname"></span></strong><span style="display: none;" id="at"> at </span><a target="_blank" data-role="none" id="dplace"></a><span id="dprice"></span></span>
+                    <div data-role="none" id="dcont" style="display: none; background-color: #111111;">
+                        <a target="_blank" id="dpicture" href=""><img style="width: 100%; " src=''alt="photo"></a>
+                    </div>
 
                     <ul data-role="listview" id="detailslist">
                         <li data-role="list-divider">Things to bring</li>
