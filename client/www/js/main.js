@@ -11,7 +11,7 @@ var placesService;
 var DEFAULT_ZOOM = 13;
 var currentLocationMarker; // blue dot to show current location
 
-$(document).bind("mobileinit", function() {
+$(document).bind("mobileinit", function () {
     console.log("in mobileinit");
     $.support.cors = true;
     $.mobile.allowCrossDomainPages = true;
@@ -63,11 +63,11 @@ $(document).ready(function() {
     fixInfoWindow();
     showOnMap();
     navigator.geolocation.getCurrentPosition(centerMap);
-    $( document ).on( "swipeleft swiperight", "#account-page", function( e ) {
+    $( document ).on( "swipeleft swiperight", "#account-page", function (e) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
         // We do this by checking the data that the framework stores on the page element (panel: open).
-        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+        if ($.mobile.activePage.jqmData( "panel" ) !== "open") {
             if ( e.type === "swipeleft"  ) {
                 //$( "#right-panel" ).panel( "open" );
             } else if ( e.type === "swiperight" ) {

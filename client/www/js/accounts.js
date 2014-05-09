@@ -1,6 +1,6 @@
 var baseUrl = "http://d-api.herokuapp.com/";
 //accounts.js
-window.fbAsyncInit = function() {
+window.fbAsyncInit = function () {
   FB.init({
     appId      : '233709206819119',
     status     : true, // check login status
@@ -46,7 +46,7 @@ window.fbAsyncInit = function() {
   // Load the SDK asynchronously
   (function(d){
    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
+   if (d.getElementById(id)) {return; }
    js = d.createElement('script'); js.id = id; js.async = true;
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
@@ -59,14 +59,13 @@ window.fbAsyncInit = function() {
     FB.api('/me', function(response) {
       console.log('Good to see you, ' + response.name + '.');
     });
-    FB.api('/me', function(response) {
-        console.log("fb id: "+response.id);
+    FB.api('/me', function (response) {
+        console.log("fb id: " + response.id);
         window.localStorage.userid = response.id;
-        $.post(baseUrl+"signin", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
+        $.post(baseUrl +"signin", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signin success");
             redirectOnLogin();
-        })
-        .fail(function(err) {
+        }).fail(function(err) {
             console.log(err.responseJSON.errors);
             $.post(baseUrl+"signup", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signup success");
