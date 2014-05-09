@@ -100,12 +100,6 @@ $(document).bind('pagechange', '#main-app', function (event, data) {
 // Draws a marker with the passed position on a map
 var showOnMap = function(position) {
     console.log("showing map");
-    var pinColor = "33CCFF";
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" +
-        pinColor,
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0, 0),
-        new google.maps.Point(10, 34));
     $.get("http://ipinfo.io", function (response) {
         //console.log(response);
         var loc = response.loc.split(',');
@@ -214,7 +208,6 @@ function closePanels() {
     } else {
         $('.panel').panel("close");
     }
-    
 }
 
 // gets all dates near LatLng position and displays them to map. called initially and when map is panned
@@ -288,7 +281,7 @@ function onDetailsLoad(boolCenter) {
     }
 }
 
-function actuallyLoadDetails(currenDate, boolCenter) {
+function actuallyLoadDetails(currentDate, boolCenter) {
     var list = $('#detailslist');
     var panel = $('#dates-details-page');
     $('.error', panel).text(""); // clear errors
@@ -296,7 +289,7 @@ function actuallyLoadDetails(currenDate, boolCenter) {
     $('#linkclick', panel).show();
     $('#linktext', panel).hide();
     var res = {};
-    res.date = dates[currentDID];
+    res.date = currentDate;
     if (boolCenter) {
         var lat = res.date.location.lat;
         var lng = res.date.location.lng;
