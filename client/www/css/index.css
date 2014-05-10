@@ -81,19 +81,6 @@ div#details-menu {
   opacity: 1;
 }
 
-/*
-.ui-panel-inner {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100vh;
-    
-    
-}
-.ui-panel {
-  min-height: 100vh;
-}*/
 
 @keyframes cf3FadeInOut {
   0% {
@@ -139,11 +126,11 @@ opacity:0;
   width: 100%;
   height: 100%;
 
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px);
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
 }
 #dplace {
   color: #444 !important;
@@ -368,13 +355,7 @@ a {
 	margin-bottom: 0px;
 	right: 10px;
 }
-/*.panel {
-  height: 100vh;
-  min-height: 100vh;
-  overflow-y: scroll;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}*/
+
 
   .controls {
     margin-top: 16px;

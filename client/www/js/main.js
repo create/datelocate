@@ -38,12 +38,6 @@ $(document).on('pageinit', '#map-page', function (event) {
         }, 3000);
 
     }
-    if(navigator.userAgent.match('CriOS')) {
-        setTimeout(function(){ 
-            navigator.geolocation.getCurrentPosition(centerMap);
-        }, 3000);
-
-    }
 });
 
 // Show the main map with user's position and dates close to the user
@@ -503,13 +497,13 @@ var getReviews = function() {
         var moreReviewsBtn = $('#more-reviews');
         var reviews = res.date.reviews.reverse();
         if (reviews.length == 0) {
-            list.append($('<li class="review">Nothing... yet!</li>')).listview("refresh");
+            list.append($('<li class="review">Nothing... yet!</li>'));
             moreReviewsBtn.hide();
         } else {
             for (var i = 0; i < Math.min(reviews.length, NUM_REVIEWS); i++) {
                 appendReview(list, reviews[i]);
             }
-            list.listview("refresh");
+            
             if (reviews.length > NUM_REVIEWS) {
                 moreReviewsBtn.show();
                 window.localStorage.reviews = JSON.stringify(reviews);
@@ -517,6 +511,7 @@ var getReviews = function() {
                 moreReviewsBtn.hide();
             }
         }
+        list.listview("refresh");
     }).fail(function (err) {
         $(".error", list.parent()).text(err.responseJSON.errors);
     })
