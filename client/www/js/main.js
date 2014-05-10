@@ -17,10 +17,6 @@ $(document).bind("mobileinit", function () {
     $.mobile.allowCrossDomainPages = true;
 });
 
-// $(document).ajaxStop(function() {
-//     $.mobile.loading('hide');
-// });
-
 //gets a get parameter
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(window.location.href))
@@ -31,12 +27,6 @@ $(document).on('pageinit', '#map-page', function (event) {
     if (getDid) {
         currentDID = getDid;
         onDetailsLoad(true);
-    }
-    if(navigator.userAgent.match('CriOS')) {
-        setTimeout(function(){ 
-            navigator.geolocation.getCurrentPosition(centerMap);
-        }, 3000);
-
     }
 });
 
@@ -66,7 +56,6 @@ $(document).ready(function() {
     DIDSet = new MiniSet();
     fixInfoWindow();
     showOnMap();
-    navigator.geolocation.getCurrentPosition(centerMap);
     $( document ).on( "swipeleft swiperight", "#account-page", function (e) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
@@ -92,11 +81,20 @@ $(document).ready(function() {
         toast("Hit Ctrl+C now to copy the link.")
     });
 
-    $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);})
+    $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
+    waitToLocate();
 });
+function waitToLocate() {
+    if (map == null) {
+        setTimeout(waitToLocate, 50);
+    } else {
+        locate();
+    }
+}
 $(document).bind('pagechange', '#main-app', function (event, data) {
     if (data.toPage[0].id == 'map-page') {
         google.maps.event.trigger(map, 'resize'); // prevent greyboxes
+        locate();
     }
 });
 
@@ -379,7 +377,7 @@ $("#filter-dates").bind("change", function() {
 
 // called when user clicks on locate div
 function locate() {
-    $('#locate img').attr("src", "img/geolocationblue.png");
+    //$('#locate img').attr("src", "img/geolocationblue.png");
     navigator.geolocation.getCurrentPosition(centerMap);
 }
 function centerMap(position, ignoreMarker) {
