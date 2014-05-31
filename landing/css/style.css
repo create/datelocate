@@ -11,7 +11,60 @@
 /*********************************************************************************/
 /* Basic                                                                         */
 /*********************************************************************************/
+/* additions */
+a {
+	-moz-transition: all 0.2s ease-in-out;
+	-webkit-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+@-moz-keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
+	@-webkit-keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
+	@-o-keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
+	@-ms-keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
+	@keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
+#headercontent h1 {
+	-moz-animation: reveal-banner 1s 0.25s ease-in-out;
+	-webkit-animation: reveal-banner 1s 0.25s ease-in-out;
+	-o-animation: reveal-banner 1s 0.25s ease-in-out;
+	-ms-animation: reveal-banner 1s 0.25s ease-in-out;
+	animation: reveal-banner 1s 0.25s ease-in-out;
+	-moz-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	opacity: 0;
+}
+#headercontent p {
+	-moz-animation: reveal-banner 1.5s 0.75s ease-in-out;
+	-webkit-animation: reveal-banner 1.5s 0.75s ease-in-out;
+	-o-animation: reveal-banner 1.5s 0.75s ease-in-out;
+	-ms-animation: reveal-banner 1.5s 0.75s ease-in-out;
+	animation: reveal-banner 1.5s 0.75s ease-in-out;
+	-moz-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	opacity: 0;
+}
+#headercontent footer {
+	-moz-animation: reveal-banner 1.5s 1s ease-in-out;
+	-webkit-animation: reveal-banner 1.5s 1s ease-in-out;
+	-o-animation: reveal-banner 1.5s 1s ease-in-out;
+	-ms-animation: reveal-banner 1.5s 1s ease-in-out;
+	animation: reveal-banner 1.5s 1s ease-in-out;
+	-moz-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	opacity: 0;
+}
 
+/* end additions */
 	body
 	{
 		background: #F8F8F8;
@@ -1180,9 +1233,9 @@
 			background: url('images/overlay.png');
 		}
 	
-		#header > header,
-		#header > header p,
-		#header > footer
+		#header header,
+		#header header p,
+		#header footer
 		{
 			text-align: center;
 			position: relative;
@@ -1198,6 +1251,7 @@
 				font-size: 2.25em;
 				line-height: 1.25em;
 				margin-bottom: 0;
+				font-size: 60pt;
 			}
 			
 			#header header p
