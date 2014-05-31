@@ -118,6 +118,7 @@ var addDeInit = function () {
     $('#pac-input').css("display", "default");
     $('#addbutton img').attr("src", "img/add.png");
     $('#addbutton').attr("onclick", "addInit()");
+    $('#add-details-page').panel("close");
 };
 
 
