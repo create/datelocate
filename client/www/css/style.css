@@ -24,7 +24,7 @@ a {
 	@-o-keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
 	@-ms-keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
 	@keyframes reveal-banner { 0% { opacity: 0; } 100% { opacity: 1; } }
-#headercontent h1 {
+#header h1 {
 	-moz-animation: reveal-banner 1s 0.25s ease-in-out;
 	-webkit-animation: reveal-banner 1s 0.25s ease-in-out;
 	-o-animation: reveal-banner 1s 0.25s ease-in-out;
@@ -37,7 +37,7 @@ a {
 	animation-fill-mode: forwards;
 	opacity: 0;
 }
-#headercontent p {
+#header p {
 	-moz-animation: reveal-banner 1.5s 0.75s ease-in-out;
 	-webkit-animation: reveal-banner 1.5s 0.75s ease-in-out;
 	-o-animation: reveal-banner 1.5s 0.75s ease-in-out;
@@ -50,7 +50,7 @@ a {
 	animation-fill-mode: forwards;
 	opacity: 0;
 }
-#headercontent footer {
+#header footer {
 	-moz-animation: reveal-banner 1.5s 1s ease-in-out;
 	-webkit-animation: reveal-banner 1.5s 1s ease-in-out;
 	-o-animation: reveal-banner 1.5s 1s ease-in-out;
@@ -79,7 +79,7 @@ a {
 #signin {
 	position: absolute;
 	right: 20px;
-	top: 20px;
+	top: -260px;
 	z-index: 1001;
 }
 

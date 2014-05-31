@@ -7,6 +7,11 @@
 /*********************************************************************************/
 /* Basic                                                                         */
 /*********************************************************************************/
+#signin {
+	position: inherit;
+	right: 0;
+	top: -70px;
+}
 
 	body,input,textarea,select
 	{
@@ -20,7 +25,7 @@
 		.row > section,
 		.row > article
 		{
-			margin: 0 0 1.5em 0 !important;
+			margin: 0 0 0 0 !important;
 		}
 
 	/* Buttons */
