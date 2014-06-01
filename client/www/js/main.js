@@ -95,6 +95,7 @@ $(document).ready(function() {
 
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
     waitToLocate();
+    
 });
 function waitToLocate() {
     if (map == null) {

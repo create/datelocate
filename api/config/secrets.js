@@ -6,5 +6,5 @@ module.exports = {
     sessionSecret: process.env.SESSION_SECRET || 'secretsecretsecretsecret',
 
     // distance in meters for the range of search
-    maxDistance: 3500
+    maxDistance: 5500
 };

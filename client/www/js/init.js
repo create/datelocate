@@ -114,7 +114,7 @@ $(window).load(function() {
 		$('#mapsection .fadein').each(function(index) {
 		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
 		});
-	}, { offset: 450 });
+	}, { offset: 540 });
 	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 	google.maps.event.addListener(map, "idle", function (event) {
         //console.log("idle");

@@ -131,3 +131,12 @@ function redirectOnLogin() {
             navigator.geolocation.getCurrentPosition(centerMap);
         }, 500);
 }
+$(document).ready(function() {
+  $('#logout').click(function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        FB.api('me/permissions', 'delete', function (res) {
+          console.log(res);
+        });
+    });
+});
