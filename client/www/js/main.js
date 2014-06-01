@@ -80,6 +80,18 @@ $(document).ready(function() {
         $('#linkclick').hide();
         toast("Hit Ctrl+C now to copy the link.")
     });
+    $('#flagclick').click(function() {
+        var formData = {
+            "did": currentDID
+        };
+        postReq(baseUrl + "addflag", formData, function(res) {
+            toast("Flagged unbroworthy. Thanks for the feedback.");
+            console.log("successfully flagged");
+        }).fail(function (err) {
+            console.log("err flagging");
+            toast(err.responseJSON.errors);
+        });
+    })
 
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
     waitToLocate();

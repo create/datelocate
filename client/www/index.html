@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Date Finder</title>
+		<title>Date Locate</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -15,6 +15,7 @@
 		<script src="js/jquery.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src="js/lib/waypoints.min.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -29,13 +30,12 @@
 			<section id="header" class="dark">
 
 				<header>
-					<h1>Date Finder</h1>
-					<p>Bros helping Bros with date ideas</p>
-				</header>
-				<footer>
+					<h1>Date Locate</h1>
+					<p>Find and share local date ideas</p>
 					<a id="signin" href="map.html#map-page" class="button">Get Started</a>
 					<a href="#first" id="scrollButton" class="scrolly"><span class="fa fa-angle-down"></a>
-				</footer>
+				</header>
+				
 				
 			</section>
 			
@@ -43,17 +43,17 @@
 			<section id="first" class="main">
 				<header>
 					<div class="container">
-						<h2>Get ideas for your next date night</h2>
-						<p>The ultimate site to share local date recommendations<br/>Share local advice with those in your area<br />
+						<h2 class="fadein">Get ideas for your next date night</h2>
+						<p class="fadein">The ultimate site to share local date recommendations<br/>Share local advice with those in your area<br />
 						Add your own that have worked for you<br/>
 						Earn bro points</p>
 					</div>
 				</header>
-				<div class="content dark style1 featured">
+				<div id="firstsecond" class="content dark style1 featured">
 					<div class="container">
 						<div class="row">
 							<div class="4u">
-								<section>
+								<section class="fadein">
 									<span class="feature-icon"><span class="fa fa-map-marker"></span></span>
 									<header>
 										<h3>Simple</h3>
@@ -62,7 +62,7 @@
 								</section>
 							</div>
 							<div class="4u">
-								<section>
+								<section class="fadein">
 									<span class="feature-icon"><span class="fa fa-usd"></span></span>
 									<header>
 										<h3>Sortable</h3>
@@ -72,12 +72,12 @@
 								</section>
 							</div>
 							<div class="4u">
-								<section>
+								<section class="fadein">
 									<span class="feature-icon"><span class="fa fa-trophy"></span></span>
 									<header>
 										<h3>Successful</h3>
 									</header>
-									<p>Bros can attest: <em>Date Finder works.</em> Local advice is the best advice when it comes to date venues.</p>
+									<p>Bros can attest: <em>Date Locate works.</em> Local advice is the best advice when it comes to date venues.</p>
 								</section>
 							</div>
 						</div>
@@ -88,15 +88,15 @@
 			<!--******************** Team Section ********************-->
 		    <section id="team">
 		      <div class="container">
-		        <h1 style="text-align: center">Meet the team</h1>
+		        <h1 style="text-align: center" class="fadein">Meet the team</h1>
 		        <!-- Five columns -->
 		        <div class="row">
-		          <div style="margin-left: 30%;">
+		          <div style="margin-left: 30%;" class="fadein">
 		            <div class="teamalign"> <img class="team-thumb img-circle" src="images/jeff.png" alt=""> </div>
 		            <h3>Jeff Pyke</h3>
 		            <div class="job-position">Co-founder</div>
 		          </div>
-		          <div style="float: right; margin-right: 30%;">
+		          <div style="float: right; margin-right: 30%;" class="fadein">
 		            <div class="teamalign"> <img class="team-thumb img-circle" src="images/matt.jpg" alt=""> </div>
 		            <h3>Matt Robinson</h3>
 		            <div class="job-position">Co-founder</div>
@@ -122,8 +122,8 @@
 		    </section>
   			<section id="start" class="dark">
 	  			<header class="container">
-		  			<h1>Get started now</h1>
-		  			<a href="map.html#map-page" class="button">Find some dates</a>
+		  			<h1 class="fadein">Get started now</h1>
+		  			<a href="map.html#map-page" class="fadein button">Find some dates</a>
 	  			</header>
   			</section>
 			
@@ -136,7 +136,7 @@
 				</ul>
 				<div class="copyright">
 					<ul class="menu">
-						<li>&copy; Datefinder</li>
+						<li>&copy; Datelocate</li>
 						<li><a href="http://html5up.net/">Design</a></li>
 					</ul>
 				</div>

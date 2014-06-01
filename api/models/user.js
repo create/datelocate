@@ -25,6 +25,11 @@ var userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId , 
         ref: Datel
     }],
+    
+    flagged_dates: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Datel
+    }],
 
     token: {
         type: String,

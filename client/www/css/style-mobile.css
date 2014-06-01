@@ -8,10 +8,6 @@
 /* Basic                                                                         */
 /*********************************************************************************/
 #scrollButton {
-	float: left;
-	position: relative;
-	bottom: -80px;
-	left: 50%;
 	font-size: 30pt;
 }
 

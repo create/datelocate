@@ -98,6 +98,8 @@ app.get('/getdate/:did', datel.getDate);
 app.post('/adddate', pass.isAuthenticated, datel.addDate);
 // vote on a datel
 app.post('/addvote', pass.isAuthenticated, datel.addVote);
+// flag a datel
+app.post('/addflag', pass.isAuthenticated, datel.addFlag);
 // post a new review for the datel
 app.post('/addreview', pass.isAuthenticated, datel.addReview);
 // get reviews for a datel

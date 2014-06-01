@@ -18,6 +18,7 @@ var datelSchema = new mongoose.Schema({
     price: Number,
     upvotes: Number,
     downvotes: Number,
+    flags: Number,
     price: {   // 0, 1, 2, 3
         type: Number,
         required: true

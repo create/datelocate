@@ -53,6 +53,9 @@ exports.addDate = function(req, res, next) {
                 "price": req.body.price,
                 "materials": req.body.materials,
                 "review": req.body.review,
+                "upvotes": 0,
+                "downvotes": 0,
+                "flags": 0,
                 "placesID": req.body.placesID || '',
                 "placesRef": req.body.placesRef || ''
             });
@@ -144,6 +147,67 @@ exports.addVote = function(req, res, next) {
                         return res.send(500, {
                             'response': 'fail',
                             'errors': 'Something went wrong.'
+                        });
+                    }
+
+                    User.findOne({'_id': req.user._id}, function(err, user) {
+                        return res.send(200, {
+                            'response': 'ok',
+                            'user': user
+                        });
+                    });
+                });
+
+            });
+
+        });
+
+    });
+}
+
+// add flag to an existing date
+exports.addFlag = function(req, res, next) {
+    var datelID = req.body.did;
+
+    console.log("flag");
+
+    // find the date
+    Datel.findOne({'_id': datelID}, function(err, date) {
+        if (err) {
+            return res.send(400, {
+                'response': 'fail',
+                'errors': 'Invalid date.'
+            });
+        }
+
+        // check if user has not voted for this date before
+        User.findOne({'_id': req.user._id, 'flagged_dates': date._id}, function(err, user) {
+            if (user) {
+                return res.send(500, {
+                    'response': 'fail',
+                    'errors': 'You have flagged here already.'
+                });
+            }
+
+            // update the values depending on vote direction
+            date.flags += 1;
+
+            // update the document in db
+            date.save(function(err) {
+                if (err) {
+                    return res.send(500, {
+                        'response': 'fail',
+                        'errors': 'Something went wrong saving date.'
+                    });
+                }
+
+                // now update the user
+                User.update({'_id': req.user._id}, { $push: { flagged_dates: date } }, 
+                    function(err) {
+                    if (err) {
+                        return res.send(500, {
+                            'response': 'fail',
+                            'errors': 'Something went wrong updating user.'
                         });
                     }
 

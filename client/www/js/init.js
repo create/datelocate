@@ -80,5 +80,27 @@
 
 		});
 $(window).load(function() {
-  // $('#headercontent').fadeTo(1000, 1);
+    $('#first header').waypoint(function(up) {
+		$('#first header .fadein').each(function(index) {
+		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
+		});
+	}, { offset: 350 });
+	$('#firstsecond').waypoint(function(up) {
+		$('#firstsecond .fadein').each(function(index) {
+		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
+		});
+	}, { offset: 350 });
+	$('#team').waypoint(function(up) {
+		$('#team .fadein').each(function(index) {
+		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
+		});
+		$('#start .fadein').each(function(index) {
+		    $(this).delay(600 * index).animate({'opacity': 1}, 500);
+		});
+	}, { offset: 350 });
+	$('#start').waypoint(function(up) {
+		$('#start .fadein').each(function(index) {
+		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
+		});
+	}, { offset: 550 });
 });
