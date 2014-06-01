@@ -33,19 +33,19 @@ $(document).on('pageinit', '#map-page', function (event) {
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
     setTimeout(function() {
-        $('#loginbox a').slideDown();
-        // $(document).ajaxStart(function() {
+        // $('#loginbox a').slideDown();
+        // // $(document).ajaxStart(function() {
         // // console.log("in loading animation");
         //     $.mobile.loading('show', {
         //         text: "Fetching..."
         //     });
         // });
     }, 1500);
-    $('#continue-button').click(function() {
-        setTimeout(function(){
-            navigator.geolocation.getCurrentPosition(centerMap);
-        }, 500);
-    });
+    // $('#continue-button').click(function() {
+    //     setTimeout(function(){
+    //         navigator.geolocation.getCurrentPosition(centerMap);
+    //     }, 500);
+    // });
     //console.log("page loaded");
     if (window.localStorage.userid) {
         // say already logged in
@@ -91,7 +91,7 @@ $(document).ready(function() {
             console.log("err flagging");
             toast(err.responseJSON.errors);
         });
-    })
+    });
 
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
     waitToLocate();
@@ -103,12 +103,12 @@ function waitToLocate() {
         locate();
     }
 }
-$(document).bind('pagechange', '#main-app', function (event, data) {
-    if (data.toPage[0].id == 'map-page') {
-        google.maps.event.trigger(map, 'resize'); // prevent greyboxes
-        locate();
-    }
-});
+// $(document).bind('pagechange', '#main-app', function (event, data) {
+//     if (data.toPage[0].id == 'map-page') {
+//         google.maps.event.trigger(map, 'resize'); // prevent greyboxes
+//         locate();
+//     }
+// });
 
 // Draws a marker with the passed position on a map
 var showOnMap = function(position) {
@@ -164,7 +164,7 @@ var showOnMap = function(position) {
         });
         google.maps.event.addListener(map, "click", function (event) {
             closePanels();
-        })
+        });
 
         getDates(myLatlng, map);
 

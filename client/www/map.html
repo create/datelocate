@@ -21,29 +21,7 @@
         <div id="loading" class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span></div>
         <div id="toast"></div>
         <div id="content" style="display: none;">
-            <div id="landing-page" class="app" data-role="page">
-                <div data-role="content" class="landing-content">
-                    <h1 class="hometitle center">Date Finder</h1>
-                    <h2 class="homesubtitle center">Bros helping bros...</h2>
-                    
-                    <div id="loginbox">
-                        <a href="#map-page" style="display:none;">
-                            <div id="fblogin" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div >
-                        </a>
-                    </div>
-                    
-                    <div class="account-login-button">
-                        <a href="#map-page" id="continue-button" data-role="button" data-theme="b" data-icon="arrow-d">
-                            Continue without logging in
-                        </a>
-                    </div>
-                    
-                    
-                </div>
-                <div class="landing-background-image"></div>
-            </div>
             <div id="map-page" class="app" data-role="page">
-                
                 <div id="map_canvas"><div class="toast">Please allow Date Finder to use your location.</div></div>
                 <input id="pac-input" class="controls" type="text" placeholder="Search City" data-role="none">
 
@@ -141,6 +119,27 @@
                     <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" id="closebutton">Close</a>
                 </div>
 
+            </div>
+            <div id="landing-page" data-role="page">
+                <div data-role="content" class="landing-content">
+                    <h1 class="hometitle center">Date Finder</h1>
+                    <h2 class="homesubtitle center">Bros helping bros...</h2>
+                    
+                    <div id="loginbox">
+                        <a href="#map-page" style="display:none;">
+                            <div id="fblogin" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div >
+                        </a>
+                    </div>
+                    
+                    <div class="account-login-button">
+                        <a href="#map-page" id="continue-button" data-role="button" data-theme="b" data-icon="arrow-d">
+                            Continue without logging in
+                        </a>
+                    </div>
+                    
+                    
+                </div>
+                <div class="landing-background-image"></div>
             </div>
         </div>
                 
