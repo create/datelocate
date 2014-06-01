@@ -7,10 +7,12 @@
 /*********************************************************************************/
 /* Basic                                                                         */
 /*********************************************************************************/
-#signin {
-	position: inherit;
-	right: 0;
-	top: -70px;
+#scrollButton {
+	float: left;
+	position: relative;
+	bottom: -80px;
+	left: 50%;
+	font-size: 30pt;
 }
 
 	body,input,textarea,select

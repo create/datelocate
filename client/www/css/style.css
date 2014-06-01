@@ -63,24 +63,13 @@ a {
 	animation-fill-mode: forwards;
 	opacity: 0;
 }
-#signin {
-	-moz-animation: reveal-banner 1s 1s ease-in-out;
-	-webkit-animation: reveal-banner 1s 1s ease-in-out;
-	-o-animation: reveal-banner 1s 1s ease-in-out;
-	-ms-animation: reveal-banner 1s 1s ease-in-out;
-	animation: reveal-banner 1s 1s ease-in-out;
-	-moz-animation-fill-mode: forwards;
-	-webkit-animation-fill-mode: forwards;
-	-o-animation-fill-mode: forwards;
-	-ms-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
-	opacity: 0;
-}
-#signin {
-	position: absolute;
-	right: 20px;
-	top: -260px;
-	z-index: 1001;
+
+#scrollButton {
+	float: left;
+	position: relative;
+	bottom: -150px;
+	left: 50%;
+	font-size: 30pt;
 }
 
 /* end additions */
