@@ -185,12 +185,17 @@ exports.addFlag = function(req, res, next) {
             if (user) {
                 return res.send(500, {
                     'response': 'fail',
-                    'errors': 'You have flagged here already.'
+                    'errors': 'You have already flagged this date.'
                 });
             }
 
             // update the values depending on vote direction
-            date.flags += 1;
+            if (date.flags) {
+                date.flags += 1;
+            } else {
+                date.flags = 1;
+            }
+            
 
             // update the document in db
             date.save(function(err) {
@@ -198,7 +203,7 @@ exports.addFlag = function(req, res, next) {
                     console.log(err);
                     return res.send(500, {
                         'response': 'fail',
-                        'errors': 'Something went wrong saving date.'
+                        'errors': 'Something went wrong flagging the date.'
                     });
                 }
 
@@ -208,7 +213,7 @@ exports.addFlag = function(req, res, next) {
                     if (err) {
                         return res.send(500, {
                             'response': 'fail',
-                            'errors': 'Something went wrong updating user.'
+                            'errors': 'Something went wrong updating your flags.'
                         });
                     }
 

@@ -85,7 +85,7 @@ $(document).ready(function() {
             "did": currentDID
         };
         postReq(baseUrl + "addflag", formData, function(res) {
-            toast("Flagged unbroworthy. Thanks for the feedback.");
+            toast("Flagged unhelpful. Thanks for the feedback.");
             console.log("successfully flagged");
         }).fail(function (err) {
             console.log("err flagging");
