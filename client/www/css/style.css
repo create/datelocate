@@ -79,6 +79,34 @@ a {
 .fadein {
 	opacity: 0;
 }
+#map {
+    width: 100%;
+    height: 400px;
+    opacity: 0.7;
+}
+#mapsection {
+	text-align: center;
+	margin-bottom: -1.5em;
+}
+#mapsection h1 {
+	position: relative;
+	bottom: 380px;
+	z-index: 1001;
+}
+#mapsection a {
+	position: relative;
+	bottom: 340px;
+}
+#mapsection header {
+	margin-bottom: 0;
+	background: #111;
+}
+#mapsection footer {
+	overflow: visible;
+	height: 0;
+	padding: 0;
+	margin: 0;
+}
 
 /* end additions */
 	body
@@ -1385,10 +1413,13 @@ section#team .align, section#contact .align {
 	font-size: 6em;
 	text-align: center;
 }
-#team h1, #contact h1 {
+#team h1, #contact h1, #mapsection h1 {
 	font-size: 3em;
 	margin-bottom: 1em;
 	margin-top: 0.5em;
+}
+#team h1 {
+	margin-bottom: 0;
 }
 #contact, #team {
 	padding-top: 0.5em;

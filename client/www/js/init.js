@@ -79,6 +79,13 @@
 					$('form').n33_formerize();
 
 		});
+		var mapOptions = {
+            center: new google.maps.LatLng(47.656080, -122.309353),
+            disableDefaultUI: true,
+            zoom: 13,
+            tilt: 45,  
+        };
+		
 $(window).load(function() {
     $('#first header').waypoint(function(up) {
 		$('#first header .fadein').each(function(index) {
@@ -97,10 +104,63 @@ $(window).load(function() {
 		$('#start .fadein').each(function(index) {
 		    $(this).delay(600 * index).animate({'opacity': 1}, 500);
 		});
-	}, { offset: 350 });
-	$('#start').waypoint(function(up) {
-		$('#start .fadein').each(function(index) {
+	}, { offset: 550 });
+    $('#urge').waypoint(function(up) {
+        $('#urge .fadein').each(function(index) {
+            $(this).delay(300 * index).animate({'opacity': 1}, 500);
+        });
+    }, { offset: 350 });
+	$('#mapsection').waypoint(function(up) {
+		$('#mapsection .fadein').each(function(index) {
 		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
 		});
-	}, { offset: 550 });
+	}, { offset: 450 });
+	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	google.maps.event.addListener(map, "idle", function (event) {
+        //console.log("idle");
+        getDates(map.getCenter(), map);
+    });
+    getDates(mapOptions.center, map);
+    $('#meet').click(function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        $('#team').slideDown();
+    });
 });
+var DIDSet = new MiniSet();
+var baseUrl = "http://d-api.herokuapp.com/";
+
+// gets all dates near LatLng position and displays them to map. called initially and when map is panned
+var getDates = function(LatLng, map) {
+    $.get(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
+        function (data, status) {
+            //console.log(data);
+            var marker;
+            for (var i = 0; i < data.dates.length; i++) {
+                var current = data.dates[i];
+                var did = current._id;
+                if (!DIDSet.has(did)) {
+                    var name = current.name;
+                    var lat = current.location.lat;
+                    var lng = current.location.lng;
+                    //console.log("creating date: "+name);
+                    DIDSet.add(did);
+                    var newDatePos = new google.maps.LatLng(lat, lng);
+                    marker = new google.maps.Marker({
+                        position: newDatePos,
+                        map: map,
+                        title: name
+                        //animation: google.maps.Animation.DROP
+                    });
+                    var markerClickCallback = function(did) {
+                        return function() {
+                        	window.location.replace("map.html?did="+did);
+                        }
+                        
+                    };
+                    google.maps.event.addListener(marker, 'click', markerClickCallback(did));
+                
+                }
+            }
+        });
+};

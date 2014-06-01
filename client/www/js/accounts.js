@@ -64,12 +64,12 @@ window.fbAsyncInit = function () {
         window.localStorage.userid = response.id;
         $.post(baseUrl +"signin", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signin success");
-            redirectOnLogin();
+            // redirectOnLogin();
         }).fail(function(err) {
             console.log(err.responseJSON.errors);
             $.post(baseUrl+"signup", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signup success");
-            redirectOnLogin();
+            // redirectOnLogin();
           }).fail(function(err) {
             console.log(err.responseJSON.errors);
           });
