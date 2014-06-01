@@ -86,7 +86,7 @@ a {
 }
 #mapsection {
 	text-align: center;
-	margin-bottom: -1.5em;
+	margin-bottom: -1.5em !important;
 }
 #mapsection h1 {
 	position: relative;
@@ -1295,7 +1295,7 @@ a {
 		#header header
 		{
 			height: 100%;
-			min-height: 400px;
+			min-height: 440px;
 		}
 		
 			#header header h1

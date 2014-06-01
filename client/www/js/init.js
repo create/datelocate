@@ -125,7 +125,12 @@ $(window).load(function() {
         e.stopImmediatePropagation();
         e.preventDefault();
         $('#team').slideDown();
+        $('#meet').slideUp();
     });
+    var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
+    if (iOS) {
+        $('#header').css("height", "100%");
+    }
 });
 var DIDSet = new MiniSet();
 var baseUrl = "http://d-api.herokuapp.com/";

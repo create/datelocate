@@ -195,6 +195,7 @@ exports.addFlag = function(req, res, next) {
             // update the document in db
             date.save(function(err) {
                 if (err) {
+                    console.log(err);
                     return res.send(500, {
                         'response': 'fail',
                         'errors': 'Something went wrong saving date.'
