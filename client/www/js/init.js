@@ -109,12 +109,12 @@ $(window).load(function() {
         $('#urge .fadein').each(function(index) {
             $(this).delay(300 * index).animate({'opacity': 1}, 500);
         });
-    }, { offset: 350 });
+    }, { offset: 400 });
 	$('#mapsection').waypoint(function(up) {
 		$('#mapsection .fadein').each(function(index) {
 		    $(this).delay(300 * index).animate({'opacity': 1}, 500);
 		});
-	}, { offset: 540 });
+	}, { offset: 600 });
 	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 	google.maps.event.addListener(map, "idle", function (event) {
         //console.log("idle");
