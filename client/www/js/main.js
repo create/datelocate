@@ -123,6 +123,7 @@ var showOnMap = function(position) {
         var myLatlng = new google.maps.LatLng(latitude, longitude);
         var location = latitude + "," + longitude;
         var mapOptions = {
+            scrollwheel: false,
             center: myLatlng,
             mapTypeControl: false,
             streetViewControl: false,
