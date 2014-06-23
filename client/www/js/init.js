@@ -80,6 +80,7 @@
 
 		});
 		var mapOptions = {
+			scrollwheel: false,
             center: new google.maps.LatLng(47.656080, -122.309353),
             disableDefaultUI: true,
             zoom: 13,
