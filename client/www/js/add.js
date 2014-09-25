@@ -64,7 +64,7 @@ function fillNamePlaces() {
             if (numadded > 0) {
                 fieldset.hide().prependTo('#add-form').trigger("create").slideDown();
             }
-            
+
         } else {
             console.log("error places " + status);
         }
@@ -102,7 +102,7 @@ function fillNameGeocoding() {
             function(data) {
                 // Get the closest address within a certain radius
                 console.log(data);
-                
+
                 $('#add-name').val(data.results[0].formatted_address.split(",")[0]);
             }
         );
@@ -163,10 +163,10 @@ $('#add-form').submit(function (e) {
             getDates(map.getCenter(), map);
             form["0"].reset();
             $('#add-details-page').panel("close");
-            toast("Date added! You're a bro.");
+            toast("Date added! Kudos to you.");
         })
         .fail(function(err) {
-            
+
             $(".error", form).text(err.responseJSON.errors);
         });
     } else {

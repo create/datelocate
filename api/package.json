@@ -1,7 +1,7 @@
 {
   "name": "DateFinder",
   "version": "0.0.0",
-  "description": "Bros helping bros",
+  "description": "Where to go? Discover local date ideas.",
   "scripts": {
     "test": "make test"
   },

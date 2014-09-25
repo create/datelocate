@@ -6,10 +6,10 @@
         id        = "com.datefinder"
         version   = "1.0.0">
 
-    <name>DateFinder</name>
+    <name>DateLocate</name>
 
     <description>
-        Date Finder is an app to help bros out with date ideas.
+        Where to go? Find and share local date ideas.
     </description>
 
     <author href="http://datefinder.herokuapp.com" email="jeffrey.pyke@gmail.com">
@@ -27,7 +27,7 @@
         following tag to your config.xml; you will still have the INTERNET
         permission on your app, which PhoneGap requires.
     -->
-    
+
 
     <!-- Customize your app and platform with the preference element. -->
     <!-- <preference name="phonegap-version"      value="3.4.0" /> -->      <!-- all: current version of PhoneGap -->
