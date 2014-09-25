@@ -95,7 +95,7 @@ $(document).ready(function() {
 
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
     waitToLocate();
-    
+
 });
 function waitToLocate() {
     if (map == null) {
@@ -114,12 +114,17 @@ function waitToLocate() {
 // Draws a marker with the passed position on a map
 var showOnMap = function(position) {
     console.log("showing map");
-    $.get("http://ipinfo.io", function (response) {
+    $.get("http://ipinfo.io/json", function (response) {
         //console.log(response);
         var loc = response.loc.split(',');
-        //console.log(loc);
-        var latitude = loc[0];
-        var longitude = loc[1];
+        if (loc) {
+            var latitude = loc[0];
+            var longitude = loc[1];
+        } else {
+            var latitude = "47.6097";
+            var longitude = "122.3331";
+        }
+
         var myLatlng = new google.maps.LatLng(latitude, longitude);
         var location = latitude + "," + longitude;
         var mapOptions = {
@@ -130,7 +135,7 @@ var showOnMap = function(position) {
             zoomControl: false,
             //minZoom: 12,
             zoom: DEFAULT_ZOOM,
-            tilt: 45,  
+            tilt: 45,
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),
             mapOptions);
@@ -138,22 +143,22 @@ var showOnMap = function(position) {
         var noPoi = [
         // {
         //     featureType: "poi",
-            
+
         //     stylers: [
         //       { visibility: "simplified" }
-        //     ]   
+        //     ]
         //   },
           // {
           //   featureType: "road",
-            
+
           //   stylers: [
           //     { visibility: "simplified" }
-          //   ]   
+          //   ]
           // }
         ];
 
         map.setOptions({styles: noPoi});
-        
+
 
         google.maps.event.addListener(map, "idle", function (event) {
                 //console.log("idle");
@@ -181,12 +186,7 @@ var showOnMap = function(position) {
         // pick list. Retrieve the matching places for that item.
         google.maps.event.addListener(searchBox, 'places_changed', function() {
             var places = searchBox.getPlaces();
-            // for (var i = 0, marker; marker = markers[i]; i++) {
-            //     marker.setMap(null);
-            // }
 
-            // For each place, get the icon, place name, and location.
-            //markers = [];
             var bounds = new google.maps.LatLngBounds();
 
             for (var i = 0, place; place = places[i]; i++) {
@@ -202,7 +202,7 @@ var showOnMap = function(position) {
                 setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
               bounds.extend(place.geometry.location);
             }
-        
+
         });
 
         // Bias the SearchBox results towards places that are within the bounds of the
@@ -228,7 +228,6 @@ function closePanels() {
 var getDates = function(LatLng, map) {
     getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
         function (data, status) {
-            //console.log(data);
             var marker;
             for (var i = 0; i < data.dates.length; i++) {
                 var current = data.dates[i];
@@ -237,7 +236,6 @@ var getDates = function(LatLng, map) {
                     var name = current.name;
                     var lat = current.location.lat;
                     var lng = current.location.lng;
-                    //console.log("creating date: "+name);
                     DIDSet.add(did);
                     dates[did] = current;
                     var newDatePos = new google.maps.LatLng(lat, lng);
@@ -257,7 +255,7 @@ var getDates = function(LatLng, map) {
                         };
                     };
                     google.maps.event.addListener(marker, 'click', markerClickCallback(did));
-                
+
                 }
             }
         });
@@ -315,7 +313,6 @@ function actuallyLoadDetails(currentDate, boolCenter) {
     $('#dname', panel).text(res.date.name);
     if (res.date.location_name) {
         $('#at', panel).show();
-        //console.log("location name: " + res.date.location_name);
         dplace.show().text(res.date.location_name);
         dplace.attr("href", "");
         dplace.addClass("nopoint");
@@ -331,11 +328,9 @@ function actuallyLoadDetails(currentDate, boolCenter) {
         $('#dmaterials', list).text("Nothing to bring!");
     }
     $('#dreview', list).text(res.date.review);
-    
-    //console.log(res);
+
     if (res.date.placesRef) {
         placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
-            //console.log(res);
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 console.log("google getDetails sucess");
                 if (oldName != res.name) {
@@ -365,7 +360,7 @@ function actuallyLoadDetails(currentDate, boolCenter) {
         console.log("no places ref");
         $('#dpicture').fadeOut();
     }
-    
+
     save('reviews', null);
     getReviews();
     $('#review-form')[0].reset();
@@ -374,7 +369,7 @@ function actuallyLoadDetails(currentDate, boolCenter) {
 $("#filter-dates").bind("change", function() {
     var keyArray = DIDSet.keys();
     for (var i = 0; i < keyArray.length; i++) {
-        
+
         var date = dates[keyArray[i]];
         if (parseInt(date.price) <= parseInt($('#filter-dates').val())) {
             //show
@@ -455,7 +450,7 @@ function smoothZoom (map, max, cnt) {
         });
         setTimeout(function(){map.setZoom(cnt)}, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
     }
-}  
+}
 function save (key, value) {
     window.localStorage[key] = value;
 };
@@ -514,7 +509,7 @@ var getReviews = function() {
             for (var i = 0; i < Math.min(reviews.length, NUM_REVIEWS); i++) {
                 appendReview(list, reviews[i]);
             }
-            
+
             if (reviews.length > NUM_REVIEWS) {
                 moreReviewsBtn.show();
                 window.localStorage.reviews = JSON.stringify(reviews);
