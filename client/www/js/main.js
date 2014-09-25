@@ -115,16 +115,14 @@ function waitToLocate() {
 var showOnMap = function(position) {
     console.log("showing map");
     $.get("http://ipinfo.io/json", function (response) {
-        //console.log(response);
-        var loc = response.loc.split(',');
-        if (loc) {
+        if (response.loc != "") {
+            var loc = response.loc.split(',');
             var latitude = loc[0];
             var longitude = loc[1];
         } else {
             var latitude = "47.6097";
             var longitude = "122.3331";
         }
-
         var myLatlng = new google.maps.LatLng(latitude, longitude);
         var location = latitude + "," + longitude;
         var mapOptions = {
@@ -159,7 +157,6 @@ var showOnMap = function(position) {
 
         map.setOptions({styles: noPoi});
 
-
         google.maps.event.addListener(map, "idle", function (event) {
                 //console.log("idle");
                 getDates(map.getCenter(), map);
@@ -186,7 +183,6 @@ var showOnMap = function(position) {
         // pick list. Retrieve the matching places for that item.
         google.maps.event.addListener(searchBox, 'places_changed', function() {
             var places = searchBox.getPlaces();
-
             var bounds = new google.maps.LatLngBounds();
 
             for (var i = 0, place; place = places[i]; i++) {
@@ -202,7 +198,6 @@ var showOnMap = function(position) {
                 setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
               bounds.extend(place.geometry.location);
             }
-
         });
 
         // Bias the SearchBox results towards places that are within the bounds of the
@@ -226,7 +221,7 @@ function closePanels() {
 
 // gets all dates near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {
-    getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
+    getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng()+","+map.getZoom(),
         function (data, status) {
             var marker;
             for (var i = 0; i < data.dates.length; i++) {
@@ -255,7 +250,6 @@ var getDates = function(LatLng, map) {
                         };
                     };
                     google.maps.event.addListener(marker, 'click', markerClickCallback(did));
-
                 }
             }
         });
@@ -328,7 +322,6 @@ function actuallyLoadDetails(currentDate, boolCenter) {
         $('#dmaterials', list).text("Nothing to bring!");
     }
     $('#dreview', list).text(res.date.review);
-
     if (res.date.placesRef) {
         placesService.getDetails({key: API_KEY, reference: res.date.placesRef, sensor: true}, function (res, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -360,7 +353,6 @@ function actuallyLoadDetails(currentDate, boolCenter) {
         console.log("no places ref");
         $('#dpicture').fadeOut();
     }
-
     save('reviews', null);
     getReviews();
     $('#review-form')[0].reset();
@@ -369,7 +361,6 @@ function actuallyLoadDetails(currentDate, boolCenter) {
 $("#filter-dates").bind("change", function() {
     var keyArray = DIDSet.keys();
     for (var i = 0; i < keyArray.length; i++) {
-
         var date = dates[keyArray[i]];
         if (parseInt(date.price) <= parseInt($('#filter-dates').val())) {
             //show
@@ -509,7 +500,6 @@ var getReviews = function() {
             for (var i = 0; i < Math.min(reviews.length, NUM_REVIEWS); i++) {
                 appendReview(list, reviews[i]);
             }
-
             if (reviews.length > NUM_REVIEWS) {
                 moreReviewsBtn.show();
                 window.localStorage.reviews = JSON.stringify(reviews);

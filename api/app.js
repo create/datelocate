@@ -105,7 +105,7 @@ app.post('/addreview', pass.isAuthenticated, datel.addReview);
 // get reviews for a datel
 app.get('/getreviews/:did', datel.getReviews);
 // get all dates near the passed coordinatee
-app.get('/getallnear/:lat,:lng', datel.getAllNear);
+app.get('/getallnear/:lat,:lng,:zoom', datel.getAllNear);
 
 app.listen(app.get('port'));
 

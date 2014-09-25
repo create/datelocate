@@ -60,7 +60,7 @@ exports.addDate = function(req, res, next) {
                 "placesRef": req.body.placesRef || ''
             });
 
-            
+
             done(null, newDate)
         },
         // store object
@@ -141,7 +141,7 @@ exports.addVote = function(req, res, next) {
                 }
 
                 // now update the user
-                User.update({'_id': req.user._id}, { $push: { voted_dates: date } }, 
+                User.update({'_id': req.user._id}, { $push: { voted_dates: date } },
                     function(err) {
                     if (err) {
                         return res.send(500, {
@@ -195,7 +195,7 @@ exports.addFlag = function(req, res, next) {
             } else {
                 date.flags = 1;
             }
-            
+
 
             // update the document in db
             date.save(function(err) {
@@ -208,7 +208,7 @@ exports.addFlag = function(req, res, next) {
                 }
 
                 // now update the user
-                User.update({'_id': req.user._id}, { $push: { flagged_dates: date } }, 
+                User.update({'_id': req.user._id}, { $push: { flagged_dates: date } },
                     function(err) {
                     if (err) {
                         return res.send(500, {
@@ -273,7 +273,7 @@ exports.addReview = function(req, res, next) {
             }
 
             // now add the relationship from date -> review
-            Datel.update({'_id': datelID}, { $push: { reviews: review } }, 
+            Datel.update({'_id': datelID}, { $push: { reviews: review } },
                 function(err) {
                 if (err) {
                     return res.send(500, {
@@ -291,7 +291,7 @@ exports.addReview = function(req, res, next) {
             });
 
             // now update the user
-            User.update({'_id': req.user._id}, { $push: { voted_dates: date } }, 
+            User.update({'_id': req.user._id}, { $push: { voted_dates: date } },
                 function(err) {
                 if (err) {
                     return res.send(500, {
@@ -307,7 +307,7 @@ exports.addReview = function(req, res, next) {
                     });
                 });
             });
-                
+
 
         });
     });
@@ -339,6 +339,7 @@ exports.getAllNear = function(req, res) {
 
     req.assert('lat', 'lat must be float.').isFloat();
     req.assert('lng', 'lng must be float.').isFloat();
+    req.assert('zoom', 'zoom must be int').isInt();
 
     var errors = req.validationErrors();
 
@@ -351,6 +352,7 @@ exports.getAllNear = function(req, res) {
 
     var lat = +req.params.lat;
     var lng = +req.params.lng;
+    var zoom = +req.params.zoom;
 
     Datel.find(function(err, dates) {
         if (err) {
@@ -362,13 +364,14 @@ exports.getAllNear = function(req, res) {
 
         var result = [];
 
+        // scale distance with zoom - smaller zoom, larger distance
+        var maxDistance = Math.pow(22 - zoom, 2) * secrets.maxDistance;
         for (var i = 0; i < dates.length; i++) {
             var curDate = dates[i].toObject();
-            var distance = getDistanceFromLatLonInM(lat, lng, 
+            var distance = getDistanceFromLatLonInM(lat, lng,
                 curDate.location.lat, curDate.location.lng);
 
-            if (distance <= secrets.maxDistance) {
-                console.log(distance);
+            if (distance <= maxDistance) {
                 curDate["distance"] = distance;
                 result.push(curDate);
             }
