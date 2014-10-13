@@ -32,25 +32,6 @@ $(document).on('pageinit', '#map-page', function (event) {
 
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
-    setTimeout(function() {
-        // $('#loginbox a').slideDown();
-        // // $(document).ajaxStart(function() {
-        // // console.log("in loading animation");
-        //     $.mobile.loading('show', {
-        //         text: "Fetching..."
-        //     });
-        // });
-    }, 1500);
-    // $('#continue-button').click(function() {
-    //     setTimeout(function(){
-    //         navigator.geolocation.getCurrentPosition(centerMap);
-    //     }, 500);
-    // });
-    //console.log("page loaded");
-    if (window.localStorage.userid) {
-        // say already logged in
-    }
-
     $('#loading').hide();
     $('#content').show();
     DIDSet = new MiniSet();
@@ -78,7 +59,14 @@ $(document).ready(function() {
     $('#linkclick').click(function() {
         $('#linktext').show().val(window.location.href.split("?")[0] + "?did="+currentDID).select();
         $('#linkclick').hide();
-        toast("Hit Ctrl+C now to copy the link.")
+        if (navigator.userAgent.indexOf('Mac OS X') != -1) {
+            // mac
+            toast("Hit Cmd+C now to copy the link.")
+        } else {
+            // pc
+            toast("Hit Ctrl+C now to copy the link.")
+
+        }
     });
     $('#flagclick').click(function() {
         var formData = {
@@ -95,7 +83,6 @@ $(document).ready(function() {
 
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
     waitToLocate();
-
 });
 function waitToLocate() {
     if (map == null) {
@@ -104,24 +91,18 @@ function waitToLocate() {
         locate();
     }
 }
-// $(document).bind('pagechange', '#main-app', function (event, data) {
-//     if (data.toPage[0].id == 'map-page') {
-//         google.maps.event.trigger(map, 'resize'); // prevent greyboxes
-//         locate();
-//     }
-// });
 
 // Draws a marker with the passed position on a map
 var showOnMap = function(position) {
-    console.log("showing map");
-    $.get("http://ipinfo.io/json", function (response) {
-        if (response.loc != "") {
+    var setup = function (response) {
+        console.log("showing map");
+        if (response.loc != undefined) {
             var loc = response.loc.split(',');
             var latitude = loc[0];
             var longitude = loc[1];
         } else {
             var latitude = "47.6097";
-            var longitude = "122.3331";
+            var longitude = "-122.3331";
         }
         var myLatlng = new google.maps.LatLng(latitude, longitude);
         var location = latitude + "," + longitude;
@@ -203,10 +184,12 @@ var showOnMap = function(position) {
         // Bias the SearchBox results towards places that are within the bounds of the
         // current map's viewport.
         google.maps.event.addListener(map, 'bounds_changed', function() {
-        var bounds = map.getBounds();
-        searchBox.setBounds(bounds);
+            var bounds = map.getBounds();
+            searchBox.setBounds(bounds);
         });
-    }, "jsonp");
+    };
+    $.get("http://ipinfo.io/json", setup
+    , "jsonp").fail(setup);
 
 };
 
