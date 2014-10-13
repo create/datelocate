@@ -138,7 +138,7 @@ var baseUrl = "http://d-api.herokuapp.com/";
 
 // gets all dates near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {
-    $.get(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng(),
+    $.get(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng()+","+map.getZoom(),
         function (data, status) {
             //console.log(data);
             var marker;
