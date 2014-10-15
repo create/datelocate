@@ -45,12 +45,12 @@ $(document).ready(function() {
             if ( e.type === "swipeleft"  ) {
                 //$( "#right-panel" ).panel( "open" );
             } else if ( e.type === "swiperight" ) {
-                $( "#header" ).panel( "open" );
+                $( "#account-panel" ).panel( "open" );
             }
         }
     });
     $('#addbutton').click(function() {
-        $('#header').panel("close");
+        $('#account-panel').panel("close");
     });
     $('#closebutton').click(function() {
         $('#dates-details-page').panel("close");
@@ -433,7 +433,6 @@ function toast(message) {
     $('#toast').text(message);
     $('#toast').fadeIn();
     setTimeout(function(){$('#toast').fadeOut("slow")}, 3500);
-    findName();
 };
 
 //infowindow POI fix:

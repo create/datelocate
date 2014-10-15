@@ -18,7 +18,7 @@ window.fbAsyncInit = function () {
       // login status of the person. In this case, we're handling the situation where they
       // have logged in to the app.
 
-      testAPI();
+      signIn();
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
       // FB.login() to prompt them to do so.
@@ -27,17 +27,16 @@ window.fbAsyncInit = function () {
       // (1) JavaScript created popup windows are blocked by most browsers unless they
       // result from direct interaction from people using the app (such as a mouse click)
       // (2) it is a bad experience to be continually prompted to login upon page load.
-      console.log("notloggedin");
-
-      FB.login();
+      console.log("not_auth");
+      setLoginStatus(false);
     } else {
       // In this case, the person is not logged into Facebook, so we call the login()
       // function to prompt them to do so. Note that at this stage there is no indication
       // of whether they are logged into the app. If they aren't then they'll see the Login
       // dialog right after they log in to Facebook.
       // The same caveats as above apply to the FB.login() call here.
-      console.log("notloggedin");
-      FB.login();
+      console.log("else notloggedin");
+      setLoginStatus(false);
     }
   });
   };
@@ -53,22 +52,22 @@ window.fbAsyncInit = function () {
 
   // Here we run a very simple test of the Graph API after login is successful.
   // This testAPI() function is only called in those cases.
-  function testAPI() {
+  function signIn() {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
     FB.api('/me', function (response) {
+        console.log('Good to see you, ' + response.name + '.');
         console.log("fb id: " + response.id);
         window.localStorage.userid = response.id;
         $.post(baseUrl +"signin", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signin success");
-            // redirectOnLogin();
+            setLoginStatus(true, response.name);
+            getAccountInfo();
         }).fail(function(err) {
             console.log(err.responseJSON.errors);
             $.post(baseUrl+"signup", {userid: window.localStorage.userid, password: window.localStorage.userid}, function(res) {
             console.log("signup success");
-            // redirectOnLogin();
+            setLoginStatus(true, response.name);
+            getAccountInfo();
           }).fail(function(err) {
             console.log(err.responseJSON.errors);
           });
@@ -80,22 +79,14 @@ function setLoginStatus(inOrOut, name) {
         $('#username').html("Welcome <span style='font-weight: 300;'>" + name+"</span>");
         $('#not-logged-in').css("display", "none");
         $('#logged-in').css("display", "default");
+        $( "#account-panel" ).panel( "open" );
     } else {
         $('#logged-in').css("display", "none");
         $('#not-logged-in').css("display", "default");
         $('#username').html("Not logged in");
     }
 }
-function findName() {
-	FB.api('/me', function(response) {
-		console.log("Success " + response.name);
-		if (response.name != undefined) {
-			setLoginStatus(true, response.name);
-		} else {
-			setLoginStatus(false);
-		}
-
-	});
+function getAccountInfo() {
     getReq(baseUrl + "account", function(data, status) {
         var datesArr = data.user.voted_dates;
         var options = {
@@ -116,11 +107,10 @@ function findName() {
         //for each one, add it to the div in a similar fashion to the reviews
         for (var i = 0; i < keys.length; i++) {
           getReq(baseUrl + "getdate/" + keys[i], function (res) {
-            console.log(res);
-                if (res != null && res.date != null) {
-                  $('<li class="donedate"><a href="#" onclick="(function(){currentDID = \''+res.date._id+'\'; onDetailsLoad(true);})();" ><strong>' + res.date.name +
-                    '</strong> at '+res.date.location_name+'</a></li>').hide().appendTo(list).slideDown();
-                }
+            if (res != null && res.date != null) {
+              $('<li class="donedate"><a href="#" onclick="(function(){currentDID = \''+res.date._id+'\'; onDetailsLoad(true);})();" ><strong>' + res.date.name +
+                '</strong> at '+res.date.location_name+'</a></li>').hide().appendTo(list).slideDown();
+            }
           });
 
         }
@@ -129,12 +119,6 @@ function findName() {
           console.log("get account error");
           $(".error", list.parent()).text(err.responseJSON.errors);
       });
-}
-function redirectOnLogin() {
-	$.mobile.changePage('#map-page', {allowSamePageTransition: true, transition: "slideup"});
-	setTimeout(function(){
-            navigator.geolocation.getCurrentPosition(centerMap);
-        }, 500);
 }
 $(document).ready(function() {
   $('#logout').click(function (e) {
