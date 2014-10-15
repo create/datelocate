@@ -19,8 +19,8 @@ $(document).bind("mobileinit", function () {
 
 //gets a get parameter
 function get(name){
-   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(window.location.href))
-      return decodeURIComponent(name[1]);
+    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(window.location.href))
+    return decodeURIComponent(name[1]);
 }
 $(document).on('pageinit', '#map-page', function (event) {
     var getDid = get("did");
@@ -74,7 +74,7 @@ $(document).ready(function() {
         };
         postReq(baseUrl + "addflag", formData, function(res) {
             toast("Flagged unhelpful. Thanks for the feedback.");
-            console.log("successfully flagged");
+                console.log("successfully flagged");
         }).fail(function (err) {
             console.log("err flagging");
             toast(err.responseJSON.errors);
@@ -117,7 +117,7 @@ var showOnMap = function(position) {
             tilt: 45
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),
-            mapOptions);
+        mapOptions);
         placesService = new google.maps.places.PlacesService(map);
         var noPoi = [
         // {
@@ -127,21 +127,21 @@ var showOnMap = function(position) {
         //       { visibility: "simplified" }
         //     ]
         //   },
-          // {
-          //   featureType: "road",
+        // {
+        //   featureType: "road",
 
-          //   stylers: [
-          //     { visibility: "simplified" }
-          //   ]
-          // }
+        //   stylers: [
+        //     { visibility: "simplified" }
+        //   ]
+        // }
         ];
 
         map.setOptions({styles: noPoi});
 
         google.maps.event.addListener(map, "idle", function (event) {
-                //console.log("idle");
-                getDates(map.getCenter(), map);
-            });
+            //console.log("idle");
+            getDates(map.getCenter(), map);
+        });
         google.maps.event.addListener(map, "dragstart", function (event) {
             $('#locate img').attr("src", "img/geolocation.png");
             closePanels();
@@ -154,7 +154,7 @@ var showOnMap = function(position) {
 
         // Create the search box and link it to the UI element.
         var input = /** @type {HTMLInputElement} */(
-          document.getElementById('pac-input'));
+        document.getElementById('pac-input'));
         //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         var searchBox = new google.maps.places.SearchBox(
@@ -167,17 +167,17 @@ var showOnMap = function(position) {
             var bounds = new google.maps.LatLngBounds();
 
             for (var i = 0, place; place = places[i]; i++) {
-              var image = {
-                // url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-              };
-              map.panTo(place.geometry.location);
+                var image = {
+                    // url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                };
+                map.panTo(place.geometry.location);
                 var zoom = map.getZoom();
                 setTimeout(smoothZoom(map, DEFAULT_ZOOM, zoom), 150);
-              bounds.extend(place.geometry.location);
+                bounds.extend(place.geometry.location);
             }
         });
 
@@ -205,37 +205,37 @@ function closePanels() {
 // gets all dates near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {
     getReq(baseUrl+"getallnear/"+LatLng.lat()+","+LatLng.lng()+","+map.getZoom(),
-        function (data, status) {
-            var marker;
-            for (var i = 0; i < data.dates.length; i++) {
-                var current = data.dates[i];
-                var did = current._id;
-                if (!DIDSet.has(did)) {
-                    var name = current.name;
-                    var lat = current.loc[1];
-                    var lng = current.loc[0];
-                    DIDSet.add(did);
-                    dates[did] = current;
-                    var newDatePos = new google.maps.LatLng(lat, lng);
-                    marker = new google.maps.Marker({
-                        position: newDatePos,
-                        map: map,
-                        title: name
-                        //animation: google.maps.Animation.DROP
-                    });
-                    dates[did].marker = marker;
-                    var markerClickCallback = function (did) {
-                        return function() {
-                            currentDID = did;
-                            $('#account-panel').panel("close");
+    function (data, status) {
+        var marker;
+        for (var i = 0; i < data.dates.length; i++) {
+            var current = data.dates[i];
+            var did = current._id;
+            if (!DIDSet.has(did)) {
+                var name = current.name;
+                var lat = current.loc[1];
+                var lng = current.loc[0];
+                DIDSet.add(did);
+                dates[did] = current;
+                var newDatePos = new google.maps.LatLng(lat, lng);
+                marker = new google.maps.Marker({
+                    position: newDatePos,
+                    map: map,
+                    title: name
+                    //animation: google.maps.Animation.DROP
+                });
+                dates[did].marker = marker;
+                var markerClickCallback = function (did) {
+                    return function() {
+                        currentDID = did;
+                        $('#account-panel').panel("close");
 
-                            onDetailsLoad();
-                        };
+                        onDetailsLoad();
                     };
-                    google.maps.event.addListener(marker, 'click', markerClickCallback(did));
-                }
+                };
+                google.maps.event.addListener(marker, 'click', markerClickCallback(did));
             }
-        });
+        }
+    });
 };
 
 var NUM_REVIEWS = 3; // max number of reviews to show initially
@@ -380,7 +380,7 @@ function centerMap(position, ignoreMarker) {
                     fillOpacity: 0.9,
                     strokeWeight: 2,
                     strokeColor: 'silver',
-                    scale: 8}
+                scale: 8}
             });
             google.maps.event.addListener(currentLocationMarker, 'click', function() {
                 infowindow.open(map,currentLocationMarker);
@@ -415,8 +415,8 @@ function postReq(url, data, success) {
 
 function smoothZoom (map, max, cnt) {
     if (cnt >= max) {
-            return;
-        }
+        return;
+    }
     else {
         z = google.maps.event.addListener(map, 'zoom_changed', function(event){
             google.maps.event.removeListener(z);

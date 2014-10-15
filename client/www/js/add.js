@@ -12,9 +12,9 @@ var addInit = function () {
             addinfowindow = new google.maps.InfoWindow({noSupress:true});
             // TODO clean up contentstring button link is messy
             var content = '<div class="content">' +
-                '<div id="place-name"></div>' +
-                '<div id="bodyContent">' +
-                "<a href='#' id='add-confirm' data-theme='b' style='color:#009900; font-size: 15px;' role='button' data-icon='check' class='ui-link ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all' onclick='fillNamePlaces()' data-role='button' data-transition='slide'>Confirm</a>" + '</div></div>'
+            '<div id="place-name"></div>' +
+            '<div id="bodyContent">' +
+            "<a href='#' id='add-confirm' data-theme='b' style='color:#009900; font-size: 15px;' role='button' data-icon='check' class='ui-link ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all' onclick='fillNamePlaces()' data-role='button' data-transition='slide'>Confirm</a>" + '</div></div>'
             addinfowindow.setContent(content);
 
         }
@@ -57,7 +57,7 @@ function fillNamePlaces() {
                     var openNow = curResult.opening_hours.open_now;
                 }
                 var distance = getDistanceFromLatLonInKm(curPos.lat(), curPos.lng(),
-                    curResult.geometry.location.lat(), curResult.geometry.location.lng()) * 1000;
+                curResult.geometry.location.lat(), curResult.geometry.location.lng()) * 1000;
                 if (distance <= MAX_PLACE_DISTANCE) {
                     fieldset.append($('<label><input type="radio" onchange="pickPlace(this)" ref="'+ref+'"bid="'+id+'" name="place" value="'+results[i].name+'">' + results[i].name + '</label>'));
                     numadded = numadded + 1
@@ -80,34 +80,34 @@ function pickPlace(tag) {
 };
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2 - lat1); // deg2rad below
-  var dLon = deg2rad(lon2 - lon1);
-  var a =
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2 - lat1); // deg2rad below
+    var dLon = deg2rad(lon2 - lon1);
+    var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
     Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c; // Distance in km
-  return d;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    return d;
 };
 
 function deg2rad(deg) {
-  return deg * (Math.PI / 180)
+    return deg * (Math.PI / 180)
 };
 
 // Gets the address of the lat/lng
 function fillNameGeocoding() {
-        $.get(
-            "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-            addMarker.getPosition().lat()+","+addMarker.getPosition().lng()+"&sensor=false&key="+API_KEY,
-            function(data) {
-                // Get the closest address within a certain radius
-                console.log(data);
+    $.get(
+    "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+    addMarker.getPosition().lat()+","+addMarker.getPosition().lng()+"&sensor=false&key="+API_KEY,
+    function(data) {
+        // Get the closest address within a certain radius
+        console.log(data);
 
-                $('#add-name').val(data.results[0].formatted_address.split(",")[0]);
-            }
-        );
+        $('#add-name').val(data.results[0].formatted_address.split(",")[0]);
+    }
+    );
 }
 
 // removes the pin dropping listener for the add page and confirm pin
