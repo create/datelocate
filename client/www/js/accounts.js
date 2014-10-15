@@ -79,7 +79,6 @@ function setLoginStatus(inOrOut, name) {
         $('#username').html("Welcome <span style='font-weight: 300;'>" + name+"</span>");
         $('#not-logged-in').css("display", "none");
         $('#logged-in').css("display", "default");
-        $( "#account-panel" ).panel( "open" );
     } else {
         $('#logged-in').css("display", "none");
         $('#not-logged-in').css("display", "default");
