@@ -1,3 +1,4 @@
+var baseUrl = "http://d-api.herokuapp.com/";
 /*
 	Tessellate 1.0 by HTML5 UP
 	html5up.net | @n33co
@@ -134,7 +135,6 @@ $(window).load(function() {
     }
 });
 var DIDSet = new MiniSet();
-var baseUrl = "http://d-api.herokuapp.com/";
 
 // gets all dates near LatLng position and displays them to map. called initially and when map is panned
 var getDates = function(LatLng, map) {

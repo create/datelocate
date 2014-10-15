@@ -5,9 +5,10 @@ var datelSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    location: {
-        "lat": Number,
-        "lng": Number
+    loc: {
+        // lng, lat
+        type: [],
+        index: '2d'
     },
     name: {    // name of the place
         type: String,

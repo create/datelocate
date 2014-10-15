@@ -1,4 +1,4 @@
-var baseUrl = "http://d-api.herokuapp.com/";
+var baseUrl = "http://127.0.0.1:3000/";
 
 var map;
 var DIDSet;
@@ -114,7 +114,7 @@ var showOnMap = function(position) {
             zoomControl: false,
             //minZoom: 12,
             zoom: DEFAULT_ZOOM,
-            tilt: 45,
+            tilt: 45
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),
             mapOptions);
@@ -212,8 +212,8 @@ var getDates = function(LatLng, map) {
                 var did = current._id;
                 if (!DIDSet.has(did)) {
                     var name = current.name;
-                    var lat = current.location.lat;
-                    var lng = current.location.lng;
+                    var lat = current.loc[1];
+                    var lng = current.loc[0];
                     DIDSet.add(did);
                     dates[did] = current;
                     var newDatePos = new google.maps.LatLng(lat, lng);
@@ -280,8 +280,8 @@ function actuallyLoadDetails(currentDate, boolCenter) {
     var res = {};
     res.date = currentDate;
     if (boolCenter) {
-        var lat = res.date.location.lat;
-        var lng = res.date.location.lng;
+        var lat = res.date.loc[1];
+        var lng = res.date.loc[0];
         setTimeout(function(){centerMap({coords: {latitude: lat, longitude: lng}}, true);}, 1500);
     }
     var dplace = $('#dplace', panel);

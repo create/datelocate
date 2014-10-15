@@ -34,7 +34,9 @@ var addInit = function () {
 function fillNamePlaces() {
     $('#namesuggestions').remove();
     $('#add-form')[0].reset();
-    $('#add-details-page').panel("open");
+    var panel = $('#add-details-page');
+    $('.error', panel).text("");
+    panel.panel("open");
     addPlace = null;
     var curPos = addMarker.getPosition();
     var request = {

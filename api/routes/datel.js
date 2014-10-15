@@ -23,8 +23,8 @@ exports.getDate = function(req, res) {
 // add a new date to the database
 exports.addDate = function(req, res, next) {
 
-    req.assert('lat', 'Location has to be complete.').notEmpty();
-    req.assert('lng', 'Location has to be complete.').notEmpty();
+    req.assert('lat', 'Location has to be complete.').isFloat();
+    req.assert('lng', 'Location has to be complete.').isFloat();
     req.assert('date_name', 'Name has to be complete.').notEmpty();
     req.assert('price', 'Price should be 0 through 3.').isInt();
     req.assert('review', 'Review has to be complete.').notEmpty();
@@ -44,10 +44,7 @@ exports.addDate = function(req, res, next) {
         // build object
         function(done) {
             var newDate = new Datel({
-                "location": {
-                    "lat": req.body.lat,
-                    "lng": req.body.lng,
-                },
+                "loc": [+req.body.lng, +req.body.lat],
                 "name": req.body.date_name,
                 "location_name": req.body.location || '',
                 "price": req.body.price,
@@ -67,6 +64,7 @@ exports.addDate = function(req, res, next) {
         function(newDate, done) {
             newDate.save(function(err) {
                 if (err) {
+                    console.log(err);
                     done('Invalid date.');
                 }
                 done(null, newDate);
@@ -81,14 +79,14 @@ exports.addDate = function(req, res, next) {
         }
     ], function(err) {
         if (err) {
+            console.log(err);
             return res.send(400, {
                 'response': 'fail',
                 'errors': 'Invalid values passed, please fix these.'
             });
         }
         Datel.findOne({'name': req.body.date_name,
-                        'location.lat': req.body.lat,
-                        'location.lng': req.body.lng}, function(err, b) {
+                        'loc': [req.body.lng, req.body.lat]}, function(err, b) {
             return res.json({'response': 'ok', 'date': b});
         });
     });
@@ -354,52 +352,23 @@ exports.getAllNear = function(req, res) {
     var lng = +req.params.lng;
     var zoom = +req.params.zoom;
 
-    Datel.find(function(err, dates) {
+    // scale distance with zoom - smaller zoom, larger distance
+    var maxDistance = Math.pow(22 - zoom, 2) * secrets.distanceFactor / (111.12 * 1000);
+
+    Datel.find({loc: {
+        $near : [lng, lat],
+        $maxDistance: maxDistance
+    }}, function(err, dates) {
         if (err) {
             return res.send(500, {
                 'response': 'fail',
                 'errors': 'Something went wrong. Please try again later.'
             });
         }
-
-        var result = [];
-
-        // scale distance with zoom - smaller zoom, larger distance
-        var maxDistance = Math.pow(22 - zoom, 2) * secrets.maxDistance;
-        for (var i = 0; i < dates.length; i++) {
-            var curDate = dates[i].toObject();
-            var distance = getDistanceFromLatLonInM(lat, lng,
-                curDate.location.lat, curDate.location.lng);
-
-            if (distance <= maxDistance) {
-                curDate["distance"] = distance;
-                result.push(curDate);
-            }
-        }
-
         res.send(200, {
             'response': 'ok',
-            'dates': result
+            'dates': dates
         });
 
     });
-
-}
-
-// return the distance between two coordinates in metres
-function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(lat2 - lat1); // deg2rad below
-    var dLon = deg2rad(lon2 - lon1);
-    var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c; // Distance in km
-    return d * 1000;
-}
-
-function deg2rad(deg) {
-    return deg * (Math.PI / 180)
 }
