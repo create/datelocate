@@ -85,7 +85,7 @@ var baseUrl = "http://d-api.herokuapp.com/";
             center: new google.maps.LatLng(47.656080, -122.309353),
             disableDefaultUI: true,
             zoom: 13,
-            tilt: 45,
+            tilt: 45
         };
 
 $(window).load(function() {
