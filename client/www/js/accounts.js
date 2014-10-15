@@ -88,44 +88,52 @@ function setLoginStatus(inOrOut, name) {
 function getAccountInfo() {
     getReq(baseUrl + "account", function(data, status) {
         var datesArr = data.user.voted_dates;
-        var options = {
-            useEasing: true,
-            useGrouping: true,
-            seperator: ",",
-            decimal:"."
-        };
-        var list = $('#dates-list');
-        $('.donedate', list).remove();
-        var demo = new countUp("reviewcount", 0, datesArr.length, 0, 2, options);
-        demo.start();
-        var dateSet = new MiniSet();
-        dateSet.add(datesArr);
-        var keys = dateSet.keys();
+        var kudoPoints = datesArr.length;
+        if (kudoPoints != reviewcount) {
 
-        //get array of date id's
-        //for each one, add it to the div in a similar fashion to the reviews
-        for (var i = 0; i < keys.length; i++) {
-          getReq(baseUrl + "getdate/" + keys[i], function (res) {
-            if (res != null && res.date != null) {
-              $('<li class="donedate"><a href="#" onclick="(function(){currentDID = \''+res.date._id+'\'; onDetailsLoad(true);})();" ><strong>' + res.date.name +
-                '</strong> at '+res.date.location_name+'</a></li>').hide().appendTo(list).slideDown();
-            }
-          });
 
+          var options = {
+              useEasing: true,
+              useGrouping: true,
+              seperator: ",",
+              decimal:"."
+          };
+          var list = $('#dates-list');
+          $('.donedate', list).remove();
+          var demo = new countUp("reviewcount", 0, kudoPoints, 0, 2, options);
+          demo.start();
+          var dateSet = new MiniSet();
+          dateSet.add(datesArr);
+          var keys = dateSet.keys();
+
+          //get array of date id's
+          //for each one, add it to the div in a similar fashion to the reviews
+          for (var i = 0; i < keys.length; i++) {
+            getReq(baseUrl + "getdate/" + keys[i], function (res) {
+              if (res != null && res.date != null) {
+                $('<li class="donedate"><a href="#" onclick="(function(){currentDID = \''+res.date._id+'\'; onDetailsLoad(true);})();" ><strong>' + res.date.name +
+                  '</strong> at '+res.date.location_name+'</a></li>').hide().appendTo(list).slideDown();
+              }
+            });
+
+          }
+          list.listview("refresh");
         }
-        list.listview("refresh");
       }).fail(function(err) {
           console.log("get account error");
           $(".error", list.parent()).text(err.responseJSON.errors);
       });
 }
 $(document).ready(function() {
-  $('#logout').click(function (e) {
+    $('#logout').click(function (e) {
         e.stopImmediatePropagation();
         e.preventDefault();
         FB.api('me/permissions', 'delete', function (res) {
             console.log(res);
             setLoginStatus(false);
         });
+    });
+    $('#accountbutton').click(function(e) {
+      getAccountInfo();
     });
 });
