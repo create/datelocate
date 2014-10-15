@@ -89,9 +89,8 @@ function getAccountInfo() {
     getReq(baseUrl + "account", function(data, status) {
         var datesArr = data.user.voted_dates;
         var kudoPoints = datesArr.length;
-        if (kudoPoints != reviewcount) {
-
-
+        var currentPoints = $("#reviewcount").text();
+        if (kudoPoints != currentPoints) {
             var options = {
                 useEasing: true,
                 useGrouping: true,
@@ -100,7 +99,7 @@ function getAccountInfo() {
             };
             var list = $('#dates-list');
             $('.donedate', list).remove();
-            var demo = new countUp("reviewcount", 0, kudoPoints, 0, 2, options);
+            var demo = new countUp("reviewcount", 0, kudoPoints, 0, 2.3, options);
             demo.start();
             var dateSet = new MiniSet();
             dateSet.add(datesArr);
