@@ -75,29 +75,35 @@ window.fbAsyncInit = function () {
         });
     });
   }
+function setLoginStatus(inOrOut, name) {
+    if (inOrOut) {
+        $('#username').html("Welcome <span style='font-weight: 300;'>" + name+"</span>");
+        $('#not-logged-in').css("display", "none");
+        $('#logged-in').css("display", "default");
+    } else {
+        $('#logged-in').css("display", "none");
+        $('#not-logged-in').css("display", "default");
+        $('#username').html("Not logged in");
+    }
+}
 function findName() {
 	FB.api('/me', function(response) {
 		console.log("Success " + response.name);
 		if (response.name != undefined) {
-			$('#not-logged-in').css("display", "none");
-			$('#logged-in').css("display", "default");
-			$('#username').html("Welcome <span style='font-weight: 300;'>" + response.name+"</span>");
-
+			setLoginStatus(true, response.name);
 		} else {
-			$('#logged-in').css("display", "none");
-			$('#not-logged-in').css("display", "default");
-			$('#username').html("Not logged in");
+			setLoginStatus(false);
 		}
 
 	});
-  getReq(baseUrl + "account", function(data, status) {
+    getReq(baseUrl + "account", function(data, status) {
         var datesArr = data.user.voted_dates;
         var options = {
-          useEasing: true,
-          useGrouping: true,
-          seperator: ",",
-          decimal:"."
-        }
+            useEasing: true,
+            useGrouping: true,
+            seperator: ",",
+            decimal:"."
+        };
         var list = $('#dates-list');
         $('.donedate', list).remove();
         var demo = new countUp("reviewcount", 0, datesArr.length, 0, 2, options);
@@ -135,7 +141,8 @@ $(document).ready(function() {
         e.stopImmediatePropagation();
         e.preventDefault();
         FB.api('me/permissions', 'delete', function (res) {
-          console.log(res);
+            console.log(res);
+            setLoginStatus(false);
         });
     });
 });
