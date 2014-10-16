@@ -1,6 +1,6 @@
 datelocate
 ==========
-## Live at http://www.dates.pw ##
+## Live at http://www.date-locate.com ##
 
 ![alt tag](https://raw.github.com/create/datelocate/master/client/www/img/splash.jpg)
 
