@@ -7,15 +7,15 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <meta property="og:image" content="/images/splash.jpg"/>
         <link rel="image_src" href="/images/splash.jpg" />
+
         <!-- DEFAULT THEME -->
         <link rel="stylesheet" type="text/css" href="css/lib/jquery.mobile-1.4.2.min.css" />
         <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:500,400,300" rel="stylesheet" type="text/css">
+        <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:500,400,300" rel="stylesheet" type="text/css"> -->
         <link href="//fonts.googleapis.com/css?family=Roboto:100italic,100,300italic,300,400italic,400,500italic,500,700italic,700,900italic,900" rel="stylesheet" type="text/css">
         <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
-
     </head>
     <body>
         <div id="loading" class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span></div>
@@ -40,7 +40,7 @@
                 <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
                     <div id="not-logged-in">
                         <h1 class="title">Uh oh! Looks like you're not logged in!</h1>
-                        <h2 class="subtitle">Log in now to add your ideas.</h2>
+                        <h2 class="subtitle">Log in now to track your completed dates.</h2>
 
                         <div class="account-login-button"><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
 
@@ -84,7 +84,7 @@
 
                     <span id="dtitle" class="title"><strong><span id="dname"></span></strong><span style="display: none;" id="at"> at </span><a target="_blank" data-role="none" id="dplace"></a><span id="dprice"></span></span>
                     <div data-role="none" id="dcont" style="display: none; background-color: #111111;">
-                        <a target="_blank" id="dpicture" href=""><img style="width: 100%; " src=''alt="photo"></a>
+                        <a target="_blank" id="dpicture" href=""><img style="width: 100%; " alt="photo"></a>
                     </div>
 
                     <ul data-role="listview" id="detailslist">
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                        <h1 class="subtitle">Your opinion</h1>
-                        <textarea required="required" type="text" placeholder="What worked well on this date?" name="review" id="add-review-texta"></textarea>
+                        <textarea required="required" placeholder="What worked well on this date?" name="review" id="add-review-texta"></textarea>
                         <div class="error"></div>
                         <input type="submit" value="Date complete" id="add-review-submit" data-icon="check">
                     </form>
@@ -143,6 +143,5 @@
           ga('send', 'pageview');
 
         </script>
-
     </body>
 </html>

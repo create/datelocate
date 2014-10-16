@@ -117,23 +117,26 @@ $(window).load(function() {
             $(this).delay(300 * index).animate({'opacity': 1}, 500);
         });
     }, { offset: 600 });
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    google.maps.event.addListener(map, "idle", function (event) {
-        //console.log("idle");
-        getDates(map.getCenter(), map);
-    });
-    getDates(mapOptions.center, map);
-    $('#meet').click(function (e) {
-        e.stopImmediatePropagation();
-        e.preventDefault();
-        $('#team').slideDown();
-        $('#meet').slideUp();
-    });
-    var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
-    if (iOS) {
-        $('#header').css("height", "100%");
-    }
+    setTimeout(function() {
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        google.maps.event.addListener(map, "idle", function (event) {
+            //console.log("idle");
+            getDates(map.getCenter(), map);
+        });
+        getDates(mapOptions.center, map);
+        $('#meet').click(function (e) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            $('#team').slideDown();
+            $('#meet').slideUp();
+        });
+        var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
+        if (iOS) {
+            $('#header').css("height", "100%");
+        }
+    }, 1000);
 });
+
 var DIDSet = new MiniSet();
 
 // gets all dates near LatLng position and displays them to map. called initially and when map is panned
