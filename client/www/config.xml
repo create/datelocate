@@ -15,7 +15,7 @@
     <author href="http://datefinder.herokuapp.com" email="jeffrey.pyke@gmail.com">
         Matt Robinson and Jeff Pyke
     </author>
-    <content src="index.html" />
+    <content src="map.html" />
     <!--
         Enable individual API permissions here.
         The "device" permission is required for the 'deviceready' event.

@@ -21,7 +21,7 @@ strong {
   white-space: normal;
 }
 
-#closebutton {
+.closebutton {
 margin-top: 50px;
 }
 .panel {

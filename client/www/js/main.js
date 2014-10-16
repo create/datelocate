@@ -52,8 +52,11 @@ $(document).ready(function() {
     $('#addbutton').click(function() {
         $('#account-panel').panel("close");
     });
-    $('#closebutton').click(function() {
+    $('#detail-closebutton').click(function() {
         $('#dates-details-page').panel("close");
+    });
+    $('#add-closebutton').click(function() {
+        $('#add-details-page').panel("close");
     });
 
     $('#linkclick').click(function() {

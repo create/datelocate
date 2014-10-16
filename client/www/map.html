@@ -58,6 +58,7 @@
                     </div>
                 </div>
 
+                <!-- Add details -->
                 <div class="panel" data-role="panel" data-display="overlay" data-position="right" data-dismissible="false" id="add-details-page">
                     <h1 class="title"><strong>Your</strong> date idea</h1>
                     <form id="add-form">
@@ -75,8 +76,8 @@
                             <textarea required="required" placeholder="Insider tips/Review" name="review" id="add-review-text"></textarea>
                             <div class="error"></div>
                             <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
-
                     </form>
+                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" id="add-closebutton" class="closebutton">Close</a>
                 </div>
 
                 <!-- The date details -->
@@ -106,7 +107,7 @@
                     <form id="review-form">
                         <div id="details-menu">
                             <input id="linktext" type="text" data-role="none">
-                            <img src="img/link.png" id="linkclick" title="Get link " alt="link">
+                            <img src="img/link.png" id="linkclick" title="Get link to share" alt="link">
                             <div id="flagclick">
                                 <img src="img/flag.png" title="Flag unhelpful" alt="flag">
                             </div>
@@ -116,7 +117,7 @@
                         <div class="error"></div>
                         <input type="submit" value="Date complete" id="add-review-submit" data-icon="check">
                     </form>
-                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" id="closebutton">Close</a>
+                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" id="detail-closebutton" class="closebutton">Close</a>
                 </div>
 
             </div>
