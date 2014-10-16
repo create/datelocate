@@ -180,16 +180,15 @@ exports.addFlag = function(req, res, next) {
 
         // check if user has not voted for this date before
         User.findOne({'_id': req.user._id, 'flagged_dates': date._id}, function(err, user) {
+            var vote = 1;
             if (user) {
-                return res.send(500, {
-                    'response': 'fail',
-                    'errors': 'You have already flagged this date.'
-                });
+                // remove their flag
+                vote = -1;
             }
 
-            // update the values depending on vote direction
+            // update the values
             if (date.flags) {
-                date.flags += 1;
+                date.flags += vote;
             } else {
                 date.flags = 1;
             }
@@ -205,9 +204,7 @@ exports.addFlag = function(req, res, next) {
                     });
                 }
 
-                // now update the user
-                User.update({'_id': req.user._id}, { $push: { flagged_dates: date } },
-                    function(err) {
+                var after = function(err) {
                     if (err) {
                         return res.send(500, {
                             'response': 'fail',
@@ -216,12 +213,25 @@ exports.addFlag = function(req, res, next) {
                     }
 
                     User.findOne({'_id': req.user._id}, function(err, user) {
+                        if (vote == -1) {
+                            // This isn't really an error..
+                            return res.send(500, {
+                                'response': 'fail',
+                                'errors': 'Your flag has been removed.'
+                            });
+                        }
                         return res.send(200, {
                             'response': 'ok',
                             'user': user
                         });
                     });
-                });
+                };
+                // now update the user
+                if (vote == -1) {
+                    User.update({'_id': req.user._id}, { $pull: { flagged_dates: date } }, after);
+                } else {
+                    User.update({'_id': req.user._id}, { $push: { flagged_dates: date } }, after);
+                }
 
             });
 
