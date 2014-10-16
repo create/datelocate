@@ -58,6 +58,9 @@ $(document).ready(function() {
     $('#add-closebutton').click(function() {
         $('#add-details-page').panel("close");
     });
+    $('#acct-closebutton').click(function() {
+        $('$account-panel').panel("close");
+    });
 
     $('#linkclick').click(function() {
         $('#linktext').show().val(window.location.href.split("?")[0] + "?did="+currentDID).select();
@@ -68,7 +71,6 @@ $(document).ready(function() {
         } else {
             // pc
             toast("Hit Ctrl+C now to copy the link.")
-
         }
     });
     $('#flagclick').click(function() {

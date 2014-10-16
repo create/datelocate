@@ -90,17 +90,18 @@ function getAccountInfo() {
         var datesArr = data.user.voted_dates;
         var kudoPoints = datesArr.length;
         var currentPoints = $("#reviewcount").text();
-        if (kudoPoints != currentPoints) {
-            var options = {
-                useEasing: true,
-                useGrouping: true,
-                seperator: ",",
-                decimal:"."
-            };
-            var list = $('#dates-list');
+        var options = {
+            useEasing: true,
+            useGrouping: true,
+            seperator: ",",
+            decimal:"."
+        };
+        var list = $('#dates-list');
+        var demo = new countUp("reviewcount", 0, kudoPoints, 0, 2.2, options);
+        demo.start();
+        console.log(kudoPoints + " " + currentPoints + " " + $('#dates-list').children().length);
+        if (kudoPoints != currentPoints || $('#dates-list').children().length == 0) {
             $('.donedate', list).remove();
-            var demo = new countUp("reviewcount", 0, kudoPoints, 0, 2.3, options);
-            demo.start();
             var dateSet = new MiniSet();
             dateSet.add(datesArr);
             var keys = dateSet.keys();

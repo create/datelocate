@@ -9,3 +9,9 @@ So you've got a date. Great! Now you've got to decide where to go. This site is 
 
 #### Making sense of the code #####
 Server code is located in api. Client code is located in client. Server runs on node with mongo. Deploy to heroku.
+##### Phonegap install #####
+In client directory:
+```
+phonegap local build android
+phonegap local run android
+```
