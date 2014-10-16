@@ -120,7 +120,6 @@ $(window).load(function() {
     setTimeout(function() {
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
         google.maps.event.addListener(map, "idle", function (event) {
-            //console.log("idle");
             getDates(map.getCenter(), map);
         });
         getDates(mapOptions.center, map);
@@ -150,8 +149,8 @@ var getDates = function(LatLng, map) {
             var did = current._id;
             if (!DIDSet.has(did)) {
                 var name = current.name;
-                var lat = current.location.lat;
-                var lng = current.location.lng;
+                var lat = current.loc[1];
+                var lng = current.loc[0];
                 //console.log("creating date: "+name);
                 DIDSet.add(did);
                 var newDatePos = new google.maps.LatLng(lat, lng);
