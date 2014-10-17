@@ -3,10 +3,10 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.datefinder"
+        id        = "com.date-locate"
         version   = "1.0.0">
 
-    <name>DateLocate</name>
+    <name>Date Locate</name>
 
     <description>
         Where to go? Find and share local date ideas.
@@ -51,6 +51,10 @@
         <gap:plugin name="Example" />
         A list of available plugins are available at https://build.phonegap.com/docs/plugins
     -->
+    <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.4.0">
+        <param name="APP_ID" value="233709206819119" />
+        <param name="APP_NAME" value="Date Locate" />
+    </gap:plugin>
 
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />
@@ -72,6 +76,10 @@
         <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker"/>
     </feature>
 
+    <feature name="org.apache.cordova.facebook.Connect">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+    </feature>
+
     <!--
         Define access to external domains.
 
@@ -80,7 +88,16 @@
 
         Otherwise, you can specify specific domains:
     -->
-    <access origin="*"/> <!-- allow local pages -->
+    <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
+    <access origin="http://d-api.herokuapp.com*"/>
+    <access origin="http://www.date-locate.com*"/>
+    <access origin="https://gstatic.com" subdomains="true"/>
+    <access origin="https://googleapis.com" subdomains="true"/>
+    <access origin="http://ipinfo.io" subdomains="true"/>
+    <access origin="facebook.com" subdomains="true" />
+    <access origin="fbcdn.net" subdomains="true" />
+    <access origin="akamaihd.net" subdomains="true" />
+    <access origin="*" />
     <!--
         <access origin="http://phonegap.com" />                    - allow any secure requests to http://phonegap.com/
         <access origin="http://phonegap.com" subdomains="true" />  - same as above, but including subdomains, such as http://build.phonegap.com/

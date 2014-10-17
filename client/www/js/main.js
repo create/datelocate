@@ -32,6 +32,7 @@ $(document).on('pageinit', '#map-page', function (event) {
 
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
+    console.log("current url: " + document.URL);
     $('#loading').hide();
     $('#content').show();
     DIDSet = new MiniSet();
@@ -52,14 +53,17 @@ $(document).ready(function() {
     $('#addbutton').click(function() {
         $('#account-panel').panel("close");
     });
-    $('#detail-closebutton').click(function() {
+    $('#detail-closebutton').click(function(e) {
         $('#dates-details-page').panel("close");
+        return false;
     });
-    $('#add-closebutton').click(function() {
+    $('#add-closebutton').click(function(e) {
         $('#add-details-page').panel("close");
+        return false;
     });
-    $('#acct-closebutton').click(function() {
-        $('$account-panel').panel("close");
+    $('#acct-closebutton').click(function(e) {
+        $('#account-panel').panel("close");
+        return false;
     });
 
     $('#linkclick').click(function() {
@@ -132,27 +136,31 @@ var showOnMap = function(position) {
         //       { visibility: "simplified" }
         //     ]
         //   },
-        // {
-        //   featureType: "road",
+        {
+          featureType: "road",
 
-        //   stylers: [
-        //     { visibility: "simplified" }
-        //   ]
-        // }
+          stylers: [
+            { visibility: "simplified" }
+          ]
+        }
         ];
 
         map.setOptions({styles: noPoi});
 
         google.maps.event.addListener(map, "idle", function (event) {
-            //console.log("idle");
             getDates(map.getCenter(), map);
         });
+        var deFocus = function() {
+            $('#pac-input').blur();
+        }
         google.maps.event.addListener(map, "dragstart", function (event) {
-            $('#locate img').attr("src", "img/geolocation.png");
+            // $('#locate img').attr("src", "img/geolocation.png");
             closePanels();
+            deFocus();
         });
         google.maps.event.addListener(map, "click", function (event) {
             closePanels();
+            deFocus();
         });
 
         getDates(myLatlng, map);
