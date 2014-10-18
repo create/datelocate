@@ -15,3 +15,4 @@ In client directory:
 phonegap local build android
 phonegap local run android
 ```
+Phonegap setup isn't entirely finished yet.
