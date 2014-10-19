@@ -14,7 +14,7 @@
 
         <link rel="stylesheet" type="text/css" href="css/map.css" />
         <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:500,400,300" rel="stylesheet" type="text/css"> -->
-        <link href="//fonts.googleapis.com/css?family=Roboto:100italic,100,300italic,300,400italic,400,500italic,500,700italic,700,900italic,900" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Roboto:100italic,100,300italic,300,400italic,400,500italic,500,700italic,700,900italic,900" rel="stylesheet" type="text/css">
         <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
     </head>
     <body>
@@ -37,13 +37,15 @@
                 </div>
                 <a href="#account-panel"><div data-position="fixed" id="accountbutton" class="mapbutton" data-transition="slide"><img height="28" width="28" src="img/panel.png" alt="panel"></div></a>
 
+                <!-- Account panel -->
                 <div id="account-panel" data-role="panel" class="panel left" data-position="left" data-display="push" data-dismissible="false">
                     <div id="not-logged-in">
                         <h1 class="title">Uh oh! Looks like you're not logged in!</h1>
                         <h2 class="subtitle">Log in now to track your completed dates.</h2>
 
-                        <div class="account-login-button"><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div>
-
+                        <!-- <div class="account-login-button"><fb:login-button show-faces="false" width="200" max-rows="1" data-size="xlarge" id="login-button"></fb:login-button></div> -->
+                        <div id="fb-root"></div>
+                        <a href="#" data-role="button" data-mini="true" id="fb-login-button" >Login with Facebook</a>
                     </div>
 
                     <div id="logged-in" style="display: none;">
@@ -126,8 +128,10 @@
         </div>
 
         <script type="text/javascript"
-          src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&sensor=true"></script>
-        <script type="text/javascript" src="js/cordova.js"></script>
+          src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&amp;sensor=true"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/cdv-plugin-fb-connect.js"></script>
+
         <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="js/lib/jquery.mobile-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/lib/miniset.js"></script>
@@ -139,7 +143,7 @@
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
 
           ga('create', 'UA-55740132-1', 'auto');
           ga('send', 'pageview');
