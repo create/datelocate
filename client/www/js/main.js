@@ -51,7 +51,7 @@ $(document).ready(function() {
     DIDSet = new MiniSet();
     $(window).hashchange(function() {
         if (location.hash == "") {
-            closePanels(true);
+            $('#dates-details-page').panel("close");
         } else {
             console.log('loading date');
             loadDateFromUrl();
@@ -80,7 +80,7 @@ $(document).ready(function() {
         beforeclose: function(event, ui) {
             window.location.hash = "";
         }
-    })
+    });
 
     $('#linkclick').click(function() {
         $('#linktext').show().val(addDidToUrl(window.location.href, currentDID)).select();
