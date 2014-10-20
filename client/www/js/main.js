@@ -216,6 +216,14 @@ var showOnMap = function(position) {
             var bounds = map.getBounds();
             searchBox.setBounds(bounds);
         });
+
+        // remove focus when user presses enter
+        var pacInput = $('#pac-input');
+        pacInput.keyup(function(e) {
+            if (e.which === 13) {
+                pacInput.blur();
+            }
+        })
     };
     $.get("http://ipinfo.io/json", setup
     , "jsonp").fail(setup);
