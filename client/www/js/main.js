@@ -18,26 +18,41 @@ $(document).bind("mobileinit", function () {
 });
 
 //gets a get parameter
-function get(name){
+function getParam(name){
     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(window.location.href))
-    return decodeURIComponent(name[1]);
+        return decodeURIComponent(name[1]);
 }
-$(document).on('pageinit', '#map-page', function (event) {
-    var getDid = get("did");
+function getDidFromUrl() {
+    var did;
+    if (did=(new RegExp('[#][a-z0-9]*')).exec(window.location.href))
+        return did[0].substr(1);
+}
+function loadDateFromUrl() {
+    var getDid = getDidFromUrl();
     if (getDid) {
         currentDID = getDid;
         onDetailsLoad(true);
     }
-});
+}
+$(document).on('pageinit', '#map-page', loadDateFromUrl);
+
 
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
     console.log("current url: " + document.URL);
-    $('#loading').hide();
-    $('#content').show();
     DIDSet = new MiniSet();
+    $(window).hashchange(function() {
+        if (location.hash == "") {
+            closePanels(true);
+        } else {
+            console.log('loading date');
+            loadDateFromUrl();
+        };
+    });
     fixInfoWindow();
     showOnMap();
+    $('#loading').hide();
+    $('#content').show();
     $( document ).on( "swipeleft swiperight", "#account-page", function (e) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
@@ -53,21 +68,14 @@ $(document).ready(function() {
     $('#addbutton').click(function() {
         $('#account-panel').panel("close");
     });
-    $('#detail-closebutton').click(function(e) {
-        $('#dates-details-page').panel("close");
-        return false;
-    });
-    $('#add-closebutton').click(function(e) {
-        $('#add-details-page').panel("close");
-        return false;
-    });
-    $('#acct-closebutton').click(function(e) {
-        $('#account-panel').panel("close");
-        return false;
-    });
+    $('#dates-details-page').panel({
+        beforeclose: function(event, ui) {
+            window.location.hash = "";
+        }
+    })
 
     $('#linkclick').click(function() {
-        $('#linktext').show().val(window.location.href.split("?")[0] + "?did="+currentDID).select();
+        $('#linktext').show().val(addDidToUrl(window.location.href, currentDID)).select();
         $('#linkclick').hide();
         if (navigator.userAgent.indexOf('Mac OS X') != -1) {
             // mac
@@ -207,8 +215,8 @@ var showOnMap = function(position) {
 };
 
 //closes panels to show map
-function closePanels() {
-    if ($(window).width() > 600) {
+function closePanels(force) {
+    if ($(window).width() > 600 && !force) {
         $('#account-panel').panel("close");
     } else {
         $('.panel').panel("close");
@@ -241,7 +249,7 @@ var getDates = function(LatLng, map) {
                     return function() {
                         currentDID = did;
                         $('#account-panel').panel("close");
-
+                        window.location.href = addDidToUrl(window.location.href, currentDID);
                         onDetailsLoad();
                     };
                 };
@@ -252,6 +260,10 @@ var getDates = function(LatLng, map) {
 };
 
 var NUM_REVIEWS = 3; // max number of reviews to show initially
+
+function addDidToUrl(url, did) {
+    return url.split("#")[0] + "#" + did;
+}
 
 // accepts 0, 1, 2, 3 and returns Free, $, $$, $$
 function priceToText(price) {

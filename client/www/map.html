@@ -56,7 +56,7 @@
                         </ul>
                         <a href="#" id="logout" data-role="button" data-icon="delete">Log out</a>
                     </div>
-                    <a href="#" data-role="button" data-icon="arrow-l" data-mini="true" id="acct-closebutton" class="closebutton">Close</a>
+                    <a href="#" data-role="button" data-icon="arrow-l" data-mini="true" data-rel="close" id="acct-closebutton" class="closebutton">Close</a>
                 </div>
 
                 <!-- Add details -->
@@ -78,7 +78,7 @@
                             <div class="error"></div>
                             <input type="submit" id="add-button" name="add" value="Add date" data-role="button" data-icon="plus">
                     </form>
-                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" id="add-closebutton" class="closebutton">Close</a>
+                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" data-rel="close" id="add-closebutton" class="closebutton">Close</a>
                 </div>
 
                 <!-- The date details -->
@@ -118,16 +118,16 @@
                         <div class="error"></div>
                         <input type="submit" value="Date complete" id="add-review-submit" data-icon="check">
                     </form>
-                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" id="detail-closebutton" class="closebutton">Close</a>
+                    <a href="#" data-role="button" data-icon="arrow-r" data-mini="true" data-rel="close" id="detail-closebutton" class="closebutton">Close</a>
                 </div>
 
             </div>
 
         </div>
 
-        <script type="text/javascript"
-          src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&sensor=true"></script>
-        <script type="text/javascript" src="js/cordova.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyC3clVyH1hk4gVznz4GfXv-gV0_ciXwv_w&amp;sensor=true"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/cdv-plugin-fb-connect.js"></script>
         <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="js/lib/jquery.mobile-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/lib/miniset.js"></script>
@@ -140,10 +140,8 @@
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
           ga('create', 'UA-55740132-1', 'auto');
           ga('send', 'pageview');
-
         </script>
     </body>
 </html>
