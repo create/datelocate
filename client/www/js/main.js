@@ -32,6 +32,14 @@ function loadDateFromUrl() {
     if (getDid) {
         currentDID = getDid;
         onDetailsLoad(true);
+        return;
+    }
+
+    /// DEPRECATED
+    var legacyDid = getParam("did");
+    if (legacyDid) {
+        currentDID = legacyDid;
+        onDetailsLoad(true);
     }
 }
 $(document).on('pageinit', '#map-page', loadDateFromUrl);
