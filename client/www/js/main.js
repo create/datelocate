@@ -223,7 +223,9 @@ var showOnMap = function(position) {
             if (e.which === 13) {
                 pacInput.blur();
             }
-        })
+        }).focus(function (e) {
+            pacInput.val('');
+        });
     };
     $.get("http://ipinfo.io/json", setup
     , "jsonp").fail(setup);
