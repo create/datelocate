@@ -10,6 +10,7 @@ var dates = {};
 var placesService;
 var DEFAULT_ZOOM = 13;
 var currentLocationMarker; // blue dot to show current location
+var loadFromUrl = true; // flag whether to listen for hashchanges and update date
 
 $(document).bind("mobileinit", function () {
     console.log("in mobileinit");
@@ -27,19 +28,29 @@ function getDidFromUrl() {
     if (did=(new RegExp('[#][a-z0-9]*')).exec(window.location.href))
         return did[0].substr(1);
 }
-function loadDateFromUrl() {
-    var getDid = getDidFromUrl();
-    if (getDid) {
-        currentDID = getDid;
-        onDetailsLoad(true);
-        return;
-    }
+function loadDateFromUrl(boolCenter) {
+    if (loadFromUrl) {
+        var getDid = getDidFromUrl();
+        if (getDid) {
+            if (boolCenter) {
+                window.history.pushState({}, document.title, "#");
+                currentDID = getDid;
+                setTimeout(function() {
+                    onDetailsLoad(boolCenter);
+                }, 50);
+            } else {
+                currentDID = getDid;
+                onDetailsLoad(boolCenter);
+            }
+            return;
+        }
 
-    /// DEPRECATED
-    var legacyDid = getParam("did");
-    if (legacyDid) {
-        currentDID = legacyDid;
-        onDetailsLoad(true);
+        /// DEPRECATED
+        var legacyDid = getParam("did");
+        if (legacyDid) {
+            currentDID = legacyDid;
+            onDetailsLoad(boolCenter);
+        }
     }
 }
 
@@ -48,17 +59,20 @@ $(document).ready(function() {
     console.log("current url: " + document.URL);
     DIDSet = new MiniSet();
     $(window).hashchange(function() {
-        if (location.hash == "") {
+        if (window.location.hash == "") {
             $('#dates-details-page').panel("close");
         } else {
-            // Do nothing, because the page is already loaded.
+            loadDateFromUrl(false);
         };
     });
     fixInfoWindow();
-    showOnMap();
-    loadDateFromUrl();
-    $('#loading').hide();
-    $('#content').show();
+    showOnMap().always(function() {
+        $('#loading').hide();
+        $('#content').show();
+        waitToLocate();
+        loadDateFromUrl(true);
+    });
+
     $( document ).on( "swipeleft swiperight", "#account-page", function (e) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
@@ -76,7 +90,9 @@ $(document).ready(function() {
     });
     $('#dates-details-page').panel({
         beforeclose: function(event, ui) {
-            window.location.hash = "";
+            if (window.location.hash != "") {
+                window.history.back();
+            }
         }
     });
 
@@ -103,9 +119,8 @@ $(document).ready(function() {
             toast(err.responseJSON.errors);
         });
     });
-
     $('img', $('#dpicture')).load(function() { $('#dpicture').fadeTo(300,1);});
-    waitToLocate();
+
 });
 function waitToLocate() {
     if (map == null) {
@@ -225,7 +240,7 @@ var showOnMap = function(position) {
             pacInput.val('');
         });
     };
-    $.get("http://ipinfo.io/json", setup
+    return $.get("http://ipinfo.io/json", setup
     , "jsonp").fail(setup);
 };
 
@@ -264,7 +279,6 @@ var getDates = function(LatLng, map) {
                     return function() {
                         currentDID = did;
                         $('#account-panel').panel("close");
-                        window.location.href = addDidToUrl(window.location.href, currentDID);
                         onDetailsLoad();
                     };
                 };
@@ -295,6 +309,15 @@ function priceToText(price) {
 // called when a marker is clicked. gets info and displays in panel
 // if boolCenter is true it will center the map on this date ID marker if it exists
 function onDetailsLoad(boolCenter) {
+    loadFromUrl = false;
+    if (window.location.hash == "") {
+        // Adds to history
+        window.location.hash = currentDID;
+    } else {
+        // Doesn't add to history
+        window.history.replaceState({}, document.title, "#" + currentDID);
+    }
+    loadFromUrl = true;
     var currentDate = dates[currentDID];
     if (!currentDate) {
         getReq(baseUrl + "getdate/" + currentDID, function (res, status) {
