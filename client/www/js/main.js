@@ -42,8 +42,6 @@ function loadDateFromUrl() {
         onDetailsLoad(true);
     }
 }
-$(document).on('pageinit', '#map-page', loadDateFromUrl);
-
 
 // Show the main map with user's position and dates close to the user
 $(document).ready(function() {
@@ -53,12 +51,12 @@ $(document).ready(function() {
         if (location.hash == "") {
             $('#dates-details-page').panel("close");
         } else {
-            console.log('loading date');
-            loadDateFromUrl();
+            // Do nothing, because the page is already loaded.
         };
     });
     fixInfoWindow();
     showOnMap();
+    loadDateFromUrl();
     $('#loading').hide();
     $('#content').show();
     $( document ).on( "swipeleft swiperight", "#account-page", function (e) {
@@ -229,7 +227,6 @@ var showOnMap = function(position) {
     };
     $.get("http://ipinfo.io/json", setup
     , "jsonp").fail(setup);
-
 };
 
 //closes panels to show map
@@ -325,7 +322,7 @@ function actuallyLoadDetails(currentDate, boolCenter) {
     if (boolCenter) {
         var lat = res.date.loc[1];
         var lng = res.date.loc[0];
-        setTimeout(function(){centerMap({coords: {latitude: lat, longitude: lng}}, true);}, 1500);
+        setTimeout(function(){centerMap({coords: {latitude: lat, longitude: lng}}, true);}, 500);
     }
     var dplace = $('#dplace', panel);
     var oldName = dplace.text();
